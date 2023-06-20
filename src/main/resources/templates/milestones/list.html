@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>マイルストーン</h1>
+    <a href="./creationForm.html" th:href="@{/milestones/creationForm}">マイルストーンアプリケーション</a>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>マイルストーン</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="milestone : ${milestoneList}">
+                <td th:text="${milestone.id}"></td>
+                <td>
+                    <a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.title}"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

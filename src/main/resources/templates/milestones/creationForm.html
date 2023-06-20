@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>creationForm</title>
+</head>
+<body>
+    <h1>マイルストーン</h1>
+    <a href="./list.html" th:href="@{/milestones}">listへ</a>
+
+
+    <form action="/milestones/creationForm" th:object="${creationForm}" method="post">
+        <div>
+            <label for="milestoneInput">title:</label>
+            <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{title}" />
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+        </div>
+    
+        <div>
+            <label for="descriptionInput">Description:</label>
+            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+    
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
