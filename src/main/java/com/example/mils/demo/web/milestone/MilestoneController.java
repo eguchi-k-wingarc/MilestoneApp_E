@@ -29,17 +29,17 @@ public class MilestoneController {
         return "milestones/list";
     }
 
-    @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute MilestoneForm form){
+    @GetMapping("/creationForm")
+    public String showCreationForm(@ModelAttribute("creationForm") MilestoneForm form) {
         return "milestones/creationForm";
     }
 
-    @PostMapping
-    public String create(@Validated MilestoneForm form, MilestoneForm milestoneForm, Model model, BindingResult bindingResult){
-        milestoneService.create(milestoneForm.getMilestone(), milestoneForm.getDescription());
-        if (bindingResult.hasErrors()){
+    @PostMapping("/creationForm")
+    public String create(@ModelAttribute("creationForm") @Validated MilestoneForm milestoneForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "milestones/creationForm";
         }
+        milestoneService.create(milestoneForm.getMilestone(), milestoneForm.getDescription());
         return "redirect:/milestones";
     }
 

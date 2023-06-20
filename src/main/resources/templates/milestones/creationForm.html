@@ -6,17 +6,20 @@
     <title>inputForm</title>
 </head>
 <body>
-    <form method="post" action="/milestones" th:object="${milestoneForm}" th:action="@{/milestones}"> 
+    <form action="/milestones/creationForm" th:object="${creationForm}" method="post">
         <div>
-            <label for="milestoneInput">マイルストーン:</label>
-            <input type="text" id="milestoneInput" name="milestoneInput" th:field="${milestoneForm.milestone}">
-            <p th:if="${#fields.hasErrors('milestone')}" th:errors="*{milestone}">(error)</p>
+            <label for="milestoneInput">Milestone:</label>
+            <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{milestone}" />
+            <p th:if="${#fields.hasErrors('milestone')}" th:errors="*{milestone}"></p>
         </div>
+    
         <div>
-            <label for="descriptionInput">詳細:</label>
-            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="${milestoneForm.description}"></textarea>
+            <label for="descriptionInput">Description:</label>
+            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
-        <button type="submit">作成</button>
+    
+        <button type="submit">Submit</button>
     </form>
 </body>
 </html>
