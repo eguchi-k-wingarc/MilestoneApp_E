@@ -19,8 +19,7 @@
         <tbody>
             <tr th:each="milestone : ${milestoneList}">
                 <td th:text="${milestone.id}"></td>
-                <td th:text="${milestone.milestone}"></td>
-                <td th:text="${milestone.description}"></td>
+                <td><a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.milestone}"></a></td>
             </tr>
         </tbody>
         

@@ -17,6 +17,10 @@ public class MilestoneService {
         return milestoneRepository.findAll();
     }
 
+    public MilestoneEntity findById(long id){
+        return milestoneRepository.findById(id);
+    }
+
     @Transactional
     public void create(String milestone, String description){
         milestoneRepository.insert(milestone, description);
