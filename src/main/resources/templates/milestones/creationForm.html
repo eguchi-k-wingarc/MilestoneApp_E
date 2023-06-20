@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inputForm</title>
+</head>
+<body>
+    <form method="post" action="/milestones" th:object="${milestoneForm}" th:action="@{/milestones}"> 
+        <div>
+            <label for="milestoneInput">マイルストーン:</label>
+            <input type="text" id="milestoneInput" name="milestoneInput" th:field="${milestoneForm.milestone}">
+            <p th:if="${#fields.hasErrors('milestone')}" th:errors="*{milestone}">(error)</p>
+        </div>
+        <div>
+            <label for="descriptionInput">詳細:</label>
+            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="${milestoneForm.description}"></textarea>
+        </div>
+        <button type="submit">作成</button>
+    </form>
+</body>
+</html>
