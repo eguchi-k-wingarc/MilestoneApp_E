@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class MilestoneForm {
-    @NotBlank(message = "マイルストーンを入力してください")
+    @NotBlank(message = "タイトルを入力してください")
     @Size(max = 256, message = "多すぎです")
     private String title;
 
