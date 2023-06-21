@@ -47,7 +47,7 @@ public class MilestoneController {
     }
 
     @PostMapping("/creationForm")
-    public String create(@ModelAttribute("creationForm") @Validated MilestoneForm milestoneForm, BindingResult bindingResult, Model model) {
+    public String create(@ModelAttribute("creationForm") @Validated MilestoneForm milestoneForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "milestones/creationForm";
         }
