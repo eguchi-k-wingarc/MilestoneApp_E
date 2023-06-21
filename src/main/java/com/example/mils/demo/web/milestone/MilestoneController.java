@@ -41,17 +41,17 @@ public class MilestoneController {
         return "milestones/detail";
     }
 
-    @GetMapping("/creationForm")
-    public String showCreationForm(@ModelAttribute("creationForm") MilestoneForm form) {
+    @GetMapping("/create")
+    public String showCreationForm(@ModelAttribute MilestoneForm creationForm) {
         return "milestones/creationForm";
     }
 
-    @PostMapping("/creationForm")
-    public String create(@ModelAttribute("creationForm") @Validated MilestoneForm milestoneForm, BindingResult bindingResult) {
+    @PostMapping
+    public String create(@Validated MilestoneForm creationForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "milestones/creationForm";
+            return showCreationForm(creationForm);
         }
-        milestoneService.create(milestoneForm.getTitle(), milestoneForm.getDescription());
+        milestoneService.create(creationForm.getTitle(), creationForm.getDescription());
         return "redirect:/milestones";
     }
 }
