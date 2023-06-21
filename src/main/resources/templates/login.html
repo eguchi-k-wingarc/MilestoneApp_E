@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログインページ|マイルストーンアプリケーション</title>
+</head>
+<body>
+    <h1>ログインページ</h1>
+
+    <form>
+        <div>
+            <label for="userName">ユーザー名</label>
+            <input type="text" id="userName" name="userName">
+        </div>
+        <div>
+            <label for="password">パスワード</label>
+            <input type="password" id="password" name="passwordKey">
+        </div>
+        <div>
+            <button type="submit">ログイン</button>
+        </div>
+        <div th:if="${param.error}">
+            <p>ユーザー名もしくはパスワードが違うってばよ</p>
+        </div>
+    </form>
+</body>
+</html>
