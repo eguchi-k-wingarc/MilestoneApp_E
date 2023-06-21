@@ -9,11 +9,11 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class MilestoneForm {
-    @NotBlank(message = "タイトルを入力してください")
-    @Size(max = 256, message = "多すぎです")
+    @NotBlank
+    @Size(max = 256)
     private String title;
 
-    @NotBlank(message = "説明を入力してください")
-    @Size(max = 256, message = "多すぎよ")
+    @NotBlank
+    @Size(max = 256)
     private String description;
 }
