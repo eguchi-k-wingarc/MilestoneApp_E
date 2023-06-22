@@ -9,7 +9,7 @@
             <a href="./list.html" th:href="@{/milestones}">&#60;戻る</a>
             <h1 class="ui dividing header">新規マイルストーン</h1>
             
-            <form class="ui container" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
+            <form class="ui container" th:action="@{/milestones}" th:object="${milestoneCreateForm}" method="post">
 
                 <label>Name</label>
                 <div class="ui fluid input"><input type="text" id="nameInput" name="name" th:field="*{name}" /></div>
