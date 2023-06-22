@@ -23,6 +23,6 @@ public class MilestoneService {
 
     @Transactional
     public void create(String name, String description) {
-        milestoneRepository.insert(name, description);
+        milestoneRepository.create(name, description);
     }
 }

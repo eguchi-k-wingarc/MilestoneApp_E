@@ -16,5 +16,5 @@ public interface MilestoneRepository {
     MilestoneEntity findById(@Param("id") long id);
 
     @Insert("INSERT INTO milestones (name, description) VALUES (#{name}, #{description})")
-    void insert(@Param("name") String name, @Param("description") String description);
+    void create(@Param("name") String name, @Param("description") String description);
 }
