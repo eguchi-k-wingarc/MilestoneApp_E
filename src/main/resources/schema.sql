@@ -11,7 +11,7 @@ deleted_at timestamp NUll default NUll
 create table milestones (
 id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 user_id BIGINT NOT NULL,
-title VARCHAR(256) NOT NULl,
+name VARCHAR(256) NOT NULl,
 description VARCHAR(256) NOT NULl,
 is_complete BOOLEAN NOT NUll,
 progress INT NOT NUll default 0,

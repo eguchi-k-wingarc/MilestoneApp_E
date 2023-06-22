@@ -11,7 +11,7 @@ import lombok.Data;
 public class MilestoneForm {
     @NotBlank
     @Size(max = 256)
-    private String title;
+    private String name;
 
     @NotBlank
     @Size(max = 256)
