@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head th:fragment="head(title)">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 各Viewで設定されたタイトル -->
+        <title th:replace="${title}">Death Milestone</title>
+        
+        <!-- どのViewでも必ず読み込むファイル -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+
+    </head>
+    <body>
+        <header class="ui stackable container menu" th:fragment="header_menu(is1,is2,is3)">
+            <a class="item" th:href="@{/milestones}" th:classappend="${is1} ? 'active' : ''">
+            Milestones
+            </a>
+            <a class="item" th:href="@{/milestones}" th:classappend="${is2} ? 'active' : ''">
+            Tasks
+            </a>
+            <a class="item" th:href="@{/milestones}" th:classappend="${is3} ? 'active' : ''">
+            Labels
+            </a>
+            <div class="right menu">
+                <a th:href="@{/}" class="ui item">
+                    Logout
+                </a>
+            </div>
+        </header>
+    </body>
+</html>
