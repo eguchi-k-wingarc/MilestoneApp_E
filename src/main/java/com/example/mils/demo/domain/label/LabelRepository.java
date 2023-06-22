@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface LabelRepository {  //ラベル操作用インターフェース
 
-    
+
     @Select("select * from labels")
     List<LabelEntity> findAll();
 
@@ -19,5 +19,5 @@ public interface LabelRepository {  //ラベル操作用インターフェース
     LabelEntity findById(@Param("id") long id);
 
     @Insert("insert into labels (name) values (#{name})")
-    void insert(@Param("name") String name);
+    void create(@Param("name") String name);
 }

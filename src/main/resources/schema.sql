@@ -50,6 +50,6 @@ label_id BIGINT NOT NULL,
 created_at timestamp default current_timestamp,
 updated_at timestamp default current_timestamp on update current_timestamp,
 
-FOREIGN KEY (task_id) REFERENCES tasks(id),
-FOREIGN KEY (label_id) REFERENCES labels(id)
+FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE SET NULL,
+FOREIGN KEY (label_id) REFERENCES labels(id) ON DELETE SET NULL
 );

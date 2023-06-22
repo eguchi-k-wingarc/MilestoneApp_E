@@ -20,6 +20,6 @@ public class LabelService {
     }
 
     public void create(String name){
-        labelRepository.insert(name);
+        labelRepository.create(name);
     }
 }
