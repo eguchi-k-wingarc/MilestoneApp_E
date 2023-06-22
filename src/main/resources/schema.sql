@@ -35,3 +35,21 @@ updated_at timestamp default current_timestamp on update current_timestamp,
 FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE SET NULL,
 FOREIGN KEY (milestone_id) REFERENCES milestones(id) ON DELETE SET NULL
 );
+
+create table labels (
+id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(256) NOT NULL,
+created_at timestamp default current_timestamp,
+updated_at timestamp default current_timestamp on update current_timestamp
+);
+
+create table taskLabels (
+id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+task_id BIGINT NOT NULL,
+label_id BIGINT NOT NULL,
+created_at timestamp default current_timestamp,
+updated_at timestamp default current_timestamp on update current_timestamp,
+
+FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE SET NULL,
+FOREIGN KEY (label_id) REFERENCES labels(id) ON DELETE SET NULL
+);
