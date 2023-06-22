@@ -1,29 +1,44 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <name>Document</name>
-</head>
+    <head th:replace="base::head(~{::title})">
+        <title>Milestones - Death Milestone</title>
+    </head>
 <body>
-    <h1>マイルストーン</h1>
-    <a href="../index.html" th:href="@{/}">トップページ</a>
-    <a href="./creationForm.html" th:href="@{/milestones/create}">フォーム</a>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>マイルストーン</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="milestone : ${milestoneList}">
-                <td th:text="${milestone.id}"></td>
-                <td>
-                    <a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.name}"></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <header th:replace="base::header_menu(true,false,false)"></header>
+    <main class="ui container">
+        <h1 class="ui dividing header">マイルストーン一覧</h1>
+
+        <table class="ui selectable celled table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名前</th>
+                    <th>説明</th>
+                    <th>作成日</th>
+                    <th>期限</th>
+                    <th>状況</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    <tr th:each="milestone : ${milestoneList}">
+                        <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.id}"></a></td>
+                        <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.name}"></a></td>
+                        <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.description}"></a></td>
+                        <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${#temporals.format(milestone.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
+                        <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
+                        <td>
+                            <a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}">
+                                <progress max="100" th:value="${milestone.progress}"></progress>
+                            </a>
+                        </td>
+                        
+                    </tr>
+            </tbody>
+        </table>
+        <a class="ui green button" th:href="@{/milestones/create}">新規作成</a>
+
+    </main>
+
 </body>
 </html>
