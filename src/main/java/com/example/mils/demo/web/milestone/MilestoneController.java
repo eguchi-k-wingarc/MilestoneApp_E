@@ -44,8 +44,8 @@ public class MilestoneController {
     /**
      * 指定されたIDのマイルストーンの詳細画面を表示します。
      *
-     * @param milestoneId    マイルストーンのID
-     * @param model 画面に渡すデータを格納するModelオブジェクト
+     * @param milestoneId マイルストーンのID
+     * @param model       画面に渡すデータを格納するModelオブジェクト
      * @return 詳細画面のテンプレート名
      */
     @GetMapping("/{milestoneId}")
@@ -82,6 +82,53 @@ public class MilestoneController {
             return showCreationForm(creationForm);
         }
         milestoneService.create(creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
+        return "redirect:/milestones";
+    }
+
+    /**
+     * マイルストーンの編集フォームを表示します。
+     *
+     * @param milestoneId マイルストーンのID
+     * @param model       画面に渡すデータを格納するModelオブジェクト
+     * @return 編集フォームのテンプレート名
+     */
+    @GetMapping("/{milestoneId}/edit")
+    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneForm form, Model model) {
+        MilestoneEntity milestone = milestoneService.findById(milestoneId);
+        form.setName(milestone.getName());
+        form.setDescription(milestone.getDescription());
+        form.setDeadline(milestone.getDeadline());
+        model.addAttribute("milestoneForm", form);
+        return "milestones/editForm";
+    }
+
+    /**
+     * マイルストーンを更新します。
+     *
+     * @param milestoneId   マイルストーンのID
+     * @param form          マイルストーン編集フォームオブジェクト
+     * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
+     * @return 一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{milestoneId}/update")
+    public String update(@PathVariable("milestoneId") Long milestoneId, @Validated MilestoneForm form, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return showEditForm(milestoneId, form, model);
+        }
+        
+        milestoneService.update(milestoneId, form.getName(), form.getDescription(), form.getDeadline());
+        return "redirect:/milestones";
+    }
+
+    /**
+     * マイルストーンを削除します。
+     *
+     * @param milestoneId マイルストーンのID
+     * @return 一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{milestoneId}/delete")
+    public String delete(@PathVariable("milestoneId") Long milestoneId) {
+        milestoneService.delete(milestoneId);
         return "redirect:/milestones";
     }
 }
