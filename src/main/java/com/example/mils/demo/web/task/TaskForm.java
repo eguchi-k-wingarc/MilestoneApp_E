@@ -1,10 +1,11 @@
 package com.example.mils.demo.web.task;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,6 @@ public class TaskForm {
 
     @NotNull
     @Future // 未来の日付であることをバリデーション
-    private LocalDate deadline;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDateTime deadline;
 }

@@ -1,5 +1,7 @@
 package com.example.mils.demo.domain.task;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,12 +9,12 @@ import lombok.Data;
 @Data
 public class TaskEntity {
     private long id;
-    private long userId;
-    private long milestoneId;
+    private Long userId; // TODO: nullを許可しないlong型に変更する
+    private Long milestoneId; // TODO: nullを許可しないlong型に変更する
     private String name;
     private String description;
     private boolean isComplete;
-    private String deadline;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime deadline;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

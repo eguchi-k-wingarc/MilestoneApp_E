@@ -1,5 +1,6 @@
 package com.example.mils.demo.domain.milestone;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
@@ -15,6 +16,6 @@ public interface MilestoneRepository {
     @Select("select * from milestones where id = #{id}")
     MilestoneEntity findById(@Param("id") long id);
 
-    @Insert("INSERT INTO milestones (name, description) VALUES (#{name}, #{description})")
-    void create(@Param("name") String name, @Param("description") String description);
+    @Insert("INSERT INTO milestones (name, description, deadline) VALUES (#{name}, #{description}, #{deadline})")
+    void create(@Param("name") String name, @Param("description") String description, @Param("deadline") LocalDateTime deadline);
 }

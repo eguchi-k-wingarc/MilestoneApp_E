@@ -49,7 +49,7 @@ public class MilestoneController {
      * @return 詳細画面のテンプレート名
      */
     @GetMapping("/{milestoneId}")
-    public String showDetail(@PathVariable("milestoneId") long milestoneId, Model model) {
+    public String showDetail(@PathVariable("milestoneId") Long milestoneId, Model model) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         List<TaskEntity> task = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);
@@ -81,7 +81,7 @@ public class MilestoneController {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm);
         }
-        milestoneService.create(creationForm.getName(), creationForm.getDescription());
+        milestoneService.create(creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
         return "redirect:/milestones";
     }
 }

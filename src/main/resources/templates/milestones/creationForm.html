@@ -22,6 +22,12 @@
             <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}"></textarea>
             <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
         </div>
+
+        <div>
+            <label for="deadlineInput">Deadline:</label>
+            <input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}" />
+            <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
+        </div>
     
         <button type="submit">Submit</button>
     </form>

@@ -16,7 +16,7 @@ public interface TaskRepository {
     TaskEntity findById(@Param("id") long id);
 
     @Select("select * from tasks where id = #{milestoneId}")
-    List<TaskEntity> findByMilestoneId(@Param("milestoneId") long milestoneId);
+    List<TaskEntity> findByMilestoneId(@Param("milestoneId") Long milestoneId); // TODO: nullを許可しないlong型に変更する
 
     @Insert("INSERT INTO tasks (name, description) VALUES (#{name}, #{description})")
     void create(@Param("name") String name, @Param("description") String description);

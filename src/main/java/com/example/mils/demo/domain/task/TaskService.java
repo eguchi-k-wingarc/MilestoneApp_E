@@ -20,7 +20,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public List<TaskEntity> findByMilestoneId(long milestoneId) {
+    public List<TaskEntity> findByMilestoneId(Long milestoneId) { // TODO: nullを許可しないlong型に変更する
         return taskRepository.findByMilestoneId(milestoneId);
     }
 
