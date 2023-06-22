@@ -32,11 +32,13 @@
                                 <progress max="100" th:value="${milestone.progress}"></progress>
                             </a>
                         </td>
-                        
                     </tr>
             </tbody>
         </table>
-        <a class="ui green button" th:href="@{/milestones/create}">新規作成</a>
+        <div class="ui container">
+            <a class="ui green button" th:href="@{/milestones/create}">新規作成</a>
+        </div>
+        
 
     </main>
 
