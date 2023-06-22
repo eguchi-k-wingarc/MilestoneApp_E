@@ -1,11 +1,10 @@
-package com.example.mils.demo.web.milestone;
+package com.example.mils.demo.web.task;
 
 import java.time.LocalDateTime;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class MilestoneForm {
+public class TaskForm {
     @NotBlank
     @Size(max = 256)
     private String name;
@@ -24,6 +23,6 @@ public class MilestoneForm {
 
     @NotNull
     @Future // 未来の日付であることをバリデーション
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime deadline;
 }
