@@ -10,7 +10,7 @@
     <a href="./list.html" th:href="@{/milestones}">listへ</a>
 
 
-    <form action="/milestones" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
+    <form action="/milestones" th:action="@{/milestones}" th:object="${milestoneCreateForm}" method="post">
         <div>
             <label for="milestoneInput">name:</label>
             <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{name}" />
