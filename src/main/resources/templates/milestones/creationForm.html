@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>creationForm</title>
+    <name>creationForm</name>
 </head>
 <body>
     <h1>マイルストーン</h1>
@@ -12,9 +12,9 @@
 
     <form action="/milestones" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
         <div>
-            <label for="milestoneInput">title:</label>
-            <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{title}" />
-            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            <label for="milestoneInput">name:</label>
+            <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{name}" />
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
         </div>
     
         <div>

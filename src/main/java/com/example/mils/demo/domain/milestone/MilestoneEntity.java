@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class MilestoneEntity {
     private long id;
-    private String title;
+    private String name;
     private String description;
 }
