@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <name>トップページ | マイルストーンアプリケーション</name>
+    <head th:replace="base::head(~{::title})">
+        <title>Index - Death Milestone</title>
     </head>
     <body>
-        <h1>マイルストーンアプリケーション</h1>
-        <a href="./milestones/list.html" th:href="@{/milestones}">マイルストーンページ</a>
+        <header th:replace="base::header_menu(false,false,false)"></header>
+        <main class="ui container">
+            <h1 class="ui dividing header">Death Milestone</h1>
+            <a class="" th:href="@{/milestones}">マイルストーンページ</a>
+        </main>
     </body>
 </html>
