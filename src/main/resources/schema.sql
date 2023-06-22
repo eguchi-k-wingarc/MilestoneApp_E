@@ -18,7 +18,7 @@ progress INT NOT NUll default 0,
 deadline timestamp NOT NULL default current_timestamp,
 created_at timestamp  default current_timestamp,
 updated_at timestamp default current_timestamp on update current_timestamp,
-FOREIGN KEY (user_id) REFERENCES users(id)
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 create table tasks (
@@ -32,6 +32,6 @@ deadline timestamp NOT NULL default current_timestamp,
 created_at timestamp  default current_timestamp,
 updated_at timestamp default current_timestamp on update current_timestamp,
 
-FOREIGN KEY (user_id) REFERENCES users(id),
-FOREIGN KEY (milestone_id) REFERENCES milestones(id)
+FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE SET NULL,
+FOREIGN KEY (milestone_id) REFERENCES milestones(id) ON DELETE SET NULL
 );
