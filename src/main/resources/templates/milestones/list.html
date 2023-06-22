@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <name>Document</name>
 </head>
 <body>
     <h1>マイルストーン</h1>
@@ -20,7 +20,7 @@
             <tr th:each="milestone : ${milestoneList}">
                 <td th:text="${milestone.id}"></td>
                 <td>
-                    <a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.title}"></a>
+                    <a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.name}"></a>
                 </td>
             </tr>
         </tbody>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <name>Document</name>
 </head>
 <body>
     <h1>マイルストーン</h1>
     <a href="./list.html" th:href="@{/milestones}">listへ戻る</a>
 
-    <h2 th:text="${milestone.title}"></h2>
+    <h2 th:text="${milestone.name}"></h2>
     <p th:text="${milestone.description}"></p>
 </body>
 </html>

@@ -22,7 +22,7 @@ public class MilestoneService {
     }
 
     @Transactional
-    public void create(String title, String description) {
-        milestoneRepository.insert(title, description);
+    public void create(String name, String description) {
+        milestoneRepository.insert(name, description);
     }
 }

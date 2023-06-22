@@ -76,7 +76,7 @@ public class MilestoneController {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm);
         }
-        milestoneService.create(creationForm.getTitle(), creationForm.getDescription());
+        milestoneService.create(creationForm.getname(), creationForm.getDescription());
         return "redirect:/milestones";
     }
 }
