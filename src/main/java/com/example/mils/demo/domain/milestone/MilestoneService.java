@@ -26,4 +26,14 @@ public class MilestoneService {
     public void create(String name, String description, LocalDateTime deadline) {
         milestoneRepository.create(name, description, deadline);
     }
+
+    @Transactional
+    public void update(long id, String name, String description, LocalDateTime deadline) {
+        milestoneRepository.update(id, name, description, deadline);
+    }
+
+    @Transactional
+    public void delete(long milestoneId) {
+        milestoneRepository.delete(milestoneId);
+    }
 }

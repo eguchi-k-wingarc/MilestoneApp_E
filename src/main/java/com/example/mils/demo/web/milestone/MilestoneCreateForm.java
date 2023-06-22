@@ -13,7 +13,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class MilestoneForm {
+public class MilestoneCreateForm {
     @NotBlank
     @Size(max = 256)
     private String name;
