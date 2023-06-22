@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head th:replace="base::head(~{::title})">
+        <title>Milestones - Death Milestone</title>
+    </head>
+<body>
+    <h1>マイルストーン</h1>
+    <a href="./list.html" th:href="@{/milestones}">listへ戻る</a>
+
+    <h2>タスク詳細</h2>
+
+    <h2 th:text="${task.name}"></h2>
+    <p th:text="${task.description}"></p>
+    <p th:text="${task.deadline}"></p>
+
+</body>
+</html>

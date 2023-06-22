@@ -9,5 +9,23 @@
 
     <h2 th:text="${milestone.name}"></h2>
     <p th:text="${milestone.description}"></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>タスク</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="task : ${taskList}">
+                <td th:text="${task.id}"></td>
+                <td>
+                    <a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.name}"></a>
+                </td>
+            </tr>            
+        </tbody>
+    </table>
+
 </body>
 </html>
