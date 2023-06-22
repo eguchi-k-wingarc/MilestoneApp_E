@@ -9,7 +9,7 @@
     <h1>マイルストーンの編集</h1>
     <a href="./list.html" th:href="@{/milestones}">一覧へ戻る</a>
 
-    <!-- 注意: actionを "/milestones/{milestoneId}/update" とし、 HTTP methodを "post" に設定します -->
+    <!-- NOTE: actionを "/milestones/{milestoneId}/update" とし、 HTTP methodを "post" に設定 -->
     <form th:action="@{'/milestones/' + ${milestoneUpdateForm.id} + '/update'}" th:object="${milestoneUpdateForm}" method="post">
         <div>
             <label for="milestoneInput">名前:</label>
@@ -31,6 +31,8 @@
 
         <button type="submit">更新</button>
     </form>
+
+    <!-- NOTE: actionを "/milestones/{milestoneId}/delete" とし、 HTTP methodを "post" に設定 -->
     <form th:action="@{'/milestones/' + ${milestoneUpdateForm.id} + '/delete'}" method="post">
         <input type="hidden" th:field="${milestoneUpdateForm.id}" />
         <button type="submit">削除</button>
