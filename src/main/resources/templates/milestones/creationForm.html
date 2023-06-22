@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>creationForm</title>
+<head th:replace="base::head(~{::title})">
+    <title>creationForm - Death Milestone</title>
 </head>
 <body>
-    <h1>マイルストーン</h1>
-    <a href="./list.html" th:href="@{/milestones}">listへ</a>
+    <header th:replace="base::header_menu(false,false,false)"></header>
+        <main class="ui container">
+            <a href="./list.html" th:href="@{/milestones}">&#60;戻る</a>
+            <h1 class="ui dividing header">新規マイルストーン</h1>
+            
+            <form class="ui segment" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
+                <div class="ui fluid input">
+                    <label>Title</label>
+                    <input type="text" id="titleInput" name="title" th:field="*{title}" placeholder="Input title here..."/>
+                    <div class="ui pointing red basic label" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</div>
+                </div>
+            
+                <div class="ui fluid input">
+                    <label>Description</label>
+                    <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}" placeholder="Input description here..."></textarea>
+                    <div class="ui pointing red basic label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+                </div>
 
-
-    <form action="/milestones" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
-        <div>
-            <label for="milestoneInput">title:</label>
-            <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{title}" />
-            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
-        </div>
-    
-        <div>
-            <label for="descriptionInput">Description:</label>
-            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}"></textarea>
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-        </div>
-    
-        <button type="submit">Submit</button>
-    </form>
+                <button class="ui fluid large teal submit button" type="submit">作成</button>
+            </form>
+        </main>
 </body>
 </html>
