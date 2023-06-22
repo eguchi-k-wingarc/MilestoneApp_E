@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.milestone.MilestoneService;
+import com.example.mils.demo.domain.task.TaskEntity;
+import com.example.mils.demo.domain.task.TaskService;
 
 import lombok.AllArgsConstructor;
-
 
 @Controller
 @AllArgsConstructor
@@ -23,7 +24,14 @@ import lombok.AllArgsConstructor;
 public class MilestoneController {
 
     private final MilestoneService milestoneService;
+    private final TaskService taskService;
 
+    /**
+     * 一覧画面を表示します。
+     *
+     * @param model 画面に渡すデータを格納するModelオブジェクト
+     * @return 一覧画面のテンプレート名
+     */
     @GetMapping()
     public String showList(Model model) {
         List<MilestoneEntity> milestoneList = milestoneService.findAll();
@@ -33,25 +41,47 @@ public class MilestoneController {
         return "milestones/list";
     }
 
-    @GetMapping("/{id}")
-    public String showDetail(@PathVariable("id") long id, Model model) {
-        MilestoneEntity milestone = milestoneService.findById(id);
+    /**
+     * 指定されたIDのマイルストーンの詳細画面を表示します。
+     *
+     * @param milestoneId    マイルストーンのID
+     * @param model 画面に渡すデータを格納するModelオブジェクト
+     * @return 詳細画面のテンプレート名
+     */
+    @GetMapping("/{milestoneId}")
+    public String showDetail(@PathVariable("milestoneId") Long milestoneId, Model model) { // TODO: nullを許可しないlong型に変更する
+        MilestoneEntity milestone = milestoneService.findById(milestoneId);
+        List<TaskEntity> task = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);
+        model.addAttribute("task", task);
 
         return "milestones/detail";
     }
 
+    /**
+     * マイルストーンの作成フォームを表示します。
+     *
+     * @param creationForm マイルストーン作成フォームオブジェクト
+     * @return 作成フォームのテンプレート名
+     */
     @GetMapping("/create")
     public String showCreationForm(@ModelAttribute MilestoneForm creationForm) {
         return "milestones/creationForm";
     }
 
+    /**
+     * マイルストーンを作成します。
+     *
+     * @param creationForm  マイルストーン作成フォームオブジェクト
+     * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
+     * @return 一覧画面にリダイレクトするURL
+     */
     @PostMapping
     public String create(@Validated MilestoneForm creationForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm);
         }
-        milestoneService.create(creationForm.getTitle(), creationForm.getDescription());
+        milestoneService.create(creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
         return "redirect:/milestones";
     }
 }

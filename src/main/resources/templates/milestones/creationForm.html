@@ -11,15 +11,21 @@
             
             <form class="ui segment" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
                 <div class="ui fluid input">
-                    <label>Title</label>
-                    <input type="text" id="titleInput" name="title" th:field="*{title}" placeholder="Input title here..."/>
-                    <div class="ui pointing red basic label" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error</div>
+                    <label>Name</label>
+                    <input type="text" id="nameInput" name="name" th:field="*{name}" placeholder="Input name here..."/>
+                    <div class="ui pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
                 </div>
             
                 <div class="ui fluid input">
                     <label>Description</label>
                     <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}" placeholder="Input description here..."></textarea>
                     <div class="ui pointing red basic label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+                </div>
+
+                <div>
+                    <label for="deadlineInput">Deadline:</label>
+                    <input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}" />
+                    <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
                 </div>
 
                 <button class="ui fluid large teal submit button" type="submit">作成</button>

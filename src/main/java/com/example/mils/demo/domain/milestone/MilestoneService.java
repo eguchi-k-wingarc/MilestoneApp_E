@@ -1,5 +1,6 @@
 package com.example.mils.demo.domain.milestone;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public class MilestoneService {
     }
 
     @Transactional
-    public void create(String title, String description) {
-        milestoneRepository.insert(title, description);
+    public void create(String name, String description, LocalDateTime deadline) {
+        milestoneRepository.create(name, description, deadline);
     }
 }
