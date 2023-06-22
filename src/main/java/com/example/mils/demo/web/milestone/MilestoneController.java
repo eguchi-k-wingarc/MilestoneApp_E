@@ -44,8 +44,8 @@ public class MilestoneController {
     /**
      * 指定されたIDのマイルストーンの詳細画面を表示します。
      *
-     * @param milestoneId    マイルストーンのID
-     * @param model 画面に渡すデータを格納するModelオブジェクト
+     * @param milestoneId マイルストーンのID
+     * @param model       画面に渡すデータを格納するModelオブジェクト
      * @return 詳細画面のテンプレート名
      */
     @GetMapping("/{milestoneId}")
@@ -65,7 +65,7 @@ public class MilestoneController {
      * @return 作成フォームのテンプレート名
      */
     @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute MilestoneForm creationForm) {
+    public String showCreationForm(@ModelAttribute MilestoneCreateForm creationForm) {
         return "milestones/creationForm";
     }
 
@@ -77,11 +77,64 @@ public class MilestoneController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping
-    public String create(@Validated MilestoneForm creationForm, BindingResult bindingResult) {
+    public String create(@Validated MilestoneCreateForm creationForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm);
         }
         milestoneService.create(creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
+        return "redirect:/milestones";
+    }
+
+    /**
+     * マイルストーンの編集フォームを表示します。
+     *
+     * @param milestoneId マイルストーンのID
+     * @param model       画面に渡すデータを格納するModelオブジェクト
+     * @return 編集フォームのテンプレート名
+     */
+    @GetMapping("/{milestoneId}/update")
+    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneUpdateForm form, Model model) {
+        MilestoneEntity milestone = milestoneService.findById(milestoneId);
+        if (milestone != null) {
+            form.setId(milestone.getId());
+            form.setName(milestone.getName());
+            form.setDescription(milestone.getDescription());
+            form.setDeadline(milestone.getDeadline());
+        } else {
+            return "redirect:/milestones";
+        }
+        model.addAttribute("milestoneUpdateForm", form);
+        return "milestones/updateForm";
+    }
+
+    /**
+     * マイルストーンを更新します。
+     *
+     * @param milestoneId   マイルストーンのID
+     * @param form          マイルストーン編集フォームオブジェクト
+     * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
+     * @return 一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{milestoneId}/update")
+    public String update(@PathVariable("milestoneId") Long milestoneId, @Validated MilestoneUpdateForm form,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return showEditForm(milestoneId, form, model);
+        }
+
+        milestoneService.update(milestoneId, form.getName(), form.getDescription(), form.getDeadline());
+        return "redirect:/milestones";
+    }
+
+    /**
+     * マイルストーンを削除します。
+     *
+     * @param milestoneId マイルストーンのID
+     * @return 一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{milestoneId}/delete")
+    public String delete(@PathVariable("milestoneId") Long milestoneId) {
+        milestoneService.delete(milestoneId);
         return "redirect:/milestones";
     }
 }

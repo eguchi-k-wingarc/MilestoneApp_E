@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update Milestone</title>
+</head>
+
+<body>
+    <h1>マイルストーンの編集</h1>
+    <a href="./list.html" th:href="@{/milestones}">一覧へ戻る</a>
+
+    <!-- 注意: actionを "/milestones/{milestoneId}/update" とし、 HTTP methodを "post" に設定します -->
+    <form th:action="@{'/milestones/' + ${milestoneUpdateForm.id} + '/update'}" th:object="${milestoneUpdateForm}" method="post">
+        <div>
+            <label for="milestoneInput">名前:</label>
+            <input type="text" id="milestoneInput" name="milestoneInput" th:field="*{name}" />
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+
+        <div>
+            <label for="descriptionInput">説明:</label>
+            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+
+        <div>
+            <label for="deadlineInput">期限:</label>
+            <input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}" />
+            <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
+        </div>
+
+        <button type="submit">更新</button>
+    </form>
+</body>
+
+</html>
