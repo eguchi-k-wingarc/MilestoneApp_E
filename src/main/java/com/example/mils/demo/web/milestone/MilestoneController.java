@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.milestone.MilestoneService;
+import com.example.mils.demo.domain.task.TaskEntity;
+import com.example.mils.demo.domain.task.TaskService;
 
 import lombok.AllArgsConstructor;
 
@@ -22,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class MilestoneController {
 
     private final MilestoneService milestoneService;
+    private final TaskService taskService;
 
     /**
      * 一覧画面を表示します。
@@ -41,14 +44,16 @@ public class MilestoneController {
     /**
      * 指定されたIDのマイルストーンの詳細画面を表示します。
      *
-     * @param id    マイルストーンのID
+     * @param milestoneId    マイルストーンのID
      * @param model 画面に渡すデータを格納するModelオブジェクト
      * @return 詳細画面のテンプレート名
      */
-    @GetMapping("/{id}")
-    public String showDetail(@PathVariable("id") long id, Model model) {
-        MilestoneEntity milestone = milestoneService.findById(id);
+    @GetMapping("/{milestoneId}")
+    public String showDetail(@PathVariable("milestoneId") long milestoneId, Model model) {
+        MilestoneEntity milestone = milestoneService.findById(milestoneId);
+        List<TaskEntity> task = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);
+        model.addAttribute("task", task);
 
         return "milestones/detail";
     }
@@ -76,7 +81,7 @@ public class MilestoneController {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm);
         }
-        milestoneService.create(creationForm.getname(), creationForm.getDescription());
+        milestoneService.create(creationForm.getName(), creationForm.getDescription());
         return "redirect:/milestones";
     }
 }
