@@ -1,5 +1,6 @@
 package com.example.mils.demo.domain.task;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -25,7 +26,17 @@ public class TaskService {
     }
 
     @Transactional
-    public void create(String name, String description) {
-        taskRepository.create(name, description);
+    public void create(long milestoneId, String name, String description, LocalDateTime deadline) {
+        taskRepository.create(milestoneId, name, description, deadline);
+    }
+
+    @Transactional
+    public void update(long id, String name, String description, LocalDateTime deadline) {
+        taskRepository.update(id, name, description, deadline);
+    }
+
+    @Transactional
+    public void delete(long taskId) {
+        taskRepository.delete(taskId);
     }
 }
