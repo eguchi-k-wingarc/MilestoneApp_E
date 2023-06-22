@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <name>Document</name>
+    <title>Document</title>
 </head>
 <body>
-    <h1>マイルストーン</h1>
-    <a href="../index.html" th:href="@{/}">トップページ</a>
-    <a href="./creationForm.html" th:href="@{/milestones/create}">フォーム</a>
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>マイルストーン</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="milestone : ${milestoneList}">
-                <td th:text="${milestone.id}"></td>
-                <td>
-                    <a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.name}"></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <header th:replace="base::header_menu(true,false,false)"></header>
+    <main class="ui container">
+        <h1 class="ui dividing header">マイルストーン一覧</h1>
+        <a class="" th:href="@{/milestones}">トップページ</a>
+        <a th:href="@{/milestones/create}">フォーム</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>マイルストーン</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="milestone : ${milestoneList}">
+                    <td th:text="${milestone.id}"></td>
+                    <td>
+                        <a th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.name}"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
 </body>
 </html>
