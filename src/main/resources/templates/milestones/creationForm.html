@@ -9,24 +9,19 @@
             <a href="./list.html" th:href="@{/milestones}">&#60;戻る</a>
             <h1 class="ui dividing header">新規マイルストーン</h1>
             
-            <form class="ui segment" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
-                <div class="ui fluid input">
-                    <label>Name</label>
-                    <input type="text" id="nameInput" name="name" th:field="*{name}" placeholder="Input name here..."/>
-                    <div class="ui pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
-                </div>
-            
-                <div class="ui fluid input">
-                    <label>Description</label>
-                    <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}" placeholder="Input description here..."></textarea>
-                    <div class="ui pointing red basic label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
-                </div>
+            <form class="ui container" th:action="@{/milestones}" th:object="${milestoneForm}" method="post">
 
-                <div>
-                    <label for="deadlineInput">Deadline:</label>
-                    <input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}" />
-                    <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
-                </div>
+                <label>Name</label>
+                <div class="ui fluid input"><input type="text" id="nameInput" name="name" th:field="*{name}" /></div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+            
+                <label>Description</label>
+                <div class="ui fluid input"><textarea id="descriptionInput" style="width: 100%; border:1px solid rgba(0,0,0,.3); padding: .67857143em 1em;" name="descriptionInput" rows="10" th:field="*{description}" ></textarea></div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+
+                <label>Deadline</label>
+                <div class="ui input"><input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}"/></div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Error</div>
 
                 <button class="ui fluid large teal submit button" type="submit">作成</button>
             </form>
