@@ -52,9 +52,9 @@ public class MilestoneController {
     @GetMapping("/{milestoneId}")
     public String showDetail(@PathVariable("milestoneId") Long milestoneId, Model model) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
-        List<TaskEntity> tasks = taskService.findByMilestoneId(milestoneId);
+        List<TaskEntity> taskList = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);
-        model.addAttribute("tasks", tasks);
+        model.addAttribute("taskList", taskList);
 
         return "milestones/detail";
     }
