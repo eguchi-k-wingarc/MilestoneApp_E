@@ -15,7 +15,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class MilestoneUpdateForm {
-    @NotBlank
     private Long id; // NOTE: インスタンス生成時のみNullを許容するためlong型ではなく、Long型にしている
 
     @NotBlank

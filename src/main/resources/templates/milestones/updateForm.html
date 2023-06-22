@@ -33,6 +33,11 @@
 
         <button type="submit">更新</button>
     </form>
+    <form th:action="@{'/milestones/' + ${milestoneUpdateForm.id} + '/delete'}" method="post">
+        <input type="hidden" th:field="${milestoneUpdateForm.id}" />
+        <button type="submit">削除</button>
+    </form>
+    
 </body>
 
 </html>
