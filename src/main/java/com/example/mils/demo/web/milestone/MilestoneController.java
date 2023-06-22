@@ -27,7 +27,7 @@ public class MilestoneController {
     private final TaskService taskService;
 
     /**
-     * 一覧画面を表示します。
+     * 一覧画面を表示
      *
      * @param model 画面に渡すデータを格納するModelオブジェクト
      * @return 一覧画面のテンプレート名
@@ -42,7 +42,8 @@ public class MilestoneController {
     }
 
     /**
-     * 指定されたIDのマイルストーンの詳細画面を表示します。
+     * 指定されたIDのマイルストーンの詳細画面を表示
+     * マイルストーン詳細画面であるのと同時にタスク一覧画面でもある
      *
      * @param milestoneId マイルストーンのID
      * @param model       画面に渡すデータを格納するModelオブジェクト
@@ -51,9 +52,9 @@ public class MilestoneController {
     @GetMapping("/{milestoneId}")
     public String showDetail(@PathVariable("milestoneId") Long milestoneId, Model model) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
-        List<TaskEntity> task = taskService.findByMilestoneId(milestoneId);
+        List<TaskEntity> tasks = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);
-        model.addAttribute("task", task);
+        model.addAttribute("tasks", tasks);
 
         return "milestones/detail";
     }
