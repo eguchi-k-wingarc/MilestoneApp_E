@@ -65,7 +65,7 @@ public class MilestoneController {
      * @return 作成フォームのテンプレート名
      */
     @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute MilestoneForm creationForm) {
+    public String showCreationForm(@ModelAttribute MilestoneCreateForm creationForm) {
         return "milestones/creationForm";
     }
 
@@ -77,7 +77,7 @@ public class MilestoneController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping
-    public String create(@Validated MilestoneForm creationForm, BindingResult bindingResult) {
+    public String create(@Validated MilestoneCreateForm creationForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm);
         }
@@ -92,14 +92,19 @@ public class MilestoneController {
      * @param model       画面に渡すデータを格納するModelオブジェクト
      * @return 編集フォームのテンプレート名
      */
-    @GetMapping("/{milestoneId}/edit")
-    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneForm form, Model model) {
+    @GetMapping("/{milestoneId}/update")
+    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneUpdateForm form, Model model) {
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
-        form.setName(milestone.getName());
-        form.setDescription(milestone.getDescription());
-        form.setDeadline(milestone.getDeadline());
-        model.addAttribute("milestoneForm", form);
-        return "milestones/editForm";
+        if (milestone != null) {
+            form.setId(milestone.getId());
+            form.setName(milestone.getName());
+            form.setDescription(milestone.getDescription());
+            form.setDeadline(milestone.getDeadline());
+        } else {
+            return "redirect:/milestones";
+        }
+        model.addAttribute("milestoneUpdateForm", form);
+        return "milestones/updateForm";
     }
 
     /**
@@ -111,11 +116,12 @@ public class MilestoneController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping("/{milestoneId}/update")
-    public String update(@PathVariable("milestoneId") Long milestoneId, @Validated MilestoneForm form, BindingResult bindingResult, Model model) {
+    public String update(@PathVariable("milestoneId") Long milestoneId, @Validated MilestoneUpdateForm form,
+            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return showEditForm(milestoneId, form, model);
         }
-        
+
         milestoneService.update(milestoneId, form.getName(), form.getDescription(), form.getDeadline());
         return "redirect:/milestones";
     }
