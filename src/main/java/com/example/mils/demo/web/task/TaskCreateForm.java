@@ -23,6 +23,6 @@ public class TaskCreateForm {
 
     @NotNull
     @Future // 未来の日付であることをバリデーション
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime deadline;
 }
