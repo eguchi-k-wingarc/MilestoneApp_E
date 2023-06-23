@@ -12,7 +12,6 @@ public class MilestoneEntity {
     private Long userId; // TODO: nullを許可しないlong型に変更する
     private String name;
     private String description;
-    private boolean isComplete;
     private int progress;
     private LocalDateTime deadline;
     private LocalDateTime createdAt;
