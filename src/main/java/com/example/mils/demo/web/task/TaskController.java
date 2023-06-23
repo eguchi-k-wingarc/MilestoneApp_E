@@ -1,5 +1,6 @@
 package com.example.mils.demo.web.task;
 
+import com.example.mils.demo.domain.milestone.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
 
@@ -21,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class TaskController {
 
     private final TaskService taskService;
+    private final MilestoneService milestoneService;
 
     /**
      * 指定されたマイルストーンIDとタスクIDに対するタスク詳細画面を表示します。
@@ -34,6 +37,8 @@ public class TaskController {
     public String showDetail(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
             Model model) {
         TaskEntity task = taskService.findById(taskId);
+        MilestoneEntity milestone = milestoneService.findById((long)task.getMilestoneId());
+        model.addAttribute("milestone", milestone);
         model.addAttribute("task", task);
 
         return "tasks/detail";

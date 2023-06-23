@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<head th:replace="base::head(~{::title})">
-    <title>Milestones - Death Milestone</title>
-</head>
+    <head th:replace="base::head(~{::title})">
+        <title>Task - Death Milestone</title>
+    </head>
 
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
@@ -12,10 +12,10 @@
         <div class="ui secondary menu">
             <a class="item" th:href="@{/milestones}">&#60;戻る</a>
             <div class="right menu">
-                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i
-                        class="edit icon"></i></a>
-                <a class="item" th:href="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}"><i
-                        class="red trash icon"></i></a>
+
+                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
+                <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+
             </div>
         </div>
 

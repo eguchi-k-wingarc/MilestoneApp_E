@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head th:replace="base::head(~{::title})">
-        <title>Milestones - Death Milestone</title>
+        <title>Task - Death Milestone</title>
     </head>
 <body>
-    <h1>マイルストーン</h1>
-    <a href="./list.html" th:href="@{/milestones}">listへ戻る</a>
+    <header th:replace="base::header_menu(false,false,false)"></header>
 
+    <main class="ui container">
+        <div class="ui secondary menu">
+                <a class="item" th:href="@{/milestones}">&#60;戻る</a>
+            <div class="right menu">
+                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${task.milestoneId})}"><i class="edit icon"></i></a>
+                <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${task.milestoneId})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+            </div>
+        </div>
+    </main>
     <h2>タスク詳細</h2>
 
     <h2 th:text="${task.name}"></h2>

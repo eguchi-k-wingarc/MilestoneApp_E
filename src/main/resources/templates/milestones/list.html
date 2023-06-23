@@ -36,7 +36,7 @@
                         <td class="center aligned">
                             <div class="ui icon buttons" style="margin: auto;">
                                 <a class="ui basic button" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
-                                <a class="ui basic button" th:href="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}"><i class="red trash icon"></i></a>
+                                <form class="ui icon buttons" th:action="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}" method="post"><button class="ui basic button" type="submit"><i class="red trash icon"></i></button></form>
                             </div>
                         </td>
                     </tr>
