@@ -8,7 +8,7 @@
     <main class="ui container">
         <h1 class="ui dividing header">マイルストーン一覧</h1>
 
-        <table class="ui selectable celled table">
+        <table class="ui selectable celled table" >
             <thead>
                 <tr>
                     <th>ID</th>
@@ -17,6 +17,7 @@
                     <th>作成日</th>
                     <th>期限</th>
                     <th>状況</th>
+                    <th>編集/削除</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,10 +28,16 @@
                         <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${milestone.description}"></a></td>
                         <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${#temporals.format(milestone.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
                         <td><a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}" th:text="${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
-                        <td>
+                        <td class="center aligned">
                             <a style="display: block;" th:href="@{/milestones/{id}(id=${milestone.id})}">
                                 <progress max="100" th:value="${milestone.progress}"></progress>
                             </a>
+                        </td>
+                        <td class="center aligned">
+                            <div class="ui icon buttons" style="margin: auto;">
+                                <a class="ui basic button" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
+                                <a class="ui basic button" th:href="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}"><i class="red trash icon"></i></a>
+                            </div>
                         </td>
                     </tr>
             </tbody>
