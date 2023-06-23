@@ -5,8 +5,15 @@
     </head>
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
+
     <main class="ui container">
-        <a href="./list.html" th:href="@{/milestones}">&#60;戻る</a>
+        <div class="ui secondary menu">
+                <a class="item" th:href="@{/milestones}">&#60;戻る</a>
+            <div class="right menu">
+                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
+                <a class="item" th:href="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}"><i class="red trash icon"></i></a>
+            </div>
+        </div>
 
         <h1 class="ui dividing header" th:text="${milestone.name}">Milestone</h1>
         <div>
@@ -49,12 +56,13 @@
 
             <button class="ui primary button" type="submit">保存</button>
             <a class="ui button" th:href="@{/milestones/{id}(id=${milestone.id})}">元に戻す</a>
+            <a class="ui green button" th:href="@{/milestones/{milestoneId}/tasks/create(milestoneId=${milestone.id})}">新規作成</a>
         </form>
 
     </main>
 
 
-    <a class="ui green button" th:href="@{/milestones/{milestoneId}/tasks/create(milestoneId=${milestone.id})}">新規作成</a>
+
 
 </body>
 </html>
