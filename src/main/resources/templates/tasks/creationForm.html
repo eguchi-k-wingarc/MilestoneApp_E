@@ -11,8 +11,7 @@
         <a href="./list.html" th:href="@{/milestones/}">&#60;戻る</a>
         <h1 class="ui dividing header">新規タスク</h1>
 
-        <form class="ui form" th:action="@{/milestones/{id}/tasks(id=${milestoneId})}" th:object="${taskCreateForm}"
-            method="post">
+        <form class="ui form" th:action="@{/milestones/{milestoneId}/tasks/create(milestoneId=${milestoneId})}" th:object="${taskCreateForm}" method="post">
             <label>Name</label>
             <div class="ui fields">
                 <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" />
@@ -46,7 +45,7 @@
 
             <div></div>
             <button class="ui primary button" type="submit">作成</button>
-            <a class="ui button" th:href="@{/task/create}">破棄</a>
+            <a class="ui button" th:href="@{/milestones/{id}/tasks/create(id=${milestoneId})}">破棄</a>
 
         </form>
     </main>
