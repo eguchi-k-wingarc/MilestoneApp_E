@@ -115,6 +115,23 @@ public class TaskController {
     }
 
     /**
+     * タスクのisCompleteを更新します。
+     *
+     * @param milestoneId   マイルストーンのID
+     * @param taskId        タスクのID
+     * @param form          タスク編集フォームオブジェクト
+     * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
+     * @return タスク一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{taskId}/update-isComplete")
+    public String updateIsComplete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
+            @Validated TaskIsCompleteUpdateForm form, BindingResult bindingResult, Model model) {
+
+        taskService.updateIsComplete(taskId, form.getIsComplete());
+        return "redirect:/milestones/" + milestoneId;
+    }
+
+    /**
      * タスクを削除します。
      *
      * @param milestoneId マイルストーンのID
