@@ -56,33 +56,26 @@
                     <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
                             th:text="${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
                     <td>
-                        <form
-                            th:action="@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}"
-                            method="post">
+                        <form th:action="@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}" method="post">
                             <input type="hidden" name="_method" value="patch" />
-                            <input type="hidden" id="hiddenIsComplete" name="isComplete"
-                                th:value="${task.isComplete}" />
-                            <input type="checkbox" th:checked="${task.isComplete}" id="checkboxIsComplete"
-                                onchange="toggleCheckbox()">
+                            <input type="hidden" id="hiddenIsComplete${task.id}" name="isComplete" th:value="${task.isComplete ? 'true' : 'false'}" />
+                            <input type="checkbox" th:checked="${task.isComplete}" id="checkboxIsComplete${task.id}" th:onclick="'toggleCheckbox(' + ${task.id} + ');'">
                         </form>
-
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <button class="ui primary button" type="submit">保存</button>
-        <a class="ui button" th:href="@{/milestones/{id}(id=${milestone.id})}">元に戻す</a>
         <a class="ui green button"
             th:href="@{/milestones/{milestoneId}/tasks/create(milestoneId=${milestone.id})}">新規作成</a>
 
     </main>
 
     <script>
-        function toggleCheckbox() {
-            var checkbox = document.getElementById('checkboxIsComplete');
-            var hiddenIsComplete = document.getElementById('hiddenIsComplete');
-            hiddenIsComplete.value = checkbox.checked ? 'true' : 'false';
+        function toggleCheckbox(taskId) {
+            var checkbox = document.getElementById('checkboxIsComplete' + taskId);
+            var hiddenIsComplete = document.getElementById('hiddenIsComplete' + taskId);
+            hiddenIsComplete.value = checkbox.checked;
             checkbox.form.submit();
         }
     </script>
