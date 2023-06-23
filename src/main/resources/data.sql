@@ -8,3 +8,6 @@ insert into tasks (user_id, milestone_id, name, description, is_complete) values
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 2, 'タスク4', 'タスク4の詳細', false);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 3, 'タスク5', 'タスク5の詳細', false);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 3, 'タスク6', 'タスク6の詳細', false);
+insert into labels (name) values ('default_label_1');
+insert into labels (name) values ('default_label_2');
+insert into labels (name) values ('default_label_3');
