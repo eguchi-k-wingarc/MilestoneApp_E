@@ -15,18 +15,27 @@
             </div>
         </div>
 
-        <h1 class="ui dividing header" th:text="${milestone.name}">Milestone</h1>
-        <div>
-            <p th:text="${milestone.description}"></p>
-        </div>
         
-        ここに作成ユーザーが入る
-        <div class="ui placeholder">
-            <div class="image header">
-                <div class="line"></div>
-                <div class="line"></div>
+        <div class="ui segment">
+            <h1 class="ui dividing header" th:text="${milestone.name}">Milestone</h1>
+            <a class="ui label">tanosii</a>
+            <h3 th:text="${milestone.description}"></h3>
+            <progress max="100" th:value="${milestone.progress}"></progress>
+            <span th:text="|${milestone.progress}%|"></span>
+            
+            <p th:text="|作成：${#temporals.format(milestone.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
+            <p th:text="|期限：${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}|"></p>
+
+            <!-- ここにユーザーが入る -->
+            <div class="ui placeholder">
+                <div class="image header">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
             </div>
         </div>
+        
+
 
         <form class="ui segment" action="" method="post">
             <table class="ui selectable celled table">
@@ -35,6 +44,7 @@
                         <th>ID</th>
                         <th>タスク</th>
                         <th>説明</th>
+                        <th>ラベル</th>
                         <th>作成日</th>
                         <th>期限</th>
                         <th>完了済</th>
@@ -45,6 +55,7 @@
                         <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.id}"></a></td>
                         <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.name}"></a></td>
                         <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.description}"></a></td>
+                        <td></td>
                         <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
                         <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
                         <td>
