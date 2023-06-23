@@ -6,7 +6,9 @@
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
         <main class="ui container">
-            <a href="./list.html" th:href="@{/milestones}">&#60;戻る</a>
+            <div class="ui secondary menu">
+                <a class="item" th:href="@{/milestones}">&#60;一覧に戻る</a>
+            </div>
             <h1 class="ui dividing header">新規マイルストーン</h1>
             
             <form class="ui form" th:action="@{/milestones}" th:object="${milestoneCreateForm}" method="post">
