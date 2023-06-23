@@ -68,7 +68,7 @@ public class TaskController {
             return showCreationForm(milestoneId, creationForm, model);
         }
         taskService.create(milestoneId, creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
-        return "redirect:/milestones/" + milestoneId + "/tasks";
+        return "redirect:/milestones/" + milestoneId;
     }
 
     /**
@@ -88,9 +88,9 @@ public class TaskController {
             form.setName(task.getName());
             form.setDescription(task.getDescription());
         } else {
-            return "redirect:/milestones/" + milestoneId + "/tasks";
+            return "redirect:/milestones/" + milestoneId;
         }
-        model.addAttribute("taskForm", form);
+        model.addAttribute("taskUpdateForm", form);
         return "tasks/updateForm";
     }
 
@@ -111,7 +111,7 @@ public class TaskController {
         }
 
         taskService.update(taskId, form.getName(), form.getDescription(), form.getDeadline());
-        return "redirect:/milestones/" + milestoneId + "/tasks";
+        return "redirect:/milestones/" + milestoneId;
     }
 
     /**
@@ -124,6 +124,6 @@ public class TaskController {
     @PostMapping("/{taskId}/delete")
     public String delete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId) {
         taskService.delete(taskId);
-        return "redirect:/milestones/" + milestoneId + "/tasks";
+        return "redirect:/milestones/" + milestoneId;
     }
 }

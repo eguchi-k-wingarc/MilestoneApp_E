@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head th:replace="base::head(~{::title})">
+    <title>Update Form - Death Milestone</title>
+</head>
+
+<body>
+    <h1>タスクの編集</h1>
+    <a href="./list.html" th:href="@{/milestones/{milestoneId}/tasks(milestoneId=${taskUpdateForm.milestoneId})}">一覧へ戻る</a>
+
+    <!-- NOTE: actionを "/milestones/{milestoneId}/tasks/{taskId}/update" とし、 HTTP methodを "post" に設定 -->
+    <form th:action="@{'/milestones/' + ${taskUpdateForm.milestoneId} + '/tasks/' + ${taskUpdateForm.id} + '/update'}" th:object="${taskUpdateForm}" method="post">
+        <div>
+            <label for="taskInput">名前:</label>
+            <input type="text" id="taskInput" name="taskInput" th:field="*{name}" />
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+
+        <div>
+            <label for="descriptionInput">説明:</label>
+            <textarea id="descriptionInput" name="descriptionInput" rows="10" th:field="*{description}"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+
+        <div>
+            <label for="deadlineInput">期限:</label>
+            <input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}" />
+            <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
+        </div>
+
+        <button type="submit">更新</button>
+    </form>
+
+    <!-- NOTE: actionを "/milestones/{milestoneId}/tasks/{taskId}/delete" とし、 HTTP methodを "post" に設定 -->
+    <form th:action="@{'/milestones/' + ${taskUpdateForm.milestoneId} + '/tasks/' + ${taskUpdateForm.id} + '/delete'}" method="post">
+        <input type="hidden" th:field="${taskUpdateForm.id}" />
+        <button type="submit">削除</button>
+    </form>
+    
+</body>
+
+</html>

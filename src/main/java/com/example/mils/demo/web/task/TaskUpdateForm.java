@@ -17,6 +17,8 @@ import lombok.Data;
 public class TaskUpdateForm {
     private Long id; // NOTE: インスタンス生成時のみNullを許容するためlong型ではなく、Long型にしている
 
+    private Long milestoneId;
+
     @NotBlank
     @Size(max = 256)
     private String name;
