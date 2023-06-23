@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
+
     <head th:replace="base::head(~{::title})">
         <title>Task - Death Milestone</title>
     </head>
+
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
 
     <main class="ui container">
         <div class="ui secondary menu">
-                <a class="item" th:href="@{/milestones}">&#60;戻る</a>
+            <a class="item" th:href="@{/milestones}">&#60;戻る</a>
             <div class="right menu">
+
                 <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
                 <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+
             </div>
         </div>
 
@@ -19,7 +23,7 @@
         <div>
             <p th:text="${milestone.description}"></p>
         </div>
-        
+
         ここに作成ユーザーが入る
         <div class="ui placeholder">
             <div class="image header">
@@ -28,41 +32,60 @@
             </div>
         </div>
 
-        <form class="ui segment" action="" method="post">
-            <table class="ui selectable celled table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>タスク</th>
-                        <th>説明</th>
-                        <th>作成日</th>
-                        <th>期限</th>
-                        <th>完了済</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="task : ${taskList}">
-                        <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.id}"></a></td>
-                        <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.name}"></a></td>
-                        <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${task.description}"></a></td>
-                        <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
-                        <td ><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}" th:text="${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
-                        <td>
-                            <a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"><input type="checkbox" name="" id="" th:checked="${task.isComplete}"></a>
-                        </td>
-                    </tr>            
-                </tbody>
-            </table>
+        <table class="ui selectable celled table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>タスク</th>
+                    <th>説明</th>
+                    <th>作成日</th>
+                    <th>期限</th>
+                    <th>完了済</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="task : ${taskList}">
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
+                            th:text="${task.id}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
+                            th:text="${task.name}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
+                            th:text="${task.description}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
+                            th:text="${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
+                            th:text="${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
+                    <td>
+                        <form
+                            th:action="@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}"
+                            method="post">
+                            <input type="hidden" name="_method" value="patch" />
+                            <input type="hidden" id="hiddenIsComplete" name="isComplete"
+                                th:value="${task.isComplete}" />
+                            <input type="checkbox" th:checked="${task.isComplete}" id="checkboxIsComplete"
+                                onchange="toggleCheckbox()">
+                        </form>
 
-            <button class="ui primary button" type="submit">保存</button>
-            <a class="ui button" th:href="@{/milestones/{id}(id=${milestone.id})}">元に戻す</a>
-            <a class="ui green button" th:href="@{/milestones/{milestoneId}/tasks/create(milestoneId=${milestone.id})}">新規作成</a>
-        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="ui primary button" type="submit">保存</button>
+        <a class="ui button" th:href="@{/milestones/{id}(id=${milestone.id})}">元に戻す</a>
+        <a class="ui green button"
+            th:href="@{/milestones/{milestoneId}/tasks/create(milestoneId=${milestone.id})}">新規作成</a>
 
     </main>
 
-
-
-
+    <script>
+        function toggleCheckbox() {
+            var checkbox = document.getElementById('checkboxIsComplete');
+            var hiddenIsComplete = document.getElementById('hiddenIsComplete');
+            hiddenIsComplete.value = checkbox.checked ? 'true' : 'false';
+            checkbox.form.submit();
+        }
+    </script>
 </body>
+
 </html>

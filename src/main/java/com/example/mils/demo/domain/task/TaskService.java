@@ -36,6 +36,11 @@ public class TaskService {
     }
 
     @Transactional
+    public void updateIsComplete(long id, Boolean isComplete) {
+        taskRepository.updateIsComplete(id, isComplete);
+    }
+
+    @Transactional
     public void delete(long taskId) {
         taskRepository.delete(taskId);
     }
