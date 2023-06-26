@@ -44,4 +44,10 @@ public class IndexController {
         userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES);
         return "redirect:/login";
     }
+
+    @GetMapping("/admin-dashboard")
+    public String showAdminDashboardForm() {
+        return "admin-dashboard";
+    }
+
 }
