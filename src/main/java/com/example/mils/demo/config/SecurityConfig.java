@@ -51,7 +51,7 @@ public class SecurityConfig extends AbstractHttpConfigurer<SecurityConfig, HttpS
                         .usernameParameter("email")
                         .passwordParameter("password"))
                 // H2コンソールへのCSRF保護を無効にする
-                .csrf(csrf -> csrf.ignoringAntMatchers("/h2-console/**"))
+                .csrf(csrf -> csrf.ignoringAntMatchers("/h2-console/**","/milestones/*/tasks/*/update-isComplete"))
                 // H2コンソールを表示するためにフレームオプションを設定
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
                 // セッション管理のポリシーを設定

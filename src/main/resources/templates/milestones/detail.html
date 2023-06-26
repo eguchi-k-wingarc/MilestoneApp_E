@@ -79,7 +79,6 @@
 
     <script>
         function toggleCheckbox(taskId,url) {
-            var form = document.getElementById('form' + taskId);
             const check = document.getElementById('check' + taskId).checked;
             sendData({'isComplete':check},url);
         }
@@ -97,6 +96,11 @@
             // キーと値のペアをひとつの文字列に連結して、ウェブブラウザーのフォーム送信方式に
             // 合うよう、エンコードされた空白をプラス記号に置き換えます。
             const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+            // エラーが発生した場合に行うことを定義します
+            XHR.addEventListener('error', (event) => {
+                alert(event);
+            });
 
             // リクエストをセットアップします
             XHR.open('POST', url);
