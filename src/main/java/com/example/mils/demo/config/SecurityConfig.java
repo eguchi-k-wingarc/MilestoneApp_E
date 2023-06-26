@@ -2,6 +2,7 @@ package com.example.mils.demo.config;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Collection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.example.mils.demo.domain.auth.CustomUserDetailsService;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 @Configuration
@@ -39,14 +42,25 @@ public class SecurityConfig extends AbstractHttpConfigurer<SecurityConfig, HttpS
                                 .authenticationProvider(authenticationProvider())
                                 .authorizeRequests(authorizeRequests -> authorizeRequests
                                                 // loginとh2-console、registerパスへのアクセスを許可
-                                                .mvcMatchers("/login**", "/h2-console/**", "/register**").permitAll()
+                                                .mvcMatchers("/login**", "/h2-console/**", "/register**",
+                                                                "/admin-login**")
+                                                .permitAll()
                                                 // それ以外のすべてのリクエストは認証が必要とする
                                                 .anyRequest().authenticated())
                                 .formLogin(formLogin -> formLogin
                                                 // ログインページを指定
                                                 .loginPage("/login")
                                                 // ログインに成功したときのデフォルトのリダイレクトを設定
-                                                .defaultSuccessUrl("/milestones", true)
+                                                .successHandler((request, response, authentication) -> {
+                                                        Collection<? extends GrantedAuthority> authorities = authentication
+                                                                        .getAuthorities();
+                                                        if (authorities.contains(
+                                                                        new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+                                                                response.sendRedirect("/admin-dashboard");
+                                                        } else {
+                                                                response.sendRedirect("/milestones");
+                                                        }
+                                                })
                                                 // ユーザ名とパスワードのパラメータ名を指定します
                                                 .usernameParameter("email")
                                                 .passwordParameter("password"))
