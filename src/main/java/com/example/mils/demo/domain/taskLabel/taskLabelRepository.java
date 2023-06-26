@@ -7,15 +7,14 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.mils.demo.domain.label.LabelEntity;
 
 @Mapper
-public interface taskLabelRepository {
+public interface TaskLabelRepository {
     
     // taskのIDで紐づいたラベルを全て取得
-    // return List<taskLabelEntity>
+    // return List<LabelEntity>
     @Select("SELECT * FROM labels WHERE task_id = #{taskId}")
     List<LabelEntity> findByTaskId(@Param("taskId") long taskId);
 
