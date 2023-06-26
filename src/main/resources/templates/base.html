@@ -27,11 +27,10 @@
             <a class="item" th:href="@{/milestones}" th:classappend="${is3} ? 'active' : ''">
             Labels
             </a>
-            <div class="right menu">
-                <a th:href="@{/}" class="ui item">
-                    Logout
-                </a>
-            </div>
+            <form class="right menu" th:action="@{/logout}" method="post">
+                <input class="ui item" type="submit" value="Logout">
+            </form>
+            
         </header>
     </body>
 </html>
