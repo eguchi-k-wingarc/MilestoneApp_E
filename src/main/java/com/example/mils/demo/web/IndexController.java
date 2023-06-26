@@ -2,7 +2,6 @@ package com.example.mils.demo.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class IndexController {
@@ -11,8 +10,8 @@ public class IndexController {
         return "index";
     }
 
-    // @GetMapping("/login2")
-    // public String showLoginForm() {
-    //     return "login";
-    // }
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
 }
