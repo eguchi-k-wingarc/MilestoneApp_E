@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.label.LabelService;
 
-import aj.org.objectweb.asm.Label;
 import lombok.AllArgsConstructor;
 
 @Controller
