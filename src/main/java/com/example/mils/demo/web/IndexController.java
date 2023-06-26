@@ -7,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 import com.example.mils.demo.web.user.UserRegisterForm;
 
@@ -39,7 +41,7 @@ public class IndexController {
         if (bindingResult.hasErrors()) {
             return showRegistrationForm(form, model);
         }
-        userService.create(form.getEmail(), form.getPassword(), form.getAuthorities());
+        userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES);
         return "redirect:/login";
     }
 }
