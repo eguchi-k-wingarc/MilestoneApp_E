@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head th:replace="base::head(~{::title})">
+        <title>Labels - Death Milestone</title>
+    </head>
+<body>
+    <header th:replace="base::header_menu(true,false,false)"></header>
+    <main class="ui container">
+        <h1 class="ui dividing header">ラベル一覧</h1>
+
+        <table class="ui selectable celled table" >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名前</th>
+                    <th>カラー</th>
+                    <th>編集/削除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="label : ${labelList}">
+                    <td><a style="display: block;" th:href="@{/labels/{id}(id=${label.id})}" th:text="${label.id}"></a></td>
+                    <td><a style="display: block;" th:href="@{/labels/{id}(id=${label.id})}" th:text="${label.name}"></a></td>
+                    <td><a class="ui label" style="display: block;" th:href="@{/labels/{id}(id=${label.id})}" th:text="${label.color}" th:classappend="${label.color}"></a></td>
+                    <td class="center aligned">
+                        <div class="ui icon buttons" style="margin: auto;">
+                            <a class="ui basic button" th:href="@{/labels/{labelId}/update(labelId=${label.id})}"><i class="edit icon"></i></a>
+                            <form class="ui icon buttons" th:action="@{/labels/{labelId}/delete(labelId=${label.id})}" method="post"><button class="ui basic button" type="submit"><i class="red trash icon"></i></button></form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="ui container">
+            <a class="ui green button" th:href="@{/labels/create}">新規作成</a>
+        </div>
+
+    </main>
+</body>
+</html>

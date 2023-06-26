@@ -46,10 +46,11 @@ create table tasks (
 );
 
 create table labels (
-    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(256) NOT NULL,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp on update current_timestamp
+id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(256) NOT NULL UNIQUE,
+color VARCHAR(256) default 'grey',
+created_at timestamp default current_timestamp,
+updated_at timestamp default current_timestamp on update current_timestamp
 );
 
 create table taskLabels (
