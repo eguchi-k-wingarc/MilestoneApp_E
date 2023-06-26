@@ -15,6 +15,7 @@ import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.milestone.MilestoneService;
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
+import com.example.mils.demo.web.task.TaskIsCompleteUpdateForm;
 
 import lombok.AllArgsConstructor;
 
@@ -50,7 +51,7 @@ public class MilestoneController {
      * @return 詳細画面のテンプレート名
      */
     @GetMapping("/{milestoneId}")
-    public String showDetail(@PathVariable("milestoneId") Long milestoneId, Model model) { // TODO: nullを許可しないlong型に変更する
+    public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         List<TaskEntity> taskList = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);

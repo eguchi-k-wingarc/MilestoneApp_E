@@ -8,18 +8,66 @@
 
     <main class="ui container">
         <div class="ui secondary menu">
-                <a class="item" th:href="@{/milestones}">&#60;戻る</a>
+                <a class="item" th:href="@{/milestones}">&#60;マイルストーンに戻る</a>
             <div class="right menu">
-                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${task.milestoneId})}"><i class="edit icon"></i></a>
-                <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${task.milestoneId})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
+                <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
             </div>
         </div>
+
+        <div class="ui segment">
+            <h1 class="ui dividing header" th:text="${task.name}">Milestone</h1>
+            <h3 th:text="${task.description}"></h3>
+            <form class="ui container" th:action="@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}" method="post">
+                <input type="hidden" name="_method" value="patch" />
+                <input type="hidden" th:id="|hiddenIsComplete${task.id}|" name="isComplete" th:value="${task.isComplete ? 'true' : 'false'}" />
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                      <input type="checkbox" th:checked="${task.isComplete}" th:id="|checkboxIsComplete${task.id}|" th:onclick="'toggleCheckbox(' + ${task.id} + ');'">
+                      <label>完了済</label>
+                    </div>
+                </div>
+            </form>
+            
+            <p th:text="|作成：${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
+            <p th:text="|期限：${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}|"></p>
+
+            <!-- ここにユーザーが入る -->
+            <div class="ui placeholder">
+                <div class="image header">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui segment">
+            <a style="color: black;" th:href="@{/milestones/{milestoneId}(milestoneId=${milestone.id})}">
+                <h2 class="ui dividing header" th:text="|紐づくマイルストーン：${milestone.name}|">Milestone</h2>
+                <h4 th:text="${milestone.description}"></h4>
+                <progress max="100" th:value="${milestone.progress}"></progress>
+                <span th:text="|${milestone.progress}%|"></span>
+                
+                <p th:text="|作成：${#temporals.format(milestone.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
+                <p th:text="|期限：${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}|"></p>
+
+                <!-- ここにユーザーが入る -->
+                <div class="ui placeholder">
+                    <div class="image header">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </main>
-    <h2>タスク詳細</h2>
-
-    <h2 th:text="${task.name}"></h2>
-    <p th:text="${task.description}"></p>
-    <p th:text="${task.deadline}"></p>
-
+    <script>
+        function toggleCheckbox(taskId) {
+            var checkbox = document.getElementById('checkboxIsComplete' + taskId);
+            var hiddenIsComplete = document.getElementById('hiddenIsComplete' + taskId);
+            hiddenIsComplete.checked = checkbox.checked;
+            document.forms[taskId-1].submit();
+        }
+    </script>
 </body>
 </html>

@@ -19,18 +19,26 @@
             </div>
         </div>
 
-        <h1 class="ui dividing header" th:text="${milestone.name}">Milestone</h1>
-        <div>
-            <p th:text="${milestone.description}"></p>
-        </div>
+        
+        <div class="ui segment">
+            <h1 class="ui dividing header" th:text="${milestone.name}">Milestone</h1>
+            <h3 th:text="${milestone.description}"></h3>
+            <progress max="100" th:value="${milestone.progress}"></progress>
+            <span th:text="|${milestone.progress}%|"></span>
+            
+            <p th:text="|作成：${#temporals.format(milestone.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
+            <p th:text="|期限：${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}|"></p>
 
-        ここに作成ユーザーが入る
-        <div class="ui placeholder">
-            <div class="image header">
-                <div class="line"></div>
-                <div class="line"></div>
+            <!-- ここにユーザーが入る -->
+            <div class="ui placeholder">
+                <div class="image header">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
             </div>
         </div>
+        
+
 
         <table class="ui selectable celled table">
             <thead>
@@ -38,6 +46,7 @@
                     <th>ID</th>
                     <th>タスク</th>
                     <th>説明</th>
+                    <th>ラベル</th>
                     <th>作成日</th>
                     <th>期限</th>
                     <th>完了済</th>
@@ -51,16 +60,13 @@
                             th:text="${task.name}"></a></td>
                     <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
                             th:text="${task.description}"></a></td>
+                    <td><a class="ui red label">HELL</a><a class="ui green label">DEATH</a><a class="ui black label">MURI</a></td>
                     <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
                             th:text="${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
                     <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
                             th:text="${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
                     <td>
-                        <form th:action="@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}" method="post">
-                            <input type="hidden" name="_method" value="patch" />
-                            <input type="hidden" id="hiddenIsComplete${task.id}" name="isComplete" th:value="${task.isComplete ? 'true' : 'false'}" />
-                            <input type="checkbox" th:checked="${task.isComplete}" id="checkboxIsComplete${task.id}" th:onclick="'toggleCheckbox(' + ${task.id} + ');'">
-                        </form>
+                        <input type="checkbox" th:id="|check${task.id}|" th:checked="${task.isComplete}"  th:onChange="|toggleCheckbox(${task.id},'@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}');|"/>
                     </td>
                 </tr>
             </tbody>
@@ -72,12 +78,35 @@
     </main>
 
     <script>
-        function toggleCheckbox(taskId) {
-            var checkbox = document.getElementById('checkboxIsComplete' + taskId);
-            var hiddenIsComplete = document.getElementById('hiddenIsComplete' + taskId);
-            hiddenIsComplete.value = checkbox.checked;
-            checkbox.form.submit();
+        function toggleCheckbox(taskId,url) {
+            var form = document.getElementById('form' + taskId);
+            const check = document.getElementById('check' + taskId).checked;
+            sendData({'isComplete':check},url);
         }
+
+        function sendData(data,url) {
+            const XHR = new XMLHttpRequest();
+
+            const urlEncodedDataPairs = [];
+
+            // data オブジェクトを、URL エンコードしたキーと値のペアの配列に変換します
+            for (const [name, value] of Object.entries(data)) {
+                urlEncodedDataPairs.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
+            }
+
+            // キーと値のペアをひとつの文字列に連結して、ウェブブラウザーのフォーム送信方式に
+            // 合うよう、エンコードされた空白をプラス記号に置き換えます。
+            const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+            // リクエストをセットアップします
+            XHR.open('POST', url);
+
+            // フォームデータの POST リクエストを扱うために必要な HTTP ヘッダを追加します
+            XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // 最後に、データを送信します
+            XHR.send(urlEncodedData);
+            }
     </script>
 </body>
 

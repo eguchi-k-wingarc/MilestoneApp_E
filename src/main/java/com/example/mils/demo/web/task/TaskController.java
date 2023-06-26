@@ -1,6 +1,9 @@
 package com.example.mils.demo.web.task;
 
 import com.example.mils.demo.domain.milestone.*;
+
+import java.lang.Boolean;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
+import com.example.mils.demo.web.task.*;
 
 import lombok.AllArgsConstructor;
 
@@ -128,11 +131,13 @@ public class TaskController {
      * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
      * @return タスク一覧画面にリダイレクトするURL
      */
-    @PostMapping("/{taskId}/update-isComplete")
-    public String updateIsComplete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            @Validated TaskIsCompleteUpdateForm form, BindingResult bindingResult, Model model) {
 
-        taskService.updateIsComplete(taskId, form.getIsComplete());
+     
+
+    @PostMapping("/{taskId}/update-isComplete")
+    public String updateIsComplete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,TaskIsCompleteUpdateForm form, Model model) {
+        Boolean isComplete = form.getIsComplete();
+        taskService.updateIsComplete(taskId, isComplete);
         return "redirect:/milestones/" + milestoneId;
     }
 
