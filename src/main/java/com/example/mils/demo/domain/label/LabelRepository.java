@@ -1,6 +1,5 @@
 package com.example.mils.demo.domain.label;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -15,6 +14,7 @@ import org.apache.ibatis.annotations.Update;
 public interface LabelRepository {  //ラベル操作用インターフェース
 
     //全てのラベルを取得する
+    //return List<LabelEntity>
     @Select("select * from labels")
     List<LabelEntity> findAll();
 
@@ -32,5 +32,5 @@ public interface LabelRepository {  //ラベル操作用インターフェース
     );
     
     @Delete("DELETE FROM labels WHERE id = #{id}")
-    void delete(@Param("id") Long id);
+    void delete(@Param("id") long id);
 }
