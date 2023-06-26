@@ -1,4 +1,5 @@
-insert into users (email, password, is_admin) values ('egu@gmail.com', 'egu', false);
+insert into users (email, password, authorities) values ('egu@gmail.com', '$2a$10$Qb2HInxnyuztG4yG/m1TxOYux8UgiVkVLqB.94QTjqFTVOYQ0pjsa', 'ROLE_ADMIN');
+insert into users (email, password, authorities) values ('egu2@gmail.com', '$2a$10$rYpIV6lZNA.fKwcURw7/KOfIbvJxMg5jTDFtznAMh79j3nEvnhBQG', 'ROLE_USER');
 insert into milestones (user_id, name, description, progress) values (1, '2023年1月1日:ローンチ', 'ローンチ', 0);
 insert into milestones (user_id, name, description, progress) values (1, '2022年10月31日:プレリリース', '早期リリース', 0);
 insert into milestones (user_id, name, description, progress) values (1, '2022年7月10日:デモ開始', 'デモ作成中', 0);
