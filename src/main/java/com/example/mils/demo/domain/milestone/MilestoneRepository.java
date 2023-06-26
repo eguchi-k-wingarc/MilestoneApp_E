@@ -33,6 +33,12 @@ public interface MilestoneRepository {
         @Param("deadline") LocalDateTime deadline
     );
 
+    @Update("UPDATE milestones SET progress = #{progress} WHERE id = #{id}")
+    void updateProgress(
+        @Param("id") long id, 
+        @Param("progress") int progress
+    );
+
     @Delete("DELETE FROM milestones WHERE id = #{id}")
     void delete(@Param("id") long id);
 }

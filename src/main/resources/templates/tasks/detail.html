@@ -72,6 +72,10 @@
             // 合うよう、エンコードされた空白をプラス記号に置き換えます。
             const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
 
+            XHR.addEventListener('load', (event) => {
+                window.location.reload();
+            });
+
             // エラーが発生した場合に行うことを定義します
             XHR.addEventListener('error', (event) => {
               alert(event);
