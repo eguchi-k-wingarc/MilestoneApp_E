@@ -49,6 +49,7 @@
                     <th>ラベル</th>
                     <th>作成日</th>
                     <th>期限</th>
+                    <th>編集/削除</th>
                     <th>完了済</th>
                 </tr>
             </thead>
@@ -65,6 +66,12 @@
                             th:text="${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
                     <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${task.id})}"
                             th:text="${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
+                    <td class="center aligned">
+                        <div class="ui icon buttons" style="margin: auto;">
+                            <a class="ui basic button" th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${task.id})}"><i class="edit icon"></i></a>
+                            <form class="ui icon buttons" th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${task.id})}" method="post"><button class="ui basic button" type="submit"><i class="red trash icon"></i></button></form>
+                        </div>
+                    </td>
                     <td>
                         <input type="checkbox" th:id="|check${task.id}|" th:checked="${task.isComplete}"  th:onChange="|toggleCheckbox(${task.id},'@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}');|"/>
                     </td>
@@ -79,7 +86,6 @@
 
     <script>
         function toggleCheckbox(taskId,url) {
-            var form = document.getElementById('form' + taskId);
             const check = document.getElementById('check' + taskId).checked;
             sendData({'isComplete':check},url);
         }
@@ -97,6 +103,11 @@
             // キーと値のペアをひとつの文字列に連結して、ウェブブラウザーのフォーム送信方式に
             // 合うよう、エンコードされた空白をプラス記号に置き換えます。
             const urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+            // エラーが発生した場合に行うことを定義します
+            XHR.addEventListener('error', (event) => {
+                alert(event);
+            });
 
             // リクエストをセットアップします
             XHR.open('POST', url);

@@ -14,6 +14,15 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class UserEntity {
+    /**
+     * authoritiesカラムの定数
+     * 
+     * "ROLE_ADMIN"：管理者権限。
+     * "ROLE_USER"：一般ユーザー権限。
+     */
+    public static final String DEFAULT_AUTHORITIES = "ROLE_USER";
+    public static final String ADMIN_AUTHORITIES = "ROLE_ADMIN";
+    
     @Id
     @GeneratedValue
     private long id;
