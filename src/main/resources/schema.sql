@@ -4,7 +4,7 @@ create table users (
     -- TODO: NOT NULL制約の付与
     password VARCHAR(256),
     -- TODO: NOT NULL制約の付与
-    is_admin BOOLEAN NOT NUll,
+    authorities VARCHAR(256) NOT NUll,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,
     deleted_at timestamp NUll default NUll
