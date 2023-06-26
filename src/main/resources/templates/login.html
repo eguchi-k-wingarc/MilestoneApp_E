@@ -2,28 +2,44 @@
 <html lang="ja">
 
 <head th:replace="base::head(~{::title})">
-    <title>Creation Form - Death Milestone</title>
+    <title>Login - Death Milestone</title>
 </head>
 
 <body>
-    <h1>ログインページ</h1>
+    <main class="doubling stackable grid container">
+        <h1 class="ui dividing header center aligned">ログインページ</h1>
+        <div class="ui middle aligned center aligned grid">
+            <div class="culumn">
+              <form class="ui large form" th:action="@{/login}" method="post">
+                <div class="ui stacked segment">
+                  <div class="field">
+                    <div class="ui left icon input">
+                      <i class="user icon"></i>
+                      <input type="text" id="email" name="email"  autocomplete="off" placeholder="E-mail address">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="ui left icon input">
+                      <i class="lock icon"></i>
+                      <input type="password" id="password" name="password" autocomplete="off" placeholder="Password">
+                    </div>
+                  </div>
+                  <button class="ui fluid large teal submit button" type="submit" >Login</button>
+                </div>
+          
+                <div class="ui negative message" th:if="${param.error}">
+                    <p class="header">ユーザー名もしくはパスワードが違うってばよ</p>
+                </div>
+          
+              </form>
+          
+              <div class="ui message">
+                New to us? <a href="#">Sign Up</a>
+              </div>
+            </div>
+        </div>
+    </main>
 
-    <form th:action="@{/login}" method="post">
-        <div>
-            <label for="email">メールアドレス</label>
-            <input type="text" id="email" name="email" autocomplete="off">
-        </div>
-        <div>
-            <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" autocomplete="off">
-        </div>
-        <div>
-            <button type="submit">ログイン</button>
-        </div>
-        <div th:if="${param.error}">
-            <p>ユーザー名もしくはパスワードが違うってばよ</p>
-        </div>
-    </form>
     
 </body>
 
