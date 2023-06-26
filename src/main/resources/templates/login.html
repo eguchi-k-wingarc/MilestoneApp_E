@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <name>ログインページ|マイルストーンアプリケーション</name>
+
+<head th:replace="base::head(~{::title})">
+    <title>Creation Form - Death Milestone</title>
 </head>
+
 <body>
     <h1>ログインページ</h1>
 
-    <form>
+    <form th:action="@{/login}" method="post">
         <div>
-            <label for="userName">ユーザー名</label>
-            <input type="text" id="userName" name="userName">
+            <label for="email">メールアドレス</label>
+            <input type="text" id="email" name="email" autocomplete="off">
         </div>
         <div>
             <label for="password">パスワード</label>
-            <input type="password" id="password" name="passwordKey">
+            <input type="password" id="password" name="password" autocomplete="off">
         </div>
         <div>
             <button type="submit">ログイン</button>
@@ -24,5 +24,7 @@
             <p>ユーザー名もしくはパスワードが違うってばよ</p>
         </div>
     </form>
+    
 </body>
+
 </html>
