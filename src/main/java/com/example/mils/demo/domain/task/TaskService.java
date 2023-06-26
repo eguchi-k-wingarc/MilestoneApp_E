@@ -6,12 +6,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.mils.demo.domain.milestone.MilestoneRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final MilestoneRepository milestoneRepository;
 
     public List<TaskEntity> findAll() {
         return taskRepository.findAll();
@@ -43,5 +46,15 @@ public class TaskService {
     @Transactional
     public void delete(long taskId) {
         taskRepository.delete(taskId);
+    }
+
+    @Transactional
+    public void calcProgress(long milestoneId) {
+        List<TaskEntity> list = taskRepository.findByMilestoneId(milestoneId);
+        int count = list.size();
+        int completed = (int)list.stream().filter(e -> e.isComplete()==true).count();
+        int progress = (completed * 100) / count;
+        milestoneRepository.updateProgress(milestoneId, progress);
+        
     }
 }

@@ -68,13 +68,14 @@ public class TaskController {
      * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
      * @return タスク一覧画面にリダイレクトするURL
      */
-    @PostMapping
+    @PostMapping("/create")
     public String create(@PathVariable("milestoneId") Long milestoneId, @Validated TaskCreateForm creationForm,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(milestoneId, creationForm, model);
         }
         taskService.create(milestoneId, creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
+        taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
     }
 
@@ -118,6 +119,7 @@ public class TaskController {
         }
 
         taskService.update(taskId, form.getName(), form.getDescription(), form.getDeadline());
+        taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
     }
 
@@ -137,6 +139,7 @@ public class TaskController {
     public String updateIsComplete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,TaskIsCompleteUpdateForm form, Model model) {
         Boolean isComplete = form.getIsComplete();
         taskService.updateIsComplete(taskId, isComplete);
+        taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
     }
 
@@ -150,6 +153,7 @@ public class TaskController {
     @PostMapping("/{taskId}/delete")
     public String delete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId) {
         taskService.delete(taskId);
+        taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
     }
 }
