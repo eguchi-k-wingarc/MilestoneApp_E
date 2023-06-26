@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.label.LabelService;
-import com.example.mils.demo.web.milestone.MilestoneUpdateForm;
 
 import lombok.AllArgsConstructor;
 
@@ -77,6 +76,7 @@ public class LabelController {
     public String showEditForm(@PathVariable("labelId") Long labelId, LabelUpdateForm form, Model model) {
         LabelEntity label = labelService.findById(labelId);
         if (label != null) {
+            form.setId(label.getId());
             form.setName(label.getName());
             form.setColor(label.getColor());
         } else {
