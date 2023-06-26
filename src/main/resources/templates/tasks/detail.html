@@ -8,18 +8,17 @@
 
     <main class="ui container">
         <div class="ui secondary menu">
-                <a class="item" th:href="@{/milestones}">&#60;マイルストーンに戻る</a>
+                <a class="item" th:href="@{/milestones/{milestoneId}(milestoneId=${milestone.id})}">&#60;マイルストーンに戻る</a>
             <div class="right menu">
-                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
-                <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+                <a class="item" th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${task.id})}"><i class="edit icon"></i></a>
+                <form class="item"  th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${task.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
             </div>
         </div>
 
         <div class="ui segment">
             <h1 class="ui dividing header" th:text="${task.name}">Milestone</h1>
             <h3 th:text="${task.description}"></h3>
-            <input type="checkbox" id="check" th:checked="${task.isComplete}"  th:onChange="|toggleCheckbox('@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}');|"/>
-
+            <p>完了済：<input type="checkbox" id="check" th:checked="${task.isComplete}"  th:onChange="|toggleCheckbox('@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}');|"/></p>
             
             <p th:text="|作成：${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
             <p th:text="|期限：${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}|"></p>
