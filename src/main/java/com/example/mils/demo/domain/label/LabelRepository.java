@@ -15,7 +15,6 @@ import org.apache.ibatis.annotations.Update;
 public interface LabelRepository {  //ラベル操作用インターフェース
 
     //全てのラベルを取得する
-    //return List<LabelEntity>
     @Select("select * from labels")
     List<LabelEntity> findAll();
 
