@@ -1,5 +1,7 @@
 package com.example.mils.demo.web.task;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,11 +33,11 @@ public class TaskListController {
      * @return 詳細画面のテンプレート名
      */
     @GetMapping
-    public String showList(Model model) {
+    public String showList(Model model, @AuthenticationPrincipal UserDetails loginUser) {
         List<TaskEntity> taskList = taskService.findAll();
 
         model.addAttribute("taskList", taskList);
-
+        model.addAttribute("loginUser", loginUser);
         return "tasks/list";
     }
 }

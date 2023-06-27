@@ -42,14 +42,14 @@ public class SecurityConfig extends AbstractHttpConfigurer<SecurityConfig, HttpS
                                 .authenticationProvider(authenticationProvider())
                                 .authorizeRequests(authorizeRequests -> authorizeRequests
                                                 // loginとh2-console、registerパスへのアクセスを許可
-                                                .mvcMatchers("/login**", "/h2-console/**", "/register**",
+                                                .mvcMatchers("/users/login**", "/h2-console/**", "/users/register**",
                                                                 "/admin-login**")
                                                 .permitAll()
                                                 // それ以外のすべてのリクエストは認証が必要とする
                                                 .anyRequest().authenticated())
                                 .formLogin(formLogin -> formLogin
                                                 // ログインページを指定
-                                                .loginPage("/login")
+                                                .loginPage("/users/login")
                                                 // ログインに成功したときのデフォルトのリダイレクトを設定
                                                 .successHandler((request, response, authentication) -> {
                                                         Collection<? extends GrantedAuthority> authorities = authentication

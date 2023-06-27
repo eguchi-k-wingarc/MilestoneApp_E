@@ -2,6 +2,8 @@ package com.example.mils.demo.web.label;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,11 +31,11 @@ public class LabelController {
      * @return 一覧画面のテンプレート名
      */
     @GetMapping()
-    public String showList(Model model) {
+    public String showList(Model model, @AuthenticationPrincipal UserDetails loginUser) {
         List<LabelEntity> labelList = labelService.findAll();
 
         model.addAttribute("labelList", labelList);
-
+        model.addAttribute("loginUser", loginUser);
         return "labels/list";
     }
 
@@ -44,7 +46,8 @@ public class LabelController {
      * @return 作成フォームのテンプレート名
      */
     @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute LabelCreateForm creationForm) {
+    public String showCreationForm(@ModelAttribute LabelCreateForm creationForm, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+        model.addAttribute("loginUser", loginUser);
         return "labels/creationForm";
     }
 
@@ -56,9 +59,9 @@ public class LabelController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping
-    public String create(@Validated LabelCreateForm creationForm, BindingResult bindingResult) {
+    public String create(@Validated LabelCreateForm creationForm, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
-            return showCreationForm(creationForm);
+            return showCreationForm(creationForm, model, loginUser);
         }
         labelService.create(creationForm.getName(), creationForm.getColor());
         return "redirect:/labels";

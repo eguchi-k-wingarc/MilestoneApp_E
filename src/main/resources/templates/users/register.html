@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head th:replace="base::head(~{::title})">
+        <title>User Register Form - Death Milestone</title>
+    </head>
+<body>
+    <header th:replace="base::header_menu(false,false,false)"></header>
+        <main class="ui container">
+            <div class="ui secondary menu">
+                <a class="item" th:href="@{/login}">&#60;ログイン画面に戻る</a>
+            </div>
+            <h1 class="ui dividing header">新規登録</h1>
+            
+            <form class="ui form" th:action="@{/milestones}" th:object="${UserRegisterForm}" method="post">
+            <label>メールアドレス</label>
+            <div class="ui fields">
+                <div class="ui nine wide field"><input type="text" id="emailInput" name="email" th:field="*{email}" /></div>
+                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div></div>
+            </div>
+
+
+            <label>パスワード</label>
+            <div class="ui fields">
+                <div class="ui nine wide field"><input type="text" id="passwordInput" name="password" th:field="*{password}" /></div>
+                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div></div>
+            </div>
+
+            <label>プロフィール写真</label>
+            <div>
+                <div class="ui nine wide field"><input type="file" name="profileInput" id="profileInput"></div>
+                <div class="ui field"><div class="ui left pointing red basic label" >Error</div></div>
+            </div>
+            <div>
+                <button class="ui primary button" type="submit">登録</button>
+                <button class="ui button" type="reset">破棄</button>
+            </div>
+            
+            
+        </form>
+    </main>
+</body>
+</html>
