@@ -2,12 +2,10 @@ package com.example.mils.demo.domain.task;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.mils.demo.domain.DeathLevelOperator;
-import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.milestone.MilestoneRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -70,11 +68,5 @@ public class TaskService {
         int progress = (completed * 100) / count;
         milestoneRepository.updateProgress(milestoneId, progress);
 
-    }
-
-    @Transactional
-    public Set<LabelEntity> getLabelsForTask(long taskId) {
-        TaskEntity task = taskRepository.findById(taskId);
-        return task.getLabels();
     }
 }
