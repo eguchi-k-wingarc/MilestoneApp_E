@@ -10,9 +10,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 
@@ -51,5 +53,27 @@ public class UserController {
         }
         userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES);
         return "redirect:/login";
+    }
+
+    @GetMapping("/update")
+    public String showUpdateForm(UserRegisterForm form, Model model, @AuthenticationPrincipal UserDetails loginUser){
+         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        if (user != null) {
+            form.setEmail(user.getEmail());
+            form.setPassword(user.getPassword());
+
+        } else {
+            return "redirect:/users";
+        }
+        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("userUpdateForm", form);
+        return "users/updateForm";
+    }
+
+    @GetMapping("/profile")
+    public String showDetail(@AuthenticationPrincipal UserDetails loginUser, Model model) {
+        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        model.addAttribute("user", user);
+        return "users/detail";
     }
 }
