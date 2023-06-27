@@ -13,7 +13,19 @@
         crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
-        
+        <script>
+            //Dark mode
+            function toggleColorMode(){
+                $("body,div,h4,p,i").toggleClass("dark")
+                $("h1,h2,h3,table,input,textarea,form,header,div").toggleClass("inverted");
+            }
+        </script>
+        <style>
+            .dark{
+                background-color: #1A1A1C;
+                color: white;
+            }
+        </style>
 
     </head>
     <body>
@@ -28,6 +40,7 @@
             Labels
             </a>
             <form class="right menu" th:action="@{/logout}" method="post" >
+                <a class="item" id="toggleColorMode" onclick="toggleColorMode();"><i class="power off icon" ></i></a>
                 <input class="item" type="submit" value="Logout" style="border: none;">
             </form>
             
