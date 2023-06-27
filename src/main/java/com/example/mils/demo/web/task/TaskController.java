@@ -1,8 +1,10 @@
 package com.example.mils.demo.web.task;
 
+import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.milestone.*;
 
 import java.lang.Boolean;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -155,5 +157,14 @@ public class TaskController {
         taskService.delete(taskId);
         taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
+    }
+
+    /**
+     * タスクにラベルを紐づけます。
+     *
+     */
+    @GetMapping("/{taskId}/labels")
+    public Set<LabelEntity> getLabelsForTask(@PathVariable Long taskId) {
+        return taskService.getLabelsForTask(taskId);
     }
 }

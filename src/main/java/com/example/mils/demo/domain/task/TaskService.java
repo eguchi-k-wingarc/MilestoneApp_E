@@ -2,11 +2,17 @@ package com.example.mils.demo.domain.task;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
+import org.h2.util.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.mils.demo.domain.label.LabelEntity;
+import com.example.mils.demo.domain.label.LabelRepository;
 import com.example.mils.demo.domain.milestone.MilestoneRepository;
+import com.example.mils.demo.domain.taskLabel.TaskLabelEntity;
+import com.example.mils.demo.domain.taskLabel.TaskLabelRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final MilestoneRepository milestoneRepository;
+    private final LabelRepository labelRepository;
+    private final TaskLabelRepository taskLabelRepository;
 
     public List<TaskEntity> findAll() {
         return taskRepository.findAll();
@@ -56,5 +64,11 @@ public class TaskService {
         int progress = (completed * 100) / count;
         milestoneRepository.updateProgress(milestoneId, progress);
         
+    }
+
+    @Transactional
+    public Set<LabelEntity> getLabelsForTask(long taskId) {
+        TaskEntity task = taskRepository.findById(taskId);
+        return task.getLabels();
     }
 }
