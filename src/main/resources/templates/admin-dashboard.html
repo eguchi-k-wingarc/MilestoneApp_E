@@ -8,7 +8,16 @@
 <body>
     <h2>Admin Dashboard</h2>
 
-    
+    <form th:action="@{/set-death-rate}" method="post">
+        <label for="urgencyLevel">Select urgency level:</label>
+        <select id="urgencyLevel" name="urgencyLevel">
+            <option th:each="level : ${allLevels}"
+                    th:value="${level.name()}"
+                    th:text="${level.getLabel()}"
+                    th:selected="${level == currentLevel}"></option>
+        </select>
+        <button type="submit">Set</button>
+    </form>
 </body>
 
 </html>
