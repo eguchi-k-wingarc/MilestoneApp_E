@@ -9,9 +9,18 @@
     <header th:replace="base::header_menu(false,false,false)"></header>
     <main class="ui container">
         <h1 class="ui dividing header">管理画面</h1>
+        <form th:action="@{/set-death-rate}" method="post">
+            <label for="urgencyLevel">Select urgency level:</label>
+            <select id="urgencyLevel" name="urgencyLevel">
+                <option th:each="level : ${allLevels}"
+                        th:value="${level.name()}"
+                        th:text="${level.getLabel()}"
+                        th:selected="${level == currentLevel}"></option>
+            </select>
+            <button type="submit">Set</button>
+        </form>
     </main>
 
-    
 </body>
 
 </html>
