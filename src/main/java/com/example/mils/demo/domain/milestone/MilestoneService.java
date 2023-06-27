@@ -2,25 +2,32 @@ package com.example.mils.demo.domain.milestone;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.example.mils.demo.domain.DeathLevelOperator;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
+    private final DeathLevelOperator deathLevelOperator;
 
-    public List<MilestoneEntity> findAll() {
-        return milestoneRepository.findAll();
-    }
+public List<MilestoneEntity> findAll() {
+    List<MilestoneEntity> list = milestoneRepository.findAll();
+    List<MilestoneEntity> processedList = list.stream().map(milestone ->{
+        milestone.setDeadline(deathLevelOperator.adjustDeadline(milestone.getDeadline()));
+        return milestone;
+    }).collect(Collectors.toList());
+    return processedList;
+}
 
-    public MilestoneEntity findById(long id) {
-        return milestoneRepository.findById(id);
-    }
+public MilestoneEntity findById(long id) {
+    MilestoneEntity milestone = milestoneRepository.findById(id);
+    milestone.setDeadline(deathLevelOperator.adjustDeadline(milestone.getDeadline()));
+    return milestone;
+}
 
     @Transactional
     public void create(String name, String description, LocalDateTime deadline) {

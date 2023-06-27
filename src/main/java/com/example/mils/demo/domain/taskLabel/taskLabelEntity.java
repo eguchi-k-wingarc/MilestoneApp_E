@@ -1,7 +1,5 @@
 package com.example.mils.demo.domain.taskLabel;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;

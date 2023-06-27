@@ -1,8 +1,8 @@
 insert into users (email, password, authorities) values ('egu@gmail.com', '$2a$10$Qb2HInxnyuztG4yG/m1TxOYux8UgiVkVLqB.94QTjqFTVOYQ0pjsa', 'ROLE_ADMIN');
 insert into users (email, password, authorities) values ('egu2@gmail.com', '$2a$10$rYpIV6lZNA.fKwcURw7/KOfIbvJxMg5jTDFtznAMh79j3nEvnhBQG', 'ROLE_USER');
-insert into milestones (user_id, name, description, progress) values (1, '2023年1月1日:ローンチ', 'ローンチ', 0);
-insert into milestones (user_id, name, description, progress) values (1, '2022年10月31日:プレリリース', '早期リリース', 0);
-insert into milestones (user_id, name, description, progress) values (1, '2022年7月10日:デモ開始', 'デモ作成中', 0);
+insert into milestones (user_id, name, description, progress) values (1, '2023年1月1日:ローンチ', 'ローンチ', 50);
+insert into milestones (user_id, name, description, progress) values (1, '2022年10月31日:プレリリース', '早期リリース', 50);
+insert into milestones (user_id, name, description, progress) values (1, '2022年7月10日:デモ開始', 'デモ作成中', 50);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 1, 'タスク1', 'タスク1の詳細', true);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 1, 'タスク2', 'タスク2の詳細', false);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 2, 'タスク3', 'タスク3の詳細', true);

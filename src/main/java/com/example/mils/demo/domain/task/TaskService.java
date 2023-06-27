@@ -3,17 +3,12 @@ package com.example.mils.demo.domain.task;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-
-import org.h2.util.Task;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.example.mils.demo.domain.DeathLevelOperator;
 import com.example.mils.demo.domain.label.LabelEntity;
-import com.example.mils.demo.domain.label.LabelRepository;
 import com.example.mils.demo.domain.milestone.MilestoneRepository;
-import com.example.mils.demo.domain.taskLabel.TaskLabelEntity;
-import com.example.mils.demo.domain.taskLabel.TaskLabelRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -21,19 +16,30 @@ import lombok.RequiredArgsConstructor;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final MilestoneRepository milestoneRepository;
-    private final LabelRepository labelRepository;
-    private final TaskLabelRepository taskLabelRepository;
+    private final DeathLevelOperator deathLevelOperator;
 
     public List<TaskEntity> findAll() {
-        return taskRepository.findAll();
+        List<TaskEntity> list = taskRepository.findAll();
+        List<TaskEntity> processedList = list.stream().map(task -> {
+            task.setDeadline(deathLevelOperator.adjustDeadline(task.getDeadline()));
+            return task;
+        }).collect(Collectors.toList());
+        return processedList;
     }
 
     public TaskEntity findById(long id) {
-        return taskRepository.findById(id);
+        TaskEntity task = taskRepository.findById(id);
+        task.setDeadline(deathLevelOperator.adjustDeadline(task.getDeadline()));
+        return task;
     }
 
-    public List<TaskEntity> findByMilestoneId(Long milestoneId) { // TODO: nullを許可しないlong型に変更する
-        return taskRepository.findByMilestoneId(milestoneId);
+    public List<TaskEntity> findByMilestoneId(Long milestoneId) {
+        List<TaskEntity> list = taskRepository.findByMilestoneId(milestoneId);
+        List<TaskEntity> processedList = list.stream().map(task -> {
+            task.setDeadline(deathLevelOperator.adjustDeadline(task.getDeadline()));
+            return task;
+        }).collect(Collectors.toList());
+        return processedList;
     }
 
     @Transactional
@@ -60,10 +66,10 @@ public class TaskService {
     public void calcProgress(long milestoneId) {
         List<TaskEntity> list = taskRepository.findByMilestoneId(milestoneId);
         int count = list.size();
-        int completed = (int)list.stream().filter(e -> e.isComplete()==true).count();
+        int completed = (int) list.stream().filter(e -> e.isComplete() == true).count();
         int progress = (completed * 100) / count;
         milestoneRepository.updateProgress(milestoneId, progress);
-        
+
     }
 
     @Transactional

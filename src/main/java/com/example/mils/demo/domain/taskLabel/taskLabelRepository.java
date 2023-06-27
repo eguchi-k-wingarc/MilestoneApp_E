@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.data.repository.query.Param;
 
-import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.task.TaskEntity;
 
 @Mapper
