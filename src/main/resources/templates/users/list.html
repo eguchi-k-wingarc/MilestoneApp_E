@@ -13,10 +13,9 @@
                 <tr>
                     <th>ID</th>
                     <th>名前</th>
-                    <th>説明</th>
+                    <th>メールアドレス</th>
+                    <th>ロール</th>
                     <th>作成日</th>
-                    <th>期限</th>
-                    <th>状況</th>
                     <th>編集/削除</th>
                 </tr>
             </thead>
@@ -24,10 +23,10 @@
                 
                     <tr th:each="user : ${usersList}">
                         <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.id}"></a></td>
-                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${users.name}"></a></td>
-                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${users.email}"></a></td>
-                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${users.authorities}"></a></td>
-                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${#temporals.format(users.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
+                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.name}"></a></td>
+                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.email}"></a></td>
+                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${user.authorities}"></a></td>
+                        <td><a style="display: block;" th:href="@{/user/{id}(id=${user.id})}" th:text="${#temporals.format(user.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
                         <td class="center aligned">
                             <div class="ui icon buttons" style="margin: auto;">
                                 <a class="ui basic button" th:href="@{/user/{id}/update(id=${user.id})}"><i class="edit icon"></i></a>
