@@ -4,6 +4,8 @@ import com.example.mils.demo.domain.milestone.*;
 
 import java.lang.Boolean;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,12 +39,12 @@ public class TaskController {
      */
     @GetMapping("/{taskId}")
     public String showDetail(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            Model model) {
+            Model model,  @AuthenticationPrincipal UserDetails loginUser) {
         TaskEntity task = taskService.findById(taskId);
         MilestoneEntity milestone = milestoneService.findById((long)task.getMilestoneId());
         model.addAttribute("milestone", milestone);
         model.addAttribute("task", task);
-
+        model.addAttribute("loginUser", loginUser);
         return "tasks/detail";
     }
 
@@ -55,8 +57,9 @@ public class TaskController {
      */
     @GetMapping("/create")
     public String showCreationForm(@PathVariable("milestoneId") Long milestoneId,
-            @ModelAttribute TaskCreateForm creationForm, Model model) {
+            @ModelAttribute TaskCreateForm creationForm, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
         model.addAttribute("milestoneId", milestoneId);
+        model.addAttribute("loginUser", loginUser);
         return "tasks/creationForm";
     }
 
@@ -70,9 +73,9 @@ public class TaskController {
      */
     @PostMapping("/create")
     public String create(@PathVariable("milestoneId") Long milestoneId, @Validated TaskCreateForm creationForm,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
-            return showCreationForm(milestoneId, creationForm, model);
+            return showCreationForm(milestoneId, creationForm, model, loginUser);
         }
         taskService.create(milestoneId, creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
         taskService.calcProgress(milestoneId);
@@ -89,7 +92,7 @@ public class TaskController {
      */
     @GetMapping("/{taskId}/update")
     public String showEditForm(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            TaskUpdateForm form, Model model) {
+            TaskUpdateForm form, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
         TaskEntity task = taskService.findById(taskId);
         if (task != null) {
             form.setId(task.getId());
@@ -99,6 +102,7 @@ public class TaskController {
             return "redirect:/milestones/" + milestoneId;
         }
         model.addAttribute("taskUpdateForm", form);
+        model.addAttribute("loginUser", loginUser);
         return "tasks/updateForm";
     }
 
@@ -113,9 +117,9 @@ public class TaskController {
      */
     @PostMapping("/{taskId}/update")
     public String update(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            @Validated TaskUpdateForm form, BindingResult bindingResult, Model model) {
+            @Validated TaskUpdateForm form, BindingResult bindingResult, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
-            return showEditForm(milestoneId, taskId, form, model);
+            return showEditForm(milestoneId, taskId, form, model, loginUser);
         }
 
         taskService.update(taskId, form.getName(), form.getDescription(), form.getDeadline());

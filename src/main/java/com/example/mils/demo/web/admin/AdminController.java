@@ -1,5 +1,7 @@
 package com.example.mils.demo.web.admin;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +19,10 @@ public class AdminController {
     private DeathLevelOperator deathLevelOperator;
     
     @GetMapping("/admin-dashboard")
-    public String showAdminDashboardForm(Model model) {
+    public String showAdminDashboardForm(Model model, @AuthenticationPrincipal UserDetails loginUser) {
         model.addAttribute("allLevels", DeathLevel.values());
         model.addAttribute("currentLevel", deathLevelOperator.getDeathLevel());
+        model.addAttribute("loginUser", loginUser);
         return "admin-dashboard";
     }
 

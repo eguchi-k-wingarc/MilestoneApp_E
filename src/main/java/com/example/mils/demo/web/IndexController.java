@@ -1,5 +1,7 @@
 package com.example.mils.demo.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +23,8 @@ public class IndexController {
     private UserService userService;
 
     @GetMapping
-    public String index() {
+    public String index(Model model,@AuthenticationPrincipal UserDetails loginUser) {
+        model.addAttribute("loginUser", loginUser);
         return "index";
     }
 
