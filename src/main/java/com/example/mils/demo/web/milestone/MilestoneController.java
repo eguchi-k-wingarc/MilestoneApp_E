@@ -55,11 +55,12 @@ public class MilestoneController {
      * @return 詳細画面のテンプレート名
      */
     @GetMapping("/{milestoneId}")
-    public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model) { // TODO: nullを許可しないlong型に変更する
+    public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         List<TaskEntity> taskList = taskService.findByMilestoneId(milestoneId);
         model.addAttribute("milestone", milestone);
         model.addAttribute("taskList", taskList);
+        model.addAttribute("loginUser", loginUser);
 
         return "milestones/detail";
     }
@@ -71,7 +72,8 @@ public class MilestoneController {
      * @return 作成フォームのテンプレート名
      */
     @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute MilestoneCreateForm creationForm) {
+    public String showCreationForm(@ModelAttribute MilestoneCreateForm creationForm, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+        model.addAttribute("loginUser", loginUser);
         return "milestones/creationForm";
     }
 
@@ -83,9 +85,9 @@ public class MilestoneController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping
-    public String create(@Validated MilestoneCreateForm creationForm, BindingResult bindingResult) {
+    public String create(@Validated MilestoneCreateForm creationForm, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
-            return showCreationForm(creationForm);
+            return showCreationForm(creationForm, model, loginUser);
         }
         milestoneService.create(creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
         return "redirect:/milestones";
@@ -99,7 +101,7 @@ public class MilestoneController {
      * @return 編集フォームのテンプレート名
      */
     @GetMapping("/{milestoneId}/update")
-    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneUpdateForm form, Model model) {
+    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         if (milestone != null) {
             form.setId(milestone.getId());
@@ -109,6 +111,7 @@ public class MilestoneController {
         } else {
             return "redirect:/milestones";
         }
+        model.addAttribute("loginUser", loginUser);
         model.addAttribute("milestoneUpdateForm", form);
         return "milestones/updateForm";
     }
@@ -123,9 +126,9 @@ public class MilestoneController {
      */
     @PostMapping("/{milestoneId}/update")
     public String update(@PathVariable("milestoneId") Long milestoneId, @Validated MilestoneUpdateForm form,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
-            return showEditForm(milestoneId, form, model);
+            return showEditForm(milestoneId, form, model, loginUser);
         }
 
         milestoneService.update(milestoneId, form.getName(), form.getDescription(), form.getDeadline());
