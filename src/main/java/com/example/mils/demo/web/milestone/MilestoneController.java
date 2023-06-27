@@ -1,6 +1,9 @@
 package com.example.mils.demo.web.milestone;
 
 import java.util.List;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,10 +37,11 @@ public class MilestoneController {
      * @return 一覧画面のテンプレート名
      */
     @GetMapping()
-    public String showList(Model model) {
+    public String showList(Model model, @AuthenticationPrincipal UserDetails loginUser) {
         List<MilestoneEntity> milestoneList = milestoneService.findAll();
 
         model.addAttribute("milestoneList", milestoneList);
+        model.addAttribute("loginUser", loginUser);
 
         return "milestones/list";
     }
