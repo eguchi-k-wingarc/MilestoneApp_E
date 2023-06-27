@@ -1,10 +1,12 @@
 create table users (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(256),
     email VARCHAR(256),
     -- TODO: NOT NULL制約の付与
     password VARCHAR(256),
     -- TODO: NOT NULL制約の付与
     authorities VARCHAR(256) NOT NUll,
+    profile_img VARCHAR(256),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,
     deleted_at timestamp NUll default NUll
@@ -46,11 +48,11 @@ create table tasks (
 );
 
 create table labels (
-id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-name VARCHAR(256) NOT NULL UNIQUE,
-color VARCHAR(256) default 'grey',
-created_at timestamp default current_timestamp,
-updated_at timestamp default current_timestamp on update current_timestamp
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(256) NOT NULL UNIQUE,
+    color VARCHAR(256) default 'grey',
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp on update current_timestamp
 );
 
 create table taskLabels (

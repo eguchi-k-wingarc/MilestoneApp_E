@@ -1,5 +1,5 @@
-insert into users (email, password, authorities) values ('egu@gmail.com', '$2a$10$Qb2HInxnyuztG4yG/m1TxOYux8UgiVkVLqB.94QTjqFTVOYQ0pjsa', 'ROLE_ADMIN');
-insert into users (email, password, authorities) values ('egu2@gmail.com', '$2a$10$rYpIV6lZNA.fKwcURw7/KOfIbvJxMg5jTDFtznAMh79j3nEvnhBQG', 'ROLE_USER');
+insert into users (name, email, password, authorities, profile_img) values ('egu', 'egu@gmail.com', '$2a$10$Qb2HInxnyuztG4yG/m1TxOYux8UgiVkVLqB.94QTjqFTVOYQ0pjsa', 'ROLE_ADMIN');
+insert into users (name, email, password, authorities, progile_img) values ('egu2', 'egu2@gmail.com', '$2a$10$rYpIV6lZNA.fKwcURw7/KOfIbvJxMg5jTDFtznAMh79j3nEvnhBQG', 'ROLE_USER');
 insert into milestones (user_id, name, description, progress) values (1, '2023年1月1日:ローンチ', 'ローンチ', 50);
 insert into milestones (user_id, name, description, progress) values (1, '2022年10月31日:プレリリース', '早期リリース', 50);
 insert into milestones (user_id, name, description, progress) values (1, '2022年7月10日:デモ開始', 'デモ作成中', 50);
