@@ -1,5 +1,6 @@
 package com.example.mils.demo.web.user;
 
+import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -84,7 +85,7 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
-         if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
@@ -94,12 +95,13 @@ public class UserController {
 
     @PostMapping("/delete")
     public String deleteUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
-         if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
         userService.update(userId, form.getEmail(), form.getPassword());
-        return "redirect:/profile";
+        userService.updateDelatedAt(userId, LocalDateTime.now());
+        return "redirect:/logout";
     }
 
     @GetMapping("/profile")

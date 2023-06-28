@@ -13,8 +13,8 @@
         </div>
         <h1 class="ui dividing header">登録情報の編集</h1>
 
-        <form class="ui form" th:action="@{'/users/' + '/update'}" th:object="${userUpdateForm}" method="post">
-            <label>emailアドレス</label>
+        <form class="ui form" th:action="@{'/users/update'}" th:object="${userUpdateForm}" method="post">
+            <label>メールアドレス</label>
             <div class="ui fields">
                 <div class="ui nine wide field"><input type="text" id="emailInput" name="email" th:field="*{email}" /></div>
                 <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div></div>
@@ -25,7 +25,12 @@
                 <div class="ui nine wide field"><input type="password" id="passwordInput" name="password" th:field="*{password}" /></div>
                 <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div></div>
             </div>
-
+            
+            <label>プロフィール写真</label>
+            <div>
+                <div class="ui nine wide field"><input type="file" name="profileInput" id="profileInput"></div>
+                <div class="ui field"><div class="ui left pointing red basic label" >Error</div></div>
+            </div>
             
             <div>
                 <button class="ui primary button" type="submit">更新</button>
