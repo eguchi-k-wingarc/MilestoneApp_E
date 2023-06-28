@@ -20,12 +20,11 @@
         </div>
 
         <div class="ui segment center aligned">
-            
+            <img class="ui circular image" th:src="${user.profileImg}" alt="">
             <h2 class="header" th:text="${user.name}">
-                <img class="ui circular image" src="" alt="">
                 Matt Giampietro
-                <div class="sub header" th:text="${user.email}"></div>
             </h2>
+            <div class="sub header" th:text="${user.email}"></div>
             <div class="description" >
                 <p th:text="${user.authorities}"></p>
                 <div class="field">

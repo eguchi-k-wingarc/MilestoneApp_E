@@ -3,7 +3,6 @@ package com.example.mils.demo.web.user;
 import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -38,6 +37,15 @@ public class UserController {
         return "users/list";
     }
 
+    
+    @GetMapping("/profile")
+    public String showDetail(@AuthenticationPrincipal UserDetails loginUser, Model model) {
+        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        model.addAttribute("user", user);
+        model.addAttribute("loginUser", loginUser);
+        return "users/detail";
+    }
+
     @GetMapping("/login")
     public String showLoginForm() {
         return "users/login";
@@ -58,11 +66,9 @@ public class UserController {
 			String filename = form.getProfileImg().getOriginalFilename();
 			FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
 			fos.write(buffer);
-		} catch (IOException e) {
+		} catch (Throwable e) {
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
-		} catch (Throwable e){
-            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", e.toString()));
-        }
+		}
         if (bindingResult.hasErrors()) {
             return showRegistrationForm(form, model);
         }
@@ -74,6 +80,7 @@ public class UserController {
     public String showUpdateForm(UserRegisterForm form, Model model, @AuthenticationPrincipal UserDetails loginUser){
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         if (user != null) {
+            form.setName(user.getName());
             form.setEmail(user.getEmail());
             form.setPassword(user.getPassword());
         } else {
@@ -86,30 +93,28 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+        try (InputStream uploadStream = form.getProfileImg().getInputStream()){
+            byte[] buffer = new byte[uploadStream.available()];
+            uploadStream.read(buffer);
+            String filename = form.getProfileImg().getOriginalFilename();
+            FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
+            fos.write(buffer);
+		} catch (Throwable e) {
+            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
+		}
         if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
-        userService.update(userId, form.getEmail(), form.getPassword());
+        userService.update(userId, form.getName(), form.getEmail(), form.getPassword(), "/profile/" + form.getProfileImg().getOriginalFilename());
         return "redirect:/profile";
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
-        if (bindingResult.hasErrors()) {
-            return showUpdateForm(form, model, loginUser);
-        }
+    public String deleteUser(@AuthenticationPrincipal UserDetails loginUser) {
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
-        userService.update(userId, form.getEmail(), form.getPassword());
         userService.updateDelatedAt(userId, LocalDateTime.now());
         return "redirect:/logout";
     }
 
-    @GetMapping("/profile")
-    public String showDetail(@AuthenticationPrincipal UserDetails loginUser, Model model) {
-        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
-        model.addAttribute("user", user);
-        model.addAttribute("loginUser", loginUser);
-        return "users/detail";
-    }
 }
