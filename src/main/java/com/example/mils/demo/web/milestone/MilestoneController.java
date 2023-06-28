@@ -18,6 +18,7 @@ import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.milestone.MilestoneService;
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
+import com.example.mils.demo.domain.task.TaskWithLabels;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 import com.example.mils.demo.web.task.TaskIsCompleteUpdateForm;
@@ -60,11 +61,11 @@ public class MilestoneController {
     @GetMapping("/{milestoneId}")
     public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
-        List<TaskEntity> taskList = taskService.findByMilestoneId(milestoneId);
+        List<TaskWithLabels> taskWithLabelsList = taskService.findTasksWithLabelsByMilestoneId(milestoneId);
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         model.addAttribute("user", user);
         model.addAttribute("milestone", milestone);
-        model.addAttribute("taskList", taskList);
+        model.addAttribute("taskWithLabelsList", taskWithLabelsList);
         model.addAttribute("loginUser", loginUser);
 
         return "milestones/detail";

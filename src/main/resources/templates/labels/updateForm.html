@@ -13,29 +13,36 @@
         </div>
         <h1 class="ui dividing header">ラベルの編集</h1>
 
-        <form class="ui form" th:action="@{'/labels/' + ${labelUpdateForm.id} + '/update'}" th:object="${labelUpdateForm}" method="post">
+        <form class="ui form" th:action="@{'/labels/' + ${labelUpdateForm.id} + '/update'}"
+            th:object="${labelUpdateForm}" method="post">
             <label>名前</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" /></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div></div>
+                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" />
+                </div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}">Error</div>
+                </div>
             </div>
-
-            <label>カラー</label>
+            <label>色</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><input type="text" id="colorInput" name="color" th:field="*{color}" /></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Error</div></div>
+                <div class="ui nine wide field"><input type="text" id="colorInput" name="color" th:field="*{color}" />
+                </div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('color')}"
+                        th:errors="*{color}">Error</div>
+                </div>
             </div>
 
-            
             <div>
                 <button class="ui primary button" type="submit">更新</button>
                 <button class="ui button" type="reset">変更を破棄</button>
             </div>
-            
-            
+
+
         </form>
     </main>
-    
+
 </body>
 
 </html>

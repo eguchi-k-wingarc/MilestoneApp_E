@@ -1,18 +1,25 @@
 package com.example.mils.demo.domain.task;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.mils.demo.domain.DeathLevelOperator;
+import com.example.mils.demo.domain.label.LabelEntity;
+import com.example.mils.demo.domain.label.LabelRepository;
 import com.example.mils.demo.domain.milestone.MilestoneRepository;
+import com.example.mils.demo.domain.taskLabel.TaskLabelEntity;
+import com.example.mils.demo.domain.taskLabel.TaskLabelRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final LabelRepository labelRepository;
+    private final TaskLabelRepository taskLabelRepository;
     private final MilestoneRepository milestoneRepository;
     private final DeathLevelOperator deathLevelOperator;
 
@@ -67,6 +74,59 @@ public class TaskService {
         int completed = (int) list.stream().filter(e -> e.isComplete() == true).count();
         int progress = (completed * 100) / count;
         milestoneRepository.updateProgress(milestoneId, progress);
-
     }
+
+    public List<TaskWithLabels> findAllTasksWithLabels() {
+        List<TaskEntity> taskEntities = taskRepository.findAll();
+
+        List<TaskWithLabels> tasksWithLabelsList = new ArrayList<>();
+        for (TaskEntity taskEntity : taskEntities) {
+            taskEntity.setDeadline(deathLevelOperator.adjustDeadline(taskEntity.getDeadline()));
+
+            List<TaskLabelEntity> taskLabelEntities = taskLabelRepository.findByTaskId(taskEntity.getId());
+
+            List<LabelEntity> labels = taskLabelEntities.stream()
+                    .map(taskLabelEntity -> labelRepository.findById(taskLabelEntity.getLabelId()))
+                    .collect(Collectors.toList());
+
+            TaskWithLabels taskWithLabels = new TaskWithLabels(taskEntity, labels);
+            tasksWithLabelsList.add(taskWithLabels);
+        }
+
+        return tasksWithLabelsList;
+    }
+
+    public TaskWithLabels findTaskWithLabelsByTaskId(Long taskId) {
+        TaskEntity taskEntity = taskRepository.findById(taskId);
+        List<TaskLabelEntity> taskLabelEntities = taskLabelRepository.findByTaskId(taskId);
+
+        List<LabelEntity> labels = taskLabelEntities.stream()
+                .map(taskLabelEntity -> labelRepository.findById(taskLabelEntity.getLabelId()))
+                .collect(Collectors.toList());
+
+        TaskWithLabels taskWithLabels = new TaskWithLabels(taskEntity, labels);
+
+        return taskWithLabels;
+    }
+
+    public List<TaskWithLabels> findTasksWithLabelsByMilestoneId(Long milestoneId) {
+        List<TaskEntity> taskEntities = taskRepository.findByMilestoneId(milestoneId);
+
+        List<TaskWithLabels> tasksWithLabelsList = new ArrayList<>();
+        for (TaskEntity taskEntity : taskEntities) {
+            taskEntity.setDeadline(deathLevelOperator.adjustDeadline(taskEntity.getDeadline()));
+
+            List<TaskLabelEntity> taskLabelEntities = taskLabelRepository.findByTaskId(taskEntity.getId());
+
+            List<LabelEntity> labels = taskLabelEntities.stream()
+                    .map(taskLabelEntity -> labelRepository.findById(taskLabelEntity.getLabelId()))
+                    .collect(Collectors.toList());
+
+            TaskWithLabels taskWithLabels = new TaskWithLabels(taskEntity, labels);
+            tasksWithLabelsList.add(taskWithLabels);
+        }
+
+        return tasksWithLabelsList;
+    }
+
 }

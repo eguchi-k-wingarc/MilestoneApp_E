@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
+import com.example.mils.demo.domain.task.TaskWithLabels;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 
@@ -44,12 +45,14 @@ public class TaskController {
     public String showDetail(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
             Model model,  @AuthenticationPrincipal UserDetails loginUser) {
         TaskEntity task = taskService.findById(taskId);
+        TaskWithLabels taskWithLabels = taskService.findTaskWithLabelsByTaskId(taskId);
         MilestoneEntity milestone = milestoneService.findById((long)task.getMilestoneId());
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         model.addAttribute("user", user);
         model.addAttribute("milestone", milestone);
         model.addAttribute("task", task);
         model.addAttribute("loginUser", loginUser);
+        model.addAttribute("taskWithLabels", taskWithLabels);
         return "tasks/detail";
     }
 
