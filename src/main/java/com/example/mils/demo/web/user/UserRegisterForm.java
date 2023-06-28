@@ -25,6 +25,7 @@ public class UserRegisterForm {
     @Size(max = 256)
     private String password;
 
+    @NotBlank
     private MultipartFile profileImg;
 
 }

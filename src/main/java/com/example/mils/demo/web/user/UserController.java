@@ -51,19 +51,22 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@RequestParam("profileImg") MultipartFile profileImg, @Validated UserRegisterForm form, BindingResult bindingResult,
+    public String registerUser(@Validated UserRegisterForm form, BindingResult bindingResult,
             Model model) {
-        try (InputStream uploadStream = profileImg.getInputStream()){
-			String filename = profileImg.getOriginalFilename();
+        
+        try (InputStream uploadStream = form.getProfileImg().getInputStream()){
+			String filename = form.getProfileImg().getOriginalFilename();
 			FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
 			IOUtils.copyLarge(uploadStream, fos);
 		} catch (IOException e) {
-            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "prifileImg", "アップロード時にエラーが発生しました"));
-		}
+            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
+		} catch (Throwable e){
+            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", e.toString()));
+        }
         if (bindingResult.hasErrors()) {
             return showRegistrationForm(form, model);
         }
-        userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES, "src\\main\\resources\\static\\profile\\" + profileImg.getOriginalFilename());
+        userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES, "src\\main\\resources\\static\\profile\\" + form.getProfileImg().getOriginalFilename());
         return "redirect:/login";
     }
 
