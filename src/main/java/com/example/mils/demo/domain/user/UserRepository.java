@@ -20,11 +20,12 @@ public interface UserRepository {
     @Select("select * from users where email = #{email}")
     Optional<UserEntity> findByEmail(@Param("email") String email);
 
-    @Insert("INSERT INTO users (email, password, authorities) VALUES (#{email}, #{password}, #{authorities})")
+    @Insert("INSERT INTO users (email, password, authorities, profileImg) VALUES (#{email}, #{password}, #{authorities}, #{profileImg})")
     void create(
             @Param("email") String email,
             @Param("password") String password,
-            @Param("authorities") String authorities
+            @Param("authorities") String authorities,
+            @Param("profileImg") String profileImg
         );
     
     @Update("UPDATE users SET email = #{email}, password = #{password} WHERE id = #{id}")

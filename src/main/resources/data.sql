@@ -9,9 +9,9 @@ insert into tasks (user_id, milestone_id, name, description, is_complete) values
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 2, 'タスク4', 'タスク4の詳細', false);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 3, 'タスク5', 'タスク5の詳細', true);
 insert into tasks (user_id, milestone_id, name, description, is_complete) values (1, 3, 'タスク6', 'タスク6の詳細', false);
-insert into labels (name) values ('default_label_1');
-insert into labels (name) values ('default_label_2');
-insert into labels (name) values ('default_label_3');
+insert into labels (name, color) values ('HELL', 'red');
+insert into labels (name, color) values ('DEATH', 'green');
+insert into labels (name, color) values ('MURI', 'black');
 insert into task_labels (task_id, label_id) values (1, 1);
 insert into task_labels (task_id, label_id) values (1, 2);
 insert into task_labels (task_id, label_id) values (1, 3);

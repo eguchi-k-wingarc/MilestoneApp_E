@@ -26,7 +26,7 @@ public class LabelService {
     }
 
     @Transactional
-    public void update(Long id, String name, String color) {
+    public void update(long id, String name, String color) {
         labelRepository.update(id, name, color);
     }
 

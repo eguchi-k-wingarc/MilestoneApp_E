@@ -13,12 +13,12 @@ public interface TaskLabelRepository {
     
     // taskのIDで紐づいたラベルを全て取得
     // return List<TaskLabelEntity>
-    @Select("SELECT * FROM task_labels WHERE task_id = #{taskId}")
+    @Select("SELECT * FROM labels WHERE task_id = #{taskId}")
     List<TaskLabelEntity> findByTaskId(@Param("taskId") long taskId);
 
     // taskのIDとlabelのIDを紐づける
-    @Insert("INSERT INTO task_labels (task_id, label_id) VALUES (#{taskId}, #{labelId})")
-    void create(@Param("taskId") long taskId, @Param("labelId") String name);
+    @Insert("INSERT INTO taskLabels (task_id, label_id) VALUES (#{taskId}, #{labelId})")
+    void create(@Param("taskId") long taskId, @Param("labelId") long labelId);
 
     // 紐づけ削除
     @Delete("DELETE FROM task_labels WHERE id = #{id}")

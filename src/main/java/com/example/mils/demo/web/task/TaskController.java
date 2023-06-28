@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
 import com.example.mils.demo.domain.task.TaskWithLabels;
+import com.example.mils.demo.domain.user.UserEntity;
+import com.example.mils.demo.domain.user.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -29,6 +31,7 @@ public class TaskController {
 
     private final TaskService taskService;
     private final MilestoneService milestoneService;
+    private final UserService userService;
 
     /**
      * 指定されたマイルストーンIDとタスクIDに対するタスク詳細画面を表示します。
@@ -44,6 +47,8 @@ public class TaskController {
         TaskEntity task = taskService.findById(taskId);
         TaskWithLabels taskWithLabels = taskService.findTaskWithLabelsByTaskId(taskId);
         MilestoneEntity milestone = milestoneService.findById((long)task.getMilestoneId());
+        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        model.addAttribute("user", user);
         model.addAttribute("milestone", milestone);
         model.addAttribute("task", task);
         model.addAttribute("loginUser", loginUser);
