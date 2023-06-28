@@ -28,14 +28,14 @@ public class UserService {
     }
 
     @Transactional
-    public void create(String email, String password, String authorities,String profile) {
+    public void create(String name, String email, String password, String authorities,String profile) {
         String hashedPassword = passwordEncoder.encode(password);
-        userRepository.create(email, hashedPassword, authorities, profile);
+        userRepository.create(name, email, hashedPassword, authorities, profile);
     }
 
     @Transactional
-    public void update(long id,String email, String password) {
+    public void update(long id, String name , String email, String password, String profile) {
         String hashedPassword = passwordEncoder.encode(password);
-        userRepository.update(id, email, hashedPassword);
+        userRepository.update(id, name, email, hashedPassword, profile);
     }
 }
