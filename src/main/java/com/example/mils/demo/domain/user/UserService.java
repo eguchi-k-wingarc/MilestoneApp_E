@@ -41,7 +41,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateDelatedAt(long id, LocalDateTime delated_at) {
-        userRepository.updateDelatedAt(id, delated_at);
+    public void updateDeletedAt(long id, LocalDateTime deleted_at) {
+        userRepository.updateDeletedAt(id, deleted_at);
     }
 }

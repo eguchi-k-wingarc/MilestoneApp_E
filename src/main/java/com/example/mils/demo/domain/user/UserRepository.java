@@ -39,9 +39,9 @@ public interface UserRepository {
         @Param("profileImg") String profileImg
     );
 
-    @Update("UPDATE users SET delated_at = #{delated_at} WHERE id = #{id}")
-    void updateDelatedAt(
+    @Update("UPDATE users SET deleted_at = #{deleted_at} WHERE id = #{id}")
+    void updateDeletedAt(
         @Param("id") long id,
-        @Param("delated_at") LocalDateTime delated_at
+        @Param("deleted_at") LocalDateTime deleted_at
     );
 }
