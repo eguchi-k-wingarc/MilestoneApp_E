@@ -54,7 +54,7 @@ public class UserController {
 
     @GetMapping("/update")
     public String showUpdateForm(UserRegisterForm form, Model model, @AuthenticationPrincipal UserDetails loginUser){
-         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         if (user != null) {
             form.setEmail(user.getEmail());
             form.setPassword(user.getPassword());

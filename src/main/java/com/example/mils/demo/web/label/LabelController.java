@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -64,6 +65,58 @@ public class LabelController {
             return showCreationForm(creationForm, model, loginUser);
         }
         labelService.create(creationForm.getName(), creationForm.getColor());
+        return "redirect:/labels";
+    }
+
+    /**
+     * ラベルの編集フォームを表示します。
+     *
+     * @param labelId ラベルのID
+     * @param model       画面に渡すデータを格納するModelオブジェクト
+     * @return 編集フォームのテンプレート名
+     */
+    @GetMapping("/{labelId}/update")
+    public String showEditForm(@PathVariable("labelId") Long labelId, LabelUpdateForm form, Model model) {
+        LabelEntity label = labelService.findById(labelId);
+        if (label != null) {
+            form.setId(label.getId());
+            form.setName(label.getName());
+            form.setColor(label.getColor());
+        } else {
+            return "redirect:/labels";
+        }
+        model.addAttribute("labelUpdateForm", form);
+        return "labels/updateForm";
+    }
+
+    /**
+     * ラベルを更新します。
+     *
+     * @param labelId   マイルストーンのID
+     * @param form          マイルストーン編集フォームオブジェクト
+     * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
+     * @return 一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{labelId}/update")
+    public String update(@PathVariable("labelId") Long labelId, @Validated LabelUpdateForm form,
+            BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return showEditForm(labelId, form, model);
+        }
+
+        labelService.update(labelId, form.getName(), form.getColor());
+        return "redirect:/labels";
+    }
+
+    /**
+     * ラベルを削除します。
+     *
+     * @param rabelId ラベルのID
+     * @return 一覧画面にリダイレクトするURL
+     */
+    @PostMapping("/{labelId}/delete")
+    public String delete(@PathVariable("labelId") Long labelId) {
+        labelService.delete(labelId);
         return "redirect:/labels";
     }
 

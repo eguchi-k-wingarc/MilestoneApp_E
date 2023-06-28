@@ -26,12 +26,12 @@ public class LabelService {
     }
 
     @Transactional
-    public void update(Long id, String name, String color) {
+    public void update(long id, String name, String color) {
         labelRepository.update(id, name, color);
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(long id) {
         labelRepository.delete(id);
     }
 }
