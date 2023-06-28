@@ -10,11 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 
@@ -41,7 +39,6 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(@ModelAttribute UserRegisterForm form, Model model) {
-        
         return "users/register";
     }
 
@@ -61,7 +58,6 @@ public class UserController {
         if (user != null) {
             form.setEmail(user.getEmail());
             form.setPassword(user.getPassword());
-
         } else {
             return "redirect:/users";
         }
@@ -70,10 +66,31 @@ public class UserController {
         return "users/updateForm";
     }
 
+    @PostMapping("/update")
+    public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+         if (bindingResult.hasErrors()) {
+            return showUpdateForm(form, model, loginUser);
+        }
+        long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
+        userService.update(userId, form.getEmail(), form.getPassword());
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+         if (bindingResult.hasErrors()) {
+            return showUpdateForm(form, model, loginUser);
+        }
+        long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
+        userService.update(userId, form.getEmail(), form.getPassword());
+        return "redirect:/profile";
+    }
+
     @GetMapping("/profile")
     public String showDetail(@AuthenticationPrincipal UserDetails loginUser, Model model) {
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         model.addAttribute("user", user);
+        model.addAttribute("loginUser", loginUser);
         return "users/detail";
     }
 }

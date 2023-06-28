@@ -32,4 +32,10 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(password);
         userRepository.create(email, hashedPassword, authorities);
     }
+
+    @Transactional
+    public void update(long id,String email, String password) {
+        String hashedPassword = passwordEncoder.encode(password);
+        userRepository.update(id, email, hashedPassword);
+    }
 }
