@@ -31,7 +31,7 @@ public class LabelService {
     }
 
     @Transactional
-    public void delete(Long id) {
-        labelRepository.delete(id);
+    public void delete(Long labelId) {
+        labelRepository.delete(labelId);
     }
 }
