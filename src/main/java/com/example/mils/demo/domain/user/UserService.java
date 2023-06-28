@@ -28,9 +28,9 @@ public class UserService {
     }
 
     @Transactional
-    public void create(String email, String password, String authorities) {
+    public void create(String email, String password, String authorities,String profile) {
         String hashedPassword = passwordEncoder.encode(password);
-        userRepository.create(email, hashedPassword, authorities);
+        userRepository.create(email, hashedPassword, authorities, profile);
     }
 
     @Transactional

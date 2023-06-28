@@ -4,20 +4,25 @@
         <title>User Register Form - Death Milestone</title>
     </head>
 <body>
-    <header th:replace="base::header_menu(false,false,false)"></header>
         <main class="ui container">
             <div class="ui secondary menu">
                 <a class="item" th:href="@{/login}">&#60;ログイン画面に戻る</a>
             </div>
             <h1 class="ui dividing header">新規登録</h1>
             
-            <form class="ui form" th:action="@{/milestones}" th:object="${UserRegisterForm}" method="post">
+            <form class="ui form" th:action="@{/users/register}" th:object="${userRegisterForm}" method="post" enctype="multipart/form-data">
+
+            <label>名前</label>
+            <div class="ui fields">
+                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" /></div>
+                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div></div>
+            </div>
+            
             <label>メールアドレス</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><input type="text" id="emailInput" name="email" th:field="*{email}" /></div>
+                <div class="ui nine wide field"><input type="email" id="emailInput" name="email" th:field="*{email}" /></div>
                 <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div></div>
             </div>
-
 
             <label>パスワード</label>
             <div class="ui fields">
@@ -27,8 +32,8 @@
 
             <label>プロフィール写真</label>
             <div>
-                <div class="ui nine wide field"><input type="file" name="profileInput" id="profileInput"></div>
-                <div class="ui field"><div class="ui left pointing red basic label" >Error</div></div>
+                <div class="ui nine wide field"><input type="file" name="profile" id="profileInput" th:field="*{profileImg}"><input type="hidden" name="" th:field="*{profileImg}" value="null"></div>
+                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('profileImg')}" th:errors="*{profileImg}">Error</div></div>
             </div>
             <div>
                 <button class="ui primary button" type="submit">登録</button>
