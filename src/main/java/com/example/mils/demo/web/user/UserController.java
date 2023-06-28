@@ -71,7 +71,18 @@ public class UserController {
          if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
-        //userService.update(form.getName(), form.getDescription(), form.getDeadline());
+        long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
+        userService.update(userId, form.getEmail(), form.getPassword());
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+         if (bindingResult.hasErrors()) {
+            return showUpdateForm(form, model, loginUser);
+        }
+        long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
+        userService.update(userId, form.getEmail(), form.getPassword());
         return "redirect:/profile";
     }
 
