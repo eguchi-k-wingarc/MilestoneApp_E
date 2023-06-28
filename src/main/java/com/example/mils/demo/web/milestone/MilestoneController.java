@@ -18,6 +18,8 @@ import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.milestone.MilestoneService;
 import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
+import com.example.mils.demo.domain.user.UserEntity;
+import com.example.mils.demo.domain.user.UserService;
 import com.example.mils.demo.web.task.TaskIsCompleteUpdateForm;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +31,7 @@ public class MilestoneController {
 
     private final MilestoneService milestoneService;
     private final TaskService taskService;
+    private final UserService userService;
 
     /**
      * 一覧画面を表示
@@ -58,6 +61,8 @@ public class MilestoneController {
     public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         List<TaskEntity> taskList = taskService.findByMilestoneId(milestoneId);
+        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        model.addAttribute("user", user);
         model.addAttribute("milestone", milestone);
         model.addAttribute("taskList", taskList);
         model.addAttribute("loginUser", loginUser);
