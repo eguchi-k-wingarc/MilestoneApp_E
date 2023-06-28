@@ -1,17 +1,25 @@
 package com.example.mils.demo.web.user;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
@@ -43,12 +51,19 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Validated UserRegisterForm form, BindingResult bindingResult,
+    public String registerUser(@RequestParam("profileImg") MultipartFile profileImg, @Validated UserRegisterForm form, BindingResult bindingResult,
             Model model) {
+        try (InputStream uploadStream = profileImg.getInputStream()){
+			String filename = profileImg.getOriginalFilename();
+			FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
+			IOUtils.copyLarge(uploadStream, fos);
+		} catch (IOException e) {
+            bindingResult.addError(new FieldError(bindingResult.getObjectName(), "prifileImg", "アップロード時にエラーが発生しました"));
+		}
         if (bindingResult.hasErrors()) {
             return showRegistrationForm(form, model);
         }
-        userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES);
+        userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES, "src\\main\\resources\\static\\profile\\" + profileImg.getOriginalFilename());
         return "redirect:/login";
     }
 
