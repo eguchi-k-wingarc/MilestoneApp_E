@@ -10,7 +10,7 @@
         <h1 class="ui dividing header center aligned">ログインページ</h1>
         <div class="ui middle aligned center aligned grid">
             <div class="culumn">
-              <form class="ui large form" th:action="@{/login}" method="post">
+              <form class="ui large form" th:action="@{/users/login}" method="post">
                 <div class="ui stacked segment">
                   <div class="field">
                     <div class="ui left icon input">
@@ -34,7 +34,7 @@
               </form>
           
               <div class="ui message">
-                New to us? <a th:href="@{/register}">Sign Up</a>
+                New to us? <a th:href="@{/users/register}">Sign Up</a>
               </div>
             </div>
         </div>

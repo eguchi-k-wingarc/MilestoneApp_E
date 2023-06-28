@@ -14,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 public class TaskLabelService {
     private final TaskLabelRepository taskLabelRepository;
 
-    public List<TaskLabelEntity> findAll(){
-        return taskLabelRepository.findAll();
-    }
+    // public List<TaskLabelEntity> findAll(){
+    //     return taskLabelRepository.findAll();
+    // }
 
-    public TaskEntity findByID(Long id){
-        return taskLabelRepository.findById(id);
-    }
+    // public TaskEntity findByID(Long id){
+    //     return taskLabelRepository.findById(id);
+    // }
 
     public List<TaskLabelEntity> findByTaskId(long taskId){
         return taskLabelRepository.findByTaskId(taskId);
