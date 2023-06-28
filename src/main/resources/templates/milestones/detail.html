@@ -32,10 +32,11 @@
             <p th:text="|期限：${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}|"></p>
 
             <!-- ここにユーザーが入る -->
-            <div class="ui placeholder">
-                <div class="image header">
-                    <div class="line"></div>
-                    <div class="line"></div>
+            <div class="ui card middle aligned">
+                <div class="ui content">
+                    <img class="ui circular image" th:src="${user.profileImg}" alt="">
+                    <h2 class="ui center aligned header" th:utext='|${user.name}<div class="ui sub header">${user.email}</div>|'></h2>
+                    <div class="ui center aligned description" th:text="${user.authorities}"></div>
                 </div>
             </div>
             <h2 class="ui header" th:text="${user.name}">
