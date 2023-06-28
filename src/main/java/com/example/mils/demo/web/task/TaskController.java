@@ -50,9 +50,9 @@ public class TaskController {
         TaskWithLabels taskWithLabels = taskService.findTaskWithLabelsByTaskId(taskId);
         MilestoneEntity milestone = milestoneService.findById((long) taskWithLabels.getTask().getMilestoneId());
         UserEntity user = userService.findById(milestone.getUserId());
-        UserEntity taskUser = userService.findById(taskWithLabels.getTask().getUserId());
+        UserEntity tUser = userService.findById(taskWithLabels.getTask().getUserId());
         model.addAttribute("user", user);
-        model.addAttribute("taskuser", taskUser);
+        model.addAttribute("tUser", tUser);
         model.addAttribute("milestone", milestone);
         model.addAttribute("loginUser", loginUser);
         model.addAttribute("taskWithLabels", taskWithLabels);
