@@ -10,18 +10,23 @@
         <div class="ui secondary menu">
                 <a class="item" th:href="@{/milestones/{milestoneId}(milestoneId=${milestone.id})}">&#60;マイルストーンに戻る</a>
             <div class="right menu">
-                <a class="item" th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${task.id})}"><i class="edit icon"></i></a>
-                <form class="item"  th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${task.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+                <a class="item" th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}"><i class="edit icon"></i></a>
+                <form class="item"  th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
             </div>
         </div>
 
         <div class="ui segment">
-            <h1 class="ui dividing header" th:text="${task.name}">Milestone</h1>
-            <h3 th:text="${task.description}"></h3>
-            <p>完了済：<input type="checkbox" id="check" th:checked="${task.isComplete}"  th:onChange="|toggleCheckbox('@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${task.id})}');|"/></p>
+            <h1 class="ui dividing header" th:text="${taskWithLabels.task.name}">Milestone</h1>
+            <h3 th:text="${taskWithLabels.task.description}"></h3>
+            <p>
+                <span th:each="label : ${taskWithLabels.labels}">
+                    <a class="ui label" th:classappend="${label.color}" th:text="${label.name}"></a>
+                </span>
+            </p>
+            <p>完了済：<input type="checkbox" id="check" th:checked="${taskWithLabels.task.isComplete}"  th:onChange="|toggleCheckbox('@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${taskWithLabels.task.id})}');|"/></p>
             
-            <p th:text="|作成：${#temporals.format(task.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
-            <p th:text="|期限：${#temporals.format(task.deadline,'yyyy/MM/dd HH:mm')}|"></p>
+            <p th:text="|作成：${#temporals.format(taskWithLabels.task.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
+            <p th:text="|期限：${#temporals.format(taskWithLabels.task.deadline,'yyyy/MM/dd HH:mm')}|"></p>
 
             <!-- ここにユーザーが入る -->
             <div class="ui placeholder">

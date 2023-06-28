@@ -60,37 +60,37 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="taskwithLabels : ${taskWithLabelsList}">
-                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskwithLabels.task.id})}"
-                            th:text="${taskwithLabels.task.id}"></a></td>
-                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskwithLabels.task.id})}"
-                            th:text="${taskwithLabels.task.name}"></a></td>
-                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskwithLabels.task.id})}"
-                            th:text="${taskwithLabels.task.description}"></a></td>
+                <tr th:each="taskWithLabels : ${taskWithLabelsList}">
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskWithLabels.task.id})}"
+                            th:text="${taskWithLabels.task.id}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskWithLabels.task.id})}"
+                            th:text="${taskWithLabels.task.name}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskWithLabels.task.id})}"
+                            th:text="${taskWithLabels.task.description}"></a></td>
                     <td>
-                        <span th:each="label : ${taskwithLabels.labels}">
+                        <span th:each="label : ${taskWithLabels.labels}">
                             <a class="ui label" th:classappend="${label.color}" th:text="${label.name}"></a>
                         </span>
                     </td>
 
-                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskwithLabels.task.id})}"
-                            th:text="${#temporals.format(taskwithLabels.task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
-                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskwithLabels.task.id})}"
-                            th:text="${#temporals.format(taskwithLabels.task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskWithLabels.task.id})}"
+                            th:text="${#temporals.format(taskWithLabels.task.createdAt,'yyyy/MM/dd HH:mm')}"></a></td>
+                    <td><a th:href="@{/milestones/{milestoneId}/tasks/{id}(milestoneId=${milestone.id}, id=${taskWithLabels.task.id})}"
+                            th:text="${#temporals.format(taskWithLabels.task.deadline,'yyyy/MM/dd HH:mm')}"></a></td>
                     <td class="center aligned">
                         <div class="ui icon buttons" style="margin: auto;">
                             <a class="ui basic button"
-                                th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${taskwithLabels.task.id})}"><i
+                                th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}"><i
                                     class="edit icon"></i></a>
                             <form class="ui icon buttons"
-                                th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${taskwithLabels.task.id})}"
+                                th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}"
                                 method="post"><button class="ui basic button" type="submit"><i
                                         class="red trash icon"></i></button></form>
                         </div>
                     </td>
                     <td>
-                        <input type="checkbox" th:id="|check${taskwithLabels.task.id}|" th:checked="${taskwithLabels.task.isComplete}"
-                            th:onChange="|toggleCheckbox(${taskwithLabels.task.id},'@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${taskwithLabels.task.id})}');|" />
+                        <input type="checkbox" th:id="|check${taskWithLabels.task.id}|" th:checked="${taskWithLabels.task.isComplete}"
+                            th:onChange="|toggleCheckbox(${taskWithLabels.task.id},'@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${taskWithLabels.task.id})}');|" />
                     </td>
                 </tr>
             </tbody>
