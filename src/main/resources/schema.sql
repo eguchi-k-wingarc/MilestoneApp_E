@@ -55,7 +55,7 @@ create table labels (
     updated_at timestamp default current_timestamp on update current_timestamp
 );
 
-create table taskLabels (
+create table task_labels (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     task_id BIGINT NOT NULL,
     label_id BIGINT NOT NULL,

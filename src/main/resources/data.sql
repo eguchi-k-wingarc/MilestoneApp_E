@@ -12,3 +12,9 @@ insert into tasks (user_id, milestone_id, name, description, is_complete) values
 insert into labels (name) values ('default_label_1');
 insert into labels (name) values ('default_label_2');
 insert into labels (name) values ('default_label_3');
+insert into task_labels (task_id, label_id) values (1, 1);
+insert into task_labels (task_id, label_id) values (1, 2);
+insert into task_labels (task_id, label_id) values (1, 3);
+insert into task_labels (task_id, label_id) values (2, 1);
+insert into task_labels (task_id, label_id) values (2, 2);
+insert into task_labels (task_id, label_id) values (2, 3);

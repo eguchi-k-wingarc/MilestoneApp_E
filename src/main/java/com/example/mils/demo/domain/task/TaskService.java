@@ -6,13 +6,19 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.mils.demo.domain.DeathLevelOperator;
+import com.example.mils.demo.domain.label.LabelEntity;
+import com.example.mils.demo.domain.label.LabelRepository;
 import com.example.mils.demo.domain.milestone.MilestoneRepository;
+import com.example.mils.demo.domain.taskLabel.TaskLabelEntity;
+import com.example.mils.demo.domain.taskLabel.TaskLabelRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final LabelRepository labelRepository;
+    private final TaskLabelRepository taskLabelRepository;
     private final MilestoneRepository milestoneRepository;
     private final DeathLevelOperator deathLevelOperator;
 
@@ -67,6 +73,18 @@ public class TaskService {
         int completed = (int) list.stream().filter(e -> e.isComplete() == true).count();
         int progress = (completed * 100) / count;
         milestoneRepository.updateProgress(milestoneId, progress);
+    }
 
+    public TaskWithLabels findTaskWithLabelsByTaskId(Long taskId) {
+        TaskEntity taskEntity = taskRepository.findById(taskId);
+        List<TaskLabelEntity> taskLabelEntities = taskLabelRepository.findByTaskId(taskId);
+
+        List<LabelEntity> labels = taskLabelEntities.stream()
+                .map(taskLabelEntity -> labelRepository.findById(taskLabelEntity.getLabelId()))
+                .collect(Collectors.toList());
+
+        TaskWithLabels taskWithLabels = new TaskWithLabels(taskEntity, labels);
+
+        return taskWithLabels;
     }
 }
