@@ -29,7 +29,7 @@ public interface UserRepository {
     
     @Update("UPDATE users SET email = #{email}, password = #{password} WHERE id = #{id}")
     void update(
-        @Param("id") String id,
+        @Param("id") long id,
         @Param("email") String email,
         @Param("password") String password
     );
