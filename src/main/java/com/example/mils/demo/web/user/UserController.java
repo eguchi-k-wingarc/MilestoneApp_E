@@ -1,12 +1,12 @@
 package com.example.mils.demo.web.user;
 
+import java.time.LocalDateTime;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -53,9 +53,11 @@ public class UserController {
             Model model) {
         
         try (InputStream uploadStream = form.getProfileImg().getInputStream()){
+            byte[] buffer = new byte[uploadStream.available()];
+            uploadStream.read(buffer);
 			String filename = form.getProfileImg().getOriginalFilename();
 			FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
-			IOUtils.copyLarge(uploadStream, fos);
+			fos.write(buffer);
 		} catch (IOException e) {
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
 		} catch (Throwable e){
@@ -64,7 +66,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return showRegistrationForm(form, model);
         }
-        userService.create(form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES, "src\\main\\resources\\static\\profile\\" + form.getProfileImg().getOriginalFilename());
+        userService.create( form.getName(), form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES, "/profile/" + form.getProfileImg().getOriginalFilename());
         return "redirect:/login";
     }
 
@@ -84,7 +86,7 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
-         if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
@@ -94,12 +96,13 @@ public class UserController {
 
     @PostMapping("/delete")
     public String deleteUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
-         if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
         userService.update(userId, form.getEmail(), form.getPassword());
-        return "redirect:/profile";
+        userService.updateDelatedAt(userId, LocalDateTime.now());
+        return "redirect:/logout";
     }
 
     @GetMapping("/profile")
