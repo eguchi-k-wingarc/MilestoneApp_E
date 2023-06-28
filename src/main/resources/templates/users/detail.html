@@ -13,32 +13,28 @@
             <a class="item" th:href="@{/milestones}">&#60;戻る</a>
             <div class="right menu">
 
-                <a class="item" th:href="@{/milestones/{milestoneId}/update(milestoneId=${milestone.id})}"><i class="edit icon"></i></a>
-                <form class="item"  th:action="@{/milestones/{milestoneId}/delete(milestoneId=${milestone.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+                <a class="item" th:href="@{/users/update}"><i class="edit icon"></i></a>
+                <form class="item"  th:action="@{/users/delete}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
 
             </div>
         </div>
 
-        
-        <div class="ui segment">
-            <h1 class="ui dividing header" th:text="${milestone.name}">Milestone</h1>
-            <h3 th:text="${milestone.description}"></h3>
-            <progress max="100" th:value="${milestone.progress}"></progress>
-            <span th:text="|${milestone.progress}%|"></span>
+        <div class="ui segment center aligned">
             
-            <p th:text="|作成：${#temporals.format(milestone.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
-            <p th:text="|期限：${#temporals.format(milestone.deadline,'yyyy/MM/dd HH:mm')}|"></p>
-
-            <!-- ここにユーザーが入る -->
-            <div class="ui placeholder">
-                <div class="image header">
-                    <div class="line"></div>
-                    <div class="line"></div>
+            <h2 class="header" th:text="${user.name}">
+                <img class="ui circular image" src="" alt="">
+                Matt Giampietro
+                <div class="sub header" th:text="${user.email}"></div>
+            </h2>
+            <div class="description" >
+                <p th:text="${user.authorities}"></p>
+                <div class="field">
+                    <input type="password" name="" id="" th:value="${user.password}" disabled>
                 </div>
+                <p th:text="|registerdAt: ${#temporals.format(user.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
+                <p th:text="|updatedAt: ${#temporals.format(user.updatedAt,'yyyy/MM/dd HH:mm')}|"></p>
+                <p th:text="|deletedAt: ${#temporals.format(user.deletedAt,'yyyy/MM/dd HH:mm')}|" th:unless="${user.deletedAt == null}"></p>
             </div>
-        </div>
-        <div class="ui card">
-            
         </div>
     </main>
 </body>
