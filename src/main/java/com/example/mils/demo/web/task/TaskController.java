@@ -1,9 +1,11 @@
 package com.example.mils.demo.web.task;
 
+import com.example.mils.demo.domain.label.LabelEntity;
+import com.example.mils.demo.domain.label.LabelService;
 import com.example.mils.demo.domain.milestone.*;
-
 import java.lang.Boolean;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
 import com.example.mils.demo.domain.task.TaskWithLabels;
+import com.example.mils.demo.domain.taskLabel.TaskLabelService;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 
@@ -32,6 +33,8 @@ public class TaskController {
     private final TaskService taskService;
     private final MilestoneService milestoneService;
     private final UserService userService;
+    private final LabelService labelService;
+    private final TaskLabelService taskLabelService;
 
     /**
      * 指定されたマイルストーンIDとタスクIDに対するタスク詳細画面を表示します。
@@ -43,9 +46,9 @@ public class TaskController {
      */
     @GetMapping("/{taskId}")
     public String showDetail(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            Model model,  @AuthenticationPrincipal UserDetails loginUser) {
+            Model model, @AuthenticationPrincipal UserDetails loginUser) {
         TaskWithLabels taskWithLabels = taskService.findTaskWithLabelsByTaskId(taskId);
-        MilestoneEntity milestone = milestoneService.findById((long)taskWithLabels.getTask().getMilestoneId());
+        MilestoneEntity milestone = milestoneService.findById((long) taskWithLabels.getTask().getMilestoneId());
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         model.addAttribute("user", user);
         model.addAttribute("milestone", milestone);
@@ -63,7 +66,7 @@ public class TaskController {
      */
     @GetMapping("/create")
     public String showCreationForm(@PathVariable("milestoneId") Long milestoneId,
-            @ModelAttribute TaskCreateForm creationForm, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
+            @ModelAttribute TaskCreateForm creationForm, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         model.addAttribute("milestoneId", milestoneId);
         model.addAttribute("loginUser", loginUser);
         return "tasks/creationForm";
@@ -79,11 +82,12 @@ public class TaskController {
      */
     @PostMapping("/create")
     public String create(@PathVariable("milestoneId") Long milestoneId, @Validated TaskCreateForm creationForm,
-            BindingResult bindingResult, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
+            BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(milestoneId, creationForm, model, loginUser);
         }
-        taskService.create(milestoneId, creationForm.getName(), creationForm.getDescription(), creationForm.getDeadline());
+        taskService.create(milestoneId, creationForm.getName(), creationForm.getDescription(),
+                creationForm.getDeadline());
         taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
     }
@@ -98,15 +102,18 @@ public class TaskController {
      */
     @GetMapping("/{taskId}/update")
     public String showEditForm(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            TaskUpdateForm form, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
-        TaskEntity task = taskService.findById(taskId);
-        if (task != null) {
-            form.setId(task.getId());
-            form.setName(task.getName());
-            form.setDescription(task.getDescription());
+            TaskUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+        TaskWithLabels taskWithLabels = taskService.findTaskWithLabelsByTaskId(taskId);
+        if (taskWithLabels.getTask() != null) {
+            form.setId(taskWithLabels.getTask().getId());
+            form.setName(taskWithLabels.getTask().getName());
+            form.setDescription(taskWithLabels.getTask().getDescription());
+            form.setLabels(taskWithLabels.getLabels().stream().map(LabelEntity::getId).collect(Collectors.toList()));
         } else {
             return "redirect:/milestones/" + milestoneId;
         }
+        List<LabelEntity> allLabels = labelService.findAll();
+        model.addAttribute("allLabels", allLabels);
         model.addAttribute("taskUpdateForm", form);
         model.addAttribute("loginUser", loginUser);
         return "tasks/updateForm";
@@ -123,12 +130,14 @@ public class TaskController {
      */
     @PostMapping("/{taskId}/update")
     public String update(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
-            @Validated TaskUpdateForm form, BindingResult bindingResult, Model model,  @AuthenticationPrincipal UserDetails loginUser) {
+            @Validated TaskUpdateForm form, BindingResult bindingResult, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showEditForm(milestoneId, taskId, form, model, loginUser);
         }
 
         taskService.update(taskId, form.getName(), form.getDescription(), form.getDeadline());
+        taskLabelService.replaceTaskWithLabels(taskId, form.getLabels());
         taskService.calcProgress(milestoneId);
         return "redirect:/milestones/" + milestoneId;
     }
@@ -143,10 +152,9 @@ public class TaskController {
      * @return タスク一覧画面にリダイレクトするURL
      */
 
-     
-
     @PostMapping("/{taskId}/update-isComplete")
-    public String updateIsComplete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,TaskIsCompleteUpdateForm form, Model model) {
+    public String updateIsComplete(@PathVariable("milestoneId") Long milestoneId, @PathVariable("taskId") Long taskId,
+            TaskIsCompleteUpdateForm form, Model model) {
         Boolean isComplete = form.getIsComplete();
         taskService.updateIsComplete(taskId, isComplete);
         taskService.calcProgress(milestoneId);

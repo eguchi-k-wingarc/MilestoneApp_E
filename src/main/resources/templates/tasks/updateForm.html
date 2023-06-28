@@ -33,6 +33,23 @@
                 </div>
             </div>
 
+            <label>Labels</label>
+            <div class="ui fields">
+                <div class="ui nine wide field">
+                    <label th:for="${'label' + label.id}" th:each="label : ${allLabels}" style="margin-bottom: 10px; display: flex; align-items: center;">
+                        <div class="ui checkbox" style="margin-right: 5px;">
+                            <input type="checkbox" tabindex="0" class="hidden" th:id="${'label' + label.id}" th:name="labels" th:value="${label.id}" th:checked="${#lists.contains(taskUpdateForm.labels, label.id) ? 'checked' : ''}"/>
+                            <label th:for="${'label' + label.id}"></label>
+                        </div>
+                        <div class="ui label" th:classappend="${label.color}" th:text="${label.name}"></div>
+                    </label>
+                </div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('labels')}"
+                        th:errors="*{labels}">Error</div>
+                </div>
+            </div>
+
             <label>Deadline</label>
             <div class="ui fields">
                 <div class="ui three wide field"><input id="deadlineInput" type="datetime-local" name="deadlineInput"

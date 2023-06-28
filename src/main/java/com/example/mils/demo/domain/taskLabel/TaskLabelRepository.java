@@ -10,17 +10,21 @@ import org.springframework.data.repository.query.Param;
 
 @Mapper
 public interface TaskLabelRepository {
+    @Select("SELECT * FROM task_labels")
+    List<TaskLabelEntity> findAll();
 
-    // taskのIDで紐づいたラベルを全て取得
-    // return List<TaskLabelEntity>
+    @Select("SELECT * FROM task_labels WHERE id = #{id}")
+    TaskLabelEntity findById(@Param("id") Long id);
+
     @Select("SELECT * FROM task_labels WHERE task_id = #{taskId}")
     List<TaskLabelEntity> findByTaskId(@Param("taskId") long taskId);
 
-    // taskのIDとlabelのIDを紐づける
     @Insert("INSERT INTO task_labels (task_id, label_id) VALUES (#{taskId}, #{labelId})")
     void create(@Param("taskId") long taskId, @Param("labelId") long labelId);
 
-    // 紐づけ削除
     @Delete("DELETE FROM task_labels WHERE id = #{id}")
     void delete(@Param("id") long id);
+
+    @Delete("DELETE FROM task_labels WHERE task_id = #{taskId}")
+    void deleteByTaskId(@Param("taskId") long taskId);
 }
