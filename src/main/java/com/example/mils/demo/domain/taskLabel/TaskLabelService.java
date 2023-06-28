@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.mils.demo.domain.task.TaskEntity;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
