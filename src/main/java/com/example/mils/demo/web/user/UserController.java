@@ -39,7 +39,6 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(@ModelAttribute UserRegisterForm form, Model model) {
-        
         return "users/register";
     }
 
@@ -65,6 +64,15 @@ public class UserController {
         model.addAttribute("loginUser", loginUser);
         model.addAttribute("userUpdateForm", form);
         return "users/updateForm";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+         if (bindingResult.hasErrors()) {
+            return showUpdateForm(form, model, loginUser);
+        }
+        //userService.update(form.getName(), form.getDescription(), form.getDeadline());
+        return "redirect:/profile";
     }
 
     @GetMapping("/profile")

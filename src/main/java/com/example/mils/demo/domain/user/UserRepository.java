@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserRepository {
@@ -25,4 +26,11 @@ public interface UserRepository {
             @Param("password") String password,
             @Param("authorities") String authorities
         );
+    
+    @Update("UPDATE users SET email = #{email}, password = #{password} WHERE id = #{id}")
+    void update(
+        @Param("id") String id,
+        @Param("email") String email,
+        @Param("password") String password
+    );
 }
