@@ -6,11 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.List;
-
-import com.example.mils.demo.domain.task.TaskEntity;
 import com.example.mils.demo.domain.task.TaskService;
+import com.example.mils.demo.domain.task.TaskWithLabels;
 
 import lombok.AllArgsConstructor;
 
@@ -34,9 +32,9 @@ public class TaskListController {
      */
     @GetMapping
     public String showList(Model model, @AuthenticationPrincipal UserDetails loginUser) {
-        List<TaskEntity> taskList = taskService.findAll();
+        List<TaskWithLabels> taskWithLabelsList = taskService.findAllTasksWithLabels();
 
-        model.addAttribute("taskList", taskList);
+        model.addAttribute("taskWithLabelsList", taskWithLabelsList);
         model.addAttribute("loginUser", loginUser);
         return "tasks/list";
     }

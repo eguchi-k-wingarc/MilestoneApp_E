@@ -47,7 +47,8 @@ public class LabelController {
      * @return 作成フォームのテンプレート名
      */
     @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute LabelCreateForm creationForm, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+    public String showCreationForm(@ModelAttribute LabelCreateForm creationForm, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         model.addAttribute("loginUser", loginUser);
         return "labels/creationForm";
     }
@@ -60,7 +61,8 @@ public class LabelController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping
-    public String create(@Validated LabelCreateForm creationForm, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+    public String create(@Validated LabelCreateForm creationForm, BindingResult bindingResult, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm, model, loginUser);
         }
@@ -71,13 +73,15 @@ public class LabelController {
     /**
      * ラベルの編集フォームを表示します。
      *
-     * @param labelId ラベルのID
-     * @param model       画面に渡すデータを格納するModelオブジェクト
+     * @param labelId       編集するラベルのID
+     * @param form ラベル編集フォームオブジェクト
      * @return 編集フォームのテンプレート名
      */
     @GetMapping("/{labelId}/update")
-    public String showEditForm(@PathVariable("labelId") Long labelId, LabelUpdateForm form, Model model) {
+    public String showEditForm(@PathVariable("labelId") Long labelId, LabelUpdateForm form, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         LabelEntity label = labelService.findById(labelId);
+
         if (label != null) {
             form.setId(label.getId());
             form.setName(label.getName());
@@ -85,25 +89,26 @@ public class LabelController {
         } else {
             return "redirect:/labels";
         }
-        model.addAttribute("labelUpdateForm", form);
+
+        model.addAttribute("loginUser", loginUser);
+        model.addAttribute("label", label);
         return "labels/updateForm";
     }
 
     /**
      * ラベルを更新します。
      *
-     * @param labelId   マイルストーンのID
-     * @param form          マイルストーン編集フォームオブジェクト
+     * @param labelId            更新するラベルのID
+     * @param form      ラベル編集フォームオブジェクト
      * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping("/{labelId}/update")
-    public String update(@PathVariable("labelId") Long labelId, @Validated LabelUpdateForm form,
-            BindingResult bindingResult, Model model) {
+    public String update(@PathVariable("labelId") Long labelId, @Validated LabelUpdateForm form, BindingResult bindingResult,
+            Model model, @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
-            return showEditForm(labelId, form, model);
+            return showEditForm(labelId, form, model, loginUser);
         }
-
         labelService.update(labelId, form.getName(), form.getColor());
         return "redirect:/labels";
     }
@@ -111,7 +116,7 @@ public class LabelController {
     /**
      * ラベルを削除します。
      *
-     * @param rabelId ラベルのID
+     * @param labelId 削除するラベルのID
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping("/{labelId}/delete")

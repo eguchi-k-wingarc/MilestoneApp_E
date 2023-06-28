@@ -12,6 +12,9 @@ insert into tasks (user_id, milestone_id, name, description, is_complete) values
 insert into labels (name, color) values ('HELL', 'red');
 insert into labels (name, color) values ('DEATH', 'green');
 insert into labels (name, color) values ('MURI', 'black');
-insert into tasklabels (task_id, label_id) values (1, 1);
-insert into tasklabels (task_id, label_id) values (1, 2);
-insert into tasklabels (task_id, label_id) values (1, 3);
+insert into task_labels (task_id, label_id) values (1, 1);
+insert into task_labels (task_id, label_id) values (1, 2);
+insert into task_labels (task_id, label_id) values (1, 3);
+insert into task_labels (task_id, label_id) values (2, 1);
+insert into task_labels (task_id, label_id) values (2, 2);
+insert into task_labels (task_id, label_id) values (2, 3);

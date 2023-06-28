@@ -22,9 +22,7 @@ create table milestones (
     deadline timestamp default current_timestamp,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE
-    SET
-        NULL
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 create table tasks (
@@ -39,12 +37,8 @@ create table tasks (
     deadline timestamp default current_timestamp,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE
-    SET
-        NULL,
-        FOREIGN KEY (milestone_id) REFERENCES milestones(id) ON DELETE
-    SET
-        NULL
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+    FOREIGN KEY (milestone_id) REFERENCES milestones(id) ON DELETE SET NULL
 );
 
 create table labels (
@@ -55,16 +49,14 @@ create table labels (
     updated_at timestamp default current_timestamp on update current_timestamp
 );
 
-create table taskLabels (
+create table task_labels (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     task_id BIGINT NOT NULL,
     label_id BIGINT NOT NULL,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,
-    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE
-    SET
-        NULL,
-        FOREIGN KEY (label_id) REFERENCES labels(id) ON DELETE
-    SET
-        NULL
+    -- NOTE: taskが削除されたら、ラベルとの紐づきレコードは削除する
+    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE,
+     -- NOTE: labelが削除されたら、タスクとの紐づきレコードは削除する
+    FOREIGN KEY (label_id) REFERENCES labels(id) ON DELETE CASCADE
 );

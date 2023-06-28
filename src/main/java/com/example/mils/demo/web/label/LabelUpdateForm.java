@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class LabelUpdateForm {
-    private Long id;
+    private Long id; // NOTE: インスタンス生成時のみNullを許容するためlong型ではなく、Long型にしている
 
     @NotBlank
     @Size(max=256)
