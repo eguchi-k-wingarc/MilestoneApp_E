@@ -1,5 +1,6 @@
 package com.example.mils.demo.domain.user;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,5 +38,10 @@ public class UserService {
     public void update(long id, String name , String email, String password, String profile) {
         String hashedPassword = passwordEncoder.encode(password);
         userRepository.update(id, name, email, hashedPassword, profile);
+    }
+
+    @Transactional
+    public void updateDelatedAt(long id, LocalDateTime delated_at) {
+        userRepository.updateDelatedAt(id, delated_at);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.mils.demo.domain.user;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +37,11 @@ public interface UserRepository {
         @Param("email") String email,
         @Param("password") String password,
         @Param("profileImg") String profileImg
+    );
+
+    @Update("UPDATE users SET delated_at = #{delated_at} WHERE id = #{id}")
+    void updateDelatedAt(
+        @Param("id") long id,
+        @Param("delated_at") LocalDateTime delated_at
     );
 }
