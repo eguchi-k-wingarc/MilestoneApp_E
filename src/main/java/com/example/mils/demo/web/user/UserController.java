@@ -10,11 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 
@@ -61,7 +59,6 @@ public class UserController {
         if (user != null) {
             form.setEmail(user.getEmail());
             form.setPassword(user.getPassword());
-
         } else {
             return "redirect:/users";
         }
@@ -74,6 +71,7 @@ public class UserController {
     public String showDetail(@AuthenticationPrincipal UserDetails loginUser, Model model) {
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         model.addAttribute("user", user);
+        model.addAttribute("loginUser", loginUser);
         return "users/detail";
     }
 }
