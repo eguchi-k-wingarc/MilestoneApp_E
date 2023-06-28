@@ -61,7 +61,7 @@ public class MilestoneController {
     public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         List<TaskWithLabels> taskWithLabelsList = taskService.findTasksWithLabelsByMilestoneId(milestoneId);
-        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        UserEntity user = userService.findById(milestone.getUserId());
         model.addAttribute("user", user);
         model.addAttribute("milestone", milestone);
         model.addAttribute("taskWithLabelsList", taskWithLabelsList);
