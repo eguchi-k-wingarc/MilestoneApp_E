@@ -19,9 +19,9 @@
             </thead>
             <tbody>
                 <tr th:each="label : ${labelList}">
-                    <td><a style="display: block;" th:href="@{/labels/{id}(id=${label.id})}" th:text="${label.id}"></a></td>
-                    <td><a style="display: block;" th:href="@{/labels/{id}(id=${label.id})}" th:text="${label.name}"></a></td>
-                    <td><a class="ui label" style="display: block;" th:href="@{/labels/{id}(id=${label.id})}" th:text="${label.color}" th:classappend="${label.color}"></a></td>
+                    <td><div style="display: block;" th:text="${label.id}"></div></td>
+                    <td><div style="display: block;" th:text="${label.name}"></div></td>
+                    <td><div class="ui label" style="display: block;" th:text="${label.color}" th:classappend="${label.color}"></div></td>
                     <td class="center aligned">
                         <div class="ui icon buttons" style="margin: auto;">
                             <a class="ui basic button" th:href="@{/labels/{labelId}/update(labelId=${label.id})}"><i class="edit icon"></i></a>
