@@ -113,7 +113,7 @@ public class UserController {
     @PostMapping("/delete")
     public String deleteUser(@AuthenticationPrincipal UserDetails loginUser) {
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
-        userService.updateDelatedAt(userId, LocalDateTime.now());
+        userService.updateDeletedAt(userId, LocalDateTime.now());
         return "redirect:/logout";
     }
 
