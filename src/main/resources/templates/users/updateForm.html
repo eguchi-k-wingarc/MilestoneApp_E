@@ -13,7 +13,7 @@
         </div>
         <h1 class="ui dividing header">登録情報の編集</h1>
 
-        <form class="ui form" th:action="@{'/users/update'}" th:object="${userUpdateForm}" method="post">
+        <form class="ui form" th:action="@{'/users/update'}" th:object="${userUpdateForm}" method="post" enctype="multipart/form-data">
             <label>名前</label>
             <div class="ui fields">
                 <div class="ui nine wide field"><input type="text" id="namelInput" name="name" th:field="*{name}"></div>
