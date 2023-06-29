@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html lang="jp">
-    <head th:fragment="head(title)">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- 各Viewで設定されたタイトル -->
-        <title th:replace="${title}">Death Milestone</title>
-        
-        <!-- どのViewでも必ず読み込むファイル -->
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
-        <script>
-            //Dark mode
-            function toggleColorMode(){
-                $("body,div,h4,p,i").toggleClass("dark")
-                $("h1,h2,h3,table,input,textarea,form,header,div").toggleClass("inverted");
-            }
-        </script>
-        <style>
-            .dark{
-                background-color: #1A1A1C;
-                color: white;
-            }
-        </style>
 
-    </head>
-    <body>
-        <header class="ui stackable container menu" th:fragment="header_menu(is1,is2,is3)">
-            <a class="item" th:href="@{/milestones}" th:classappend="${is1} ? 'active' : ''">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 各Viewで設定されたタイトル -->
+    <title th:replace="${title}">Death Milestone</title>
+
+    <!-- どのViewでも必ず読み込むファイル -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+    <script>
+        //Dark mode
+        function toggleColorMode() {
+            $("body,div,h4,p,i").toggleClass("dark")
+            $("h1,h2,h3,table,input,textarea,form,header,div").toggleClass("inverted");
+        }
+    </script>
+    <style>
+        .dark {
+            background-color: #1A1A1C;
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="ui stackable container menu" th:fragment="header_menu(is1,is2,is3)">
+        <a class="item" th:href="@{/milestones}" th:classappend="${is1} ? 'active' : ''">
             Milestones
-            </a>
-            <a class="item" th:href="@{/tasks}" th:classappend="${is2} ? 'active' : ''">
+        </a>
+        <a class="item" th:href="@{/tasks}" th:classappend="${is2} ? 'active' : ''">
             Tasks
-            </a>
-            <a class="item" th:href="@{/labels}" th:classappend="${is3} ? 'active' : ''">
+        </a>
+        <a class="item" th:href="@{/labels}" th:classappend="${is3} ? 'active' : ''">
             Labels
-            </a>
-            <img class="ui fluid tiny image item centered" th:src="@{/logo.png}" alt/>
-            
-            <form class="right menu" th:action="@{/logout}" method="post" style="margin-left: 0 !important;">
-                <a class="item" th:href="@{/users/profile}" th:text="|Login : ${loginUser.username}|"></a>
-                <a class="item" id="toggleColorMode" onclick="toggleColorMode();"><i class="power off icon" ></i></a>
-                <input class="item" type="submit" value="Logout" style="border: none;">
-            </form>
-            
-        </header>
-    </body>
+        </a>
+        <img class="ui fluid tiny image item centered" th:src="@{/logo.png}" alt />
+
+        <form class="right menu" th:action="@{/logout}" method="post" style="margin-left: 0 !important;">
+            <a class="item" th:href="@{/users/profile}" th:text="|Login : ${loginUser.username}|"></a>
+            <a class="item" id="toggleColorMode" onclick="toggleColorMode();"><i class="power off icon"></i></a>
+            <input class="item" type="submit" value="Logout" style="border: none;">
+        </form>
+
+    </header>
+</body>
+
 </html>

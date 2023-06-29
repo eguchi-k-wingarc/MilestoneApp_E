@@ -1,7 +1,6 @@
 package com.example.mils.demo.domain.user;
 
 import java.time.LocalDateTime;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ public class UserEntity {
      */
     public static final String DEFAULT_AUTHORITIES = "ROLE_USER";
     public static final String ADMIN_AUTHORITIES = "ROLE_ADMIN";
-    
+
     @Id
     @GeneratedValue
     private long id;

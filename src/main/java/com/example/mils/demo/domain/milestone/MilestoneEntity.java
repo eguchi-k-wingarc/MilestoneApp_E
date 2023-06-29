@@ -1,7 +1,6 @@
 package com.example.mils.demo.domain.milestone;
 
 import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

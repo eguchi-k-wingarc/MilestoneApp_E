@@ -3,7 +3,6 @@ package com.example.mils.demo.domain.user;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,21 +26,18 @@ public interface UserRepository {
             @Param("email") String email,
             @Param("password") String password,
             @Param("authorities") String authorities,
-            @Param("profileImg") String profileImg
-        );
-    
+            @Param("profileImg") String profileImg);
+
     @Update("UPDATE users SET name=#{name}, email = #{email}, password = #{password}, profile_img=#{profileImg} WHERE id = #{id}")
     void update(
-        @Param("id") long id,
-        @Param("name") String name,
-        @Param("email") String email,
-        @Param("password") String password,
-        @Param("profileImg") String profileImg
-    );
+            @Param("id") long id,
+            @Param("name") String name,
+            @Param("email") String email,
+            @Param("password") String password,
+            @Param("profileImg") String profileImg);
 
     @Update("UPDATE users SET deleted_at = #{deleted_at} WHERE id = #{id}")
     void updateDeletedAt(
-        @Param("id") long id,
-        @Param("deleted_at") LocalDateTime deleted_at
-    );
+            @Param("id") long id,
+            @Param("deleted_at") LocalDateTime deleted_at);
 }

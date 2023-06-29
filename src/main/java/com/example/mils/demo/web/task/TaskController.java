@@ -25,7 +25,6 @@ import com.example.mils.demo.domain.task.TaskWithLabels;
 import com.example.mils.demo.domain.taskLabel.TaskLabelService;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
-
 import lombok.AllArgsConstructor;
 
 @Controller

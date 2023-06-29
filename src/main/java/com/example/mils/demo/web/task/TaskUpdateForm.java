@@ -4,14 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -40,7 +35,7 @@ public class TaskUpdateForm {
     @AssertTrue(message = "Invalid deadline")
     public boolean isDeadlineValid() {
         if (deadlineString == null || deadlineString.trim().isEmpty()) {
-            return true; // 空の場合はバリデーションをスキップ
+            return true;
         }
         try {
             LocalDateTime parsedDeadline = LocalDateTime.parse(deadlineString, DateTimeFormatter.ISO_DATE_TIME);

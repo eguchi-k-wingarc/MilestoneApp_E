@@ -2,12 +2,10 @@ package com.example.mils.demo.domain;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
-
 import lombok.Data;
 
 @Component

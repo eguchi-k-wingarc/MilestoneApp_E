@@ -49,8 +49,7 @@ public class MilestoneService {
 
         return milestones.stream()
                 .map(this::convertToDto)
-                .collect(Collectors.toList()
-            );
+                .collect(Collectors.toList());
     }
 
     public MilestoneProgressDto getProgressDto(Long id) {
@@ -63,7 +62,6 @@ public class MilestoneService {
         return new MilestoneProgressDto(
                 entity.getId(),
                 entity.getUserId(),
-                entity.getProgress()
-            );
+                entity.getProgress());
     }
 }

@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head th:replace="base::head(~{::title})">
-        <title>Task - Death Milestone</title>
-    </head>
+
+<head th:replace="base::head(~{::title})">
+    <title>Task - Death Milestone</title>
+</head>
+
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
 
     <main class="ui container">
         <div class="ui secondary menu">
-                <a class="item" th:href="@{/milestones/{milestoneId}(milestoneId=${milestone.id})}">&#60;マイルストーンに戻る</a>
+            <a class="item" th:href="@{/milestones/{milestoneId}(milestoneId=${milestone.id})}">&#60;マイルストーンに戻る</a>
             <div class="right menu">
-                <a class="item" th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}"><i class="edit icon"></i></a>
-                <form class="item"  th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+                <a class="item"
+                    th:href="@{/milestones/{milestoneId}/tasks/{taskId}/update(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}"><i
+                        class="edit icon"></i></a>
+                <form class="item"
+                    th:action="@{/milestones/{milestoneId}/tasks/{taskId}/delete(milestoneId=${milestone.id},taskId=${taskWithLabels.task.id})}"
+                    method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
             </div>
         </div>
 
@@ -23,8 +29,10 @@
                     <a class="ui label" th:classappend="${label.color}" th:text="${label.name}"></a>
                 </span>
             </p>
-            <p>完了済：<input type="checkbox" id="check" th:checked="${taskWithLabels.task.isComplete}"  th:onChange="|toggleCheckbox('@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${taskWithLabels.task.id})}');|"/></p>
-            
+            <p>完了済：<input type="checkbox" id="check" th:checked="${taskWithLabels.task.isComplete}"
+                    th:onChange="|toggleCheckbox('@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${taskWithLabels.task.id})}');|" />
+            </p>
+
             <p th:text="|作成：${#temporals.format(taskWithLabels.task.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
             <p th:text="|期限：${#temporals.format(taskWithLabels.task.deadline,'yyyy/MM/dd HH:mm')}|"></p>
 
@@ -32,7 +40,8 @@
             <div class="ui card middle aligned">
                 <div class="ui content">
                     <img class="ui circular image" th:src="${tUser.profileImg}" alt="">
-                    <h2 class="ui center aligned header" th:utext='|${tUser.name}<div class="ui sub header">${tUser.email}</div>|'></h2>
+                    <h2 class="ui center aligned header"
+                        th:utext='|${tUser.name}<div class="ui sub header">${tUser.email}</div>|'></h2>
                     <div class="ui center aligned description" th:text="${tUser.authorities}"></div>
                 </div>
             </div>
@@ -52,7 +61,8 @@
                 <div class="ui card middle aligned">
                     <div class="ui content">
                         <img class="ui circular image" th:src="${user.profileImg}" alt="">
-                        <h2 class="ui center aligned header" th:utext='|${user.name}<div class="ui sub header">${user.email}</div>|'></h2>
+                        <h2 class="ui center aligned header"
+                            th:utext='|${user.name}<div class="ui sub header">${user.email}</div>|'></h2>
                         <div class="ui center aligned description" th:text="${user.authorities}"></div>
                     </div>
                 </div>
@@ -62,10 +72,10 @@
     <script>
         function toggleCheckbox(url) {
             const check = document.getElementById('check').checked;
-            sendData({'isComplete':check},url);
+            sendData({ 'isComplete': check }, url);
         }
 
-        function sendData(data,url) {
+        function sendData(data, url) {
             const XHR = new XMLHttpRequest();
 
             const urlEncodedDataPairs = [];
@@ -85,7 +95,7 @@
 
             // エラーが発生した場合に行うことを定義します
             XHR.addEventListener('error', (event) => {
-              alert(event);
+                alert(event);
             });
 
 
@@ -97,7 +107,8 @@
 
             // 最後に、データを送信します
             XHR.send(urlEncodedData);
-            }
+        }
     </script>
 </body>
+
 </html>

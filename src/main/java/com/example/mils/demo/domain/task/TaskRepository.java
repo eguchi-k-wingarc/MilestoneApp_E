@@ -2,7 +2,6 @@ package com.example.mils.demo.domain.task;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,15 +29,12 @@ public interface TaskRepository {
             @Param("id") long id,
             @Param("name") String name,
             @Param("description") String description,
-            @Param("deadline") LocalDateTime deadline
-        );
+            @Param("deadline") LocalDateTime deadline);
 
     @Update("UPDATE tasks SET is_complete = #{isComplete} WHERE id = #{id}")
     void updateIsComplete(
-        @Param("id") long id,
-        @Param("isComplete") Boolean isComplete
-    );
-        
+            @Param("id") long id,
+            @Param("isComplete") Boolean isComplete);
 
     @Delete("DELETE FROM tasks WHERE id = #{id}")
     void delete(@Param("id") long id);

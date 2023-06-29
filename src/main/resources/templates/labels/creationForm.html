@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head th:replace="base::head(~{::title})">
-        <title>Creation Form - Death Milestone</title>
-    </head>
-    
+
+<head th:replace="base::head(~{::title})">
+    <title>Creation Form - Death Milestone</title>
+</head>
+
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
     <main class="ui container">
@@ -15,16 +16,24 @@
         <form class="ui form" th:action="@{/labels}" th:object="${labelCreateForm}" method="post">
             <label>名前</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" /></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div></div>
+                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" />
+                </div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}">Error</div>
+                </div>
             </div>
 
             <label>カラー</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><input type="text" id="colorInput" name="color" th:field="*{color}" /></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('color')}" th:errors="*{color}">Error</div></div>
+                <div class="ui nine wide field"><input type="text" id="colorInput" name="color" th:field="*{color}" />
+                </div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('color')}"
+                        th:errors="*{color}">Error</div>
+                </div>
             </div>
-            
+
 
             <div>
                 <button class="ui primary button" type="submit">作成</button>
@@ -33,4 +42,5 @@
         </form>
     </main>
 </body>
+
 </html>

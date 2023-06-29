@@ -2,7 +2,6 @@ package com.example.mils.demo.domain.milestone;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,24 +19,21 @@ public interface MilestoneRepository {
 
     @Insert("INSERT INTO milestones (name, description, deadline) VALUES (#{name}, #{description}, #{deadline})")
     void create(
-        @Param("name") String name,
-        @Param("description") String description,
-        @Param("deadline") LocalDateTime deadline
-    );
+            @Param("name") String name,
+            @Param("description") String description,
+            @Param("deadline") LocalDateTime deadline);
 
     @Update("UPDATE milestones SET name = #{name}, description = #{description}, deadline = #{deadline} WHERE id = #{id}")
     void update(
-        @Param("id") long id, 
-        @Param("name") String name, 
-        @Param("description") String description,
-        @Param("deadline") LocalDateTime deadline
-    );
+            @Param("id") long id,
+            @Param("name") String name,
+            @Param("description") String description,
+            @Param("deadline") LocalDateTime deadline);
 
     @Update("UPDATE milestones SET progress = #{progress} WHERE id = #{id}")
     void updateProgress(
-        @Param("id") long id, 
-        @Param("progress") int progress
-    );
+            @Param("id") long id,
+            @Param("progress") int progress);
 
     @Delete("DELETE FROM milestones WHERE id = #{id}")
     void delete(@Param("id") long id);

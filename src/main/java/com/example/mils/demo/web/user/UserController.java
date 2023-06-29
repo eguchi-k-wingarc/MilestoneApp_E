@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,10 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
-
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -30,14 +27,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String showList(@AuthenticationPrincipal UserDetails loginUser, Model model){
+    public String showList(@AuthenticationPrincipal UserDetails loginUser, Model model) {
         List<UserEntity> usersList = userService.findAll();
         model.addAttribute("usersList", usersList);
         model.addAttribute("loginUser", loginUser);
         return "users/list";
     }
 
-    
     @GetMapping("/profile")
     public String showDetail(@AuthenticationPrincipal UserDetails loginUser, Model model) {
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
@@ -59,25 +55,26 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(@Validated UserRegisterForm form, BindingResult bindingResult,
             Model model) {
-        
-        try (InputStream uploadStream = form.getProfileImg().getInputStream()){
+
+        try (InputStream uploadStream = form.getProfileImg().getInputStream()) {
             byte[] buffer = new byte[uploadStream.available()];
             uploadStream.read(buffer);
-			String filename = form.getProfileImg().getOriginalFilename();
-			FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
-			fos.write(buffer);
-		} catch (Throwable e) {
+            String filename = form.getProfileImg().getOriginalFilename();
+            FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
+            fos.write(buffer);
+        } catch (Throwable e) {
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
-		}
+        }
         if (bindingResult.hasErrors()) {
             return showRegistrationForm(form, model);
         }
-        userService.create( form.getName(), form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES, "/profile/" + form.getProfileImg().getOriginalFilename());
+        userService.create(form.getName(), form.getEmail(), form.getPassword(), UserEntity.DEFAULT_AUTHORITIES,
+                "/profile/" + form.getProfileImg().getOriginalFilename());
         return "redirect:/login";
     }
 
     @GetMapping("/update")
-    public String showUpdateForm(UserRegisterForm form, Model model, @AuthenticationPrincipal UserDetails loginUser){
+    public String showUpdateForm(UserRegisterForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) {
         UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
         if (user != null) {
             form.setName(user.getName());
@@ -92,22 +89,24 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+    public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showUpdateForm(form, model, loginUser);
         }
-        try (InputStream uploadStream = form.getProfileImg().getInputStream()){
+        try (InputStream uploadStream = form.getProfileImg().getInputStream()) {
             byte[] buffer = new byte[uploadStream.available()];
             uploadStream.read(buffer);
             String filename = form.getProfileImg().getOriginalFilename();
             FileOutputStream fos = new FileOutputStream(new File("src\\main\\resources\\static\\profile\\" + filename));
             fos.write(buffer);
-		} catch (Throwable e) {
+        } catch (Throwable e) {
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
-		}
+        }
 
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
-        userService.update(userId, form.getName(), form.getEmail(), form.getPassword(), "/profile/" + form.getProfileImg().getOriginalFilename());
+        userService.update(userId, form.getName(), form.getEmail(), form.getPassword(),
+                "/profile/" + form.getProfileImg().getOriginalFilename());
         return "redirect:/profile";
     }
 

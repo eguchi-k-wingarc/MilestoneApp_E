@@ -13,10 +13,8 @@
             <div class="field">
                 <label for="urgencyLevel">Select urgency level:</label>
                 <select class="ui fluid dropdown" id="urgencyLevel" name="urgencyLevel">
-                    <option th:each="level : ${allLevels}"
-                            th:value="${level.name()}"
-                            th:text="${level.getLabel()}"
-                            th:selected="${level == currentLevel}"></option>
+                    <option th:each="level : ${allLevels}" th:value="${level.name()}" th:text="${level.getLabel()}"
+                        th:selected="${level == currentLevel}"></option>
                 </select>
             </div>
 

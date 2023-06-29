@@ -2,44 +2,44 @@
 <html lang="ja">
 
 <head th:replace="base::head(~{::title})">
-    <title>Login - Death Milestone</title>
+  <title>Login - Death Milestone</title>
 </head>
 
 <body>
-    <main class="doubling stackable grid container">
-        <h1 class="ui dividing header center aligned">ログインページ</h1>
-        <div class="ui middle aligned center aligned grid">
-            <div class="culumn">
-              <form class="ui large form" th:action="@{/users/login}" method="post">
-                <div class="ui stacked segment">
-                  <div class="field">
-                    <div class="ui left icon input">
-                      <i class="user icon"></i>
-                      <input type="text" id="email" name="email"  autocomplete="off" placeholder="E-mail address">
-                    </div>
-                  </div>
-                  <div class="field">
-                    <div class="ui left icon input">
-                      <i class="lock icon"></i>
-                      <input type="password" id="password" name="password" autocomplete="off" placeholder="Password">
-                    </div>
-                  </div>
-                  <button class="ui fluid large teal submit button" type="submit" >Login</button>
-                </div>
-          
-                <div class="ui negative message" th:if="${param.error}">
-                    <p class="header">ユーザー名もしくはパスワードが違うってばよ</p>
-                </div>
-          
-              </form>
-          
-              <div class="ui message">
-                New to us? <a th:href="@{/users/register}">Sign Up</a>
+  <main class="doubling stackable grid container">
+    <h1 class="ui dividing header center aligned">ログインページ</h1>
+    <div class="ui middle aligned center aligned grid">
+      <div class="culumn">
+        <form class="ui large form" th:action="@{/users/login}" method="post">
+          <div class="ui stacked segment">
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                <input type="text" id="email" name="email" autocomplete="off" placeholder="E-mail address">
               </div>
             </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input type="password" id="password" name="password" autocomplete="off" placeholder="Password">
+              </div>
+            </div>
+            <button class="ui fluid large teal submit button" type="submit">Login</button>
+          </div>
+
+          <div class="ui negative message" th:if="${param.error}">
+            <p class="header">ユーザー名もしくはパスワードが違うってばよ</p>
+          </div>
+
+        </form>
+
+        <div class="ui message">
+          New to us? <a th:href="@{/users/register}">Sign Up</a>
         </div>
-    </main>
-    
+      </div>
+    </div>
+  </main>
+
 </body>
 
 </html>

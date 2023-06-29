@@ -1,44 +1,60 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head th:replace="base::head(~{::title})">
-        <title>Creation Form - Death Milestone</title>
-    </head>
+
+<head th:replace="base::head(~{::title})">
+    <title>Creation Form - Death Milestone</title>
+</head>
+
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
-        <main class="ui container">
-            <div class="ui secondary menu">
-                <a class="item" th:href="@{/milestones}">&#60;一覧に戻る</a>
-            </div>
-            <h1 class="ui dividing header">新規マイルストーン</h1>
-            
-            <form class="ui form" th:action="@{/milestones}" th:object="${milestoneCreateForm}" method="post">
+    <main class="ui container">
+        <div class="ui secondary menu">
+            <a class="item" th:href="@{/milestones}">&#60;一覧に戻る</a>
+        </div>
+        <h1 class="ui dividing header">新規マイルストーン</h1>
+
+        <form class="ui form" th:action="@{/milestones}" th:object="${milestoneCreateForm}" method="post">
             <label>名前</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" /></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div></div>
+                <div class="ui nine wide field"><input type="text" id="nameInput" name="name" th:field="*{name}" />
+                </div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}">Error</div>
+                </div>
             </div>
 
 
             <label>説明</label>
             <div class="ui fields">
-                <div class="ui nine wide field"><textarea id="descriptionInput" style="width: 100%; border:1px solid rgba(0,0,0,.3); padding: .67857143em 1em;" name="descriptionInput" rows="10" th:field="*{description}" ></textarea></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div></div>
+                <div class="ui nine wide field"><textarea id="descriptionInput"
+                        style="width: 100%; border:1px solid rgba(0,0,0,.3); padding: .67857143em 1em;"
+                        name="descriptionInput" rows="10" th:field="*{description}"></textarea></div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('description')}"
+                        th:errors="*{description}">Error</div>
+                </div>
             </div>
 
             <label>期限</label>
             <div class="ui fields">
-                <div class="ui three wide field"><input id="deadlineInput" type="datetime-local" name="deadlineInput" th:field="*{deadline}"/></div>
-                <div class="ui field"><div class="ui left pointing red basic label" th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Error</div></div>
+                <div class="ui three wide field"><input id="deadlineInput" type="datetime-local" name="deadlineInput"
+                        th:field="*{deadline}" /></div>
+                <div class="ui field">
+                    <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('deadline')}"
+                        th:errors="*{deadline}">Error</div>
+                </div>
             </div>
 
-            
+
             <div>
                 <button class="ui primary button" type="submit">作成</button>
                 <button class="ui button" type="reset">破棄</button>
             </div>
-            
-            
+
+
         </form>
     </main>
 </body>
+
 </html>

@@ -3,11 +3,9 @@ package com.example.mils.demo.domain.user;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -29,13 +27,13 @@ public class UserService {
     }
 
     @Transactional
-    public void create(String name, String email, String password, String authorities,String profile) {
+    public void create(String name, String email, String password, String authorities, String profile) {
         String hashedPassword = passwordEncoder.encode(password);
         userRepository.create(name, email, hashedPassword, authorities, profile);
     }
 
     @Transactional
-    public void update(long id, String name , String email, String password, String profile) {
+    public void update(long id, String name, String email, String password, String profile) {
         String hashedPassword = passwordEncoder.encode(password);
         userRepository.update(id, name, email, hashedPassword, profile);
     }

@@ -1,9 +1,7 @@
 package com.example.mils.demo.domain.task;
 
 import java.util.List;
-
 import com.example.mils.demo.domain.label.LabelEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

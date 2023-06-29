@@ -7,10 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserRepository;
-
 import lombok.AllArgsConstructor;
 
 /**
@@ -24,8 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService { // UserDet
 
     private UserRepository userRepository;
 
-
-    @Override 
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<UserEntity> userOptional = userRepository.findByEmail(email);
         if (!userOptional.isPresent()) {
@@ -34,9 +31,9 @@ public class CustomUserDetailsService implements UserDetailsService { // UserDet
 
         UserEntity user = userOptional.get();
         return new User(
-            user.getEmail(),
-            user.getPassword(),
-            AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthorities()) // カンマで区切られた文字列を受け取り、その各部分を別々の権限と見なして、それをList<GrantedAuthority>に変換
+                user.getEmail(),
+                user.getPassword(),
+                AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthorities()) // カンマで区切られた文字列を受け取り、その各部分を別々の権限と見なして、それをList<GrantedAuthority>に変換
         );
     }
 }

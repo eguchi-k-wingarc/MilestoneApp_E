@@ -1,7 +1,6 @@
 package com.example.mils.demo.web.label;
 
 import java.util.List;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,10 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.label.LabelService;
-
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -73,8 +70,8 @@ public class LabelController {
     /**
      * ラベルの編集フォームを表示します。
      *
-     * @param labelId       編集するラベルのID
-     * @param form ラベル編集フォームオブジェクト
+     * @param labelId 編集するラベルのID
+     * @param form    ラベル編集フォームオブジェクト
      * @return 編集フォームのテンプレート名
      */
     @GetMapping("/{labelId}/update")
@@ -98,13 +95,14 @@ public class LabelController {
     /**
      * ラベルを更新します。
      *
-     * @param labelId            更新するラベルのID
-     * @param form      ラベル編集フォームオブジェクト
+     * @param labelId       更新するラベルのID
+     * @param form          ラベル編集フォームオブジェクト
      * @param bindingResult バリデーション結果を保持するBindingResultオブジェクト
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping("/{labelId}/update")
-    public String update(@PathVariable("labelId") Long labelId, @Validated LabelUpdateForm form, BindingResult bindingResult,
+    public String update(@PathVariable("labelId") Long labelId, @Validated LabelUpdateForm form,
+            BindingResult bindingResult,
             Model model, @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showEditForm(labelId, form, model, loginUser);
