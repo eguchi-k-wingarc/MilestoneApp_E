@@ -1,5 +1,7 @@
 package com.example.mils.demo.web.milestone;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -115,6 +117,11 @@ public class MilestoneController {
             form.setName(milestone.getName());
             form.setDescription(milestone.getDescription());
             form.setDeadline(milestone.getDeadline());
+            LocalDateTime deadline = milestone.getDeadline() != null
+                    ? milestone.getDeadline()
+                    : LocalDateTime.now().plusDays(1);
+            form.setDeadline(deadline);
+            form.setDeadlineString(deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")));
         } else {
             return "redirect:/milestones";
         }

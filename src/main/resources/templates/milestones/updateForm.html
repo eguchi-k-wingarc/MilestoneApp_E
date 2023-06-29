@@ -39,8 +39,8 @@
 
             <label>期限</label>
             <div class="ui fields">
-                <div class="ui three wide field"><input id="deadlineInput" type="datetime-local" name="deadlineInput"
-                        th:field="*{deadline}" /></div>
+                <div class="ui three wide field"><input id="deadlineInput" type="datetime-local" name="deadlineString"
+                        th:field="*{deadlineString}" th:value="${milestoneUpdateForm.deadlineString ?: ''}" /></div>
                 <div class="ui field">
                     <div class="ui left pointing red basic label" th:if="${#fields.hasErrors('deadline')}"
                         th:errors="*{deadline}">Error</div>
