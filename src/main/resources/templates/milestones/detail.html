@@ -35,7 +35,8 @@
             <div class="ui card middle aligned">
                 <div class="ui content">
                     <img class="ui circular image" th:src="${user.profileImg}" alt="">
-                    <h2 class="ui center aligned header" th:utext='|${user.name}<div class="ui sub header">${user.email}</div>|'></h2>
+                    <h2 class="ui center aligned header"
+                        th:utext='|${user.name}<div class="ui sub header">${user.email}</div>|'></h2>
                     <div class="ui center aligned description" th:text="${user.authorities}"></div>
                 </div>
             </div>
@@ -84,7 +85,8 @@
                         </div>
                     </td>
                     <td>
-                        <input type="checkbox" th:id="|check${taskWithLabels.task.id}|" th:checked="${taskWithLabels.task.isComplete}"
+                        <input type="checkbox" th:id="|check${taskWithLabels.task.id}|"
+                            th:checked="${taskWithLabels.task.isComplete}"
                             th:onChange="|toggleCheckbox(${taskWithLabels.task.id},'@{/milestones/{milestoneId}/tasks/{taskId}/update-isComplete(milestoneId=${milestone.id}, taskId=${taskWithLabels.task.id})}');|" />
                     </td>
                 </tr>

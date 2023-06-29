@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import com.example.mils.demo.domain.task.TaskService;
 import com.example.mils.demo.domain.task.TaskWithLabels;
-
 import lombok.AllArgsConstructor;
-
-
 
 /**
  * TaskListController
@@ -22,12 +19,12 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/tasks")
 public class TaskListController {
 
-    private final  TaskService taskService;
+    private final TaskService taskService;
 
     /**
-     *全てのタスク一覧画面を表示します。
+     * 全てのタスク一覧画面を表示します。
      *
-     * @param model       画面に渡すデータを格納するModelオブジェクト
+     * @param model 画面に渡すデータを格納するModelオブジェクト
      * @return 詳細画面のテンプレート名
      */
     @GetMapping

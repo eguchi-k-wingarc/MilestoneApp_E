@@ -1,13 +1,12 @@
 package com.example.mils.demo.web.task;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
-
-import javax.validation.constraints.Future;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -28,8 +27,22 @@ public class TaskUpdateForm {
 
     private List<Long> labels;
 
-    @NotNull
-    @Future // 未来の日付であることをバリデーション
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @NotBlank
+    private String deadlineString;
+
     private LocalDateTime deadline;
+
+    @AssertTrue(message = "Invalid deadline")
+    public boolean isDeadlineValid() {
+        if (deadlineString == null || deadlineString.trim().isEmpty()) {
+            return true;
+        }
+        try {
+            LocalDateTime parsedDeadline = LocalDateTime.parse(deadlineString, DateTimeFormatter.ISO_DATE_TIME);
+            setDeadline(parsedDeadline);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
 }

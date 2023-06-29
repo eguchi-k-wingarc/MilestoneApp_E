@@ -4,6 +4,8 @@ import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.label.LabelService;
 import com.example.mils.demo.domain.milestone.*;
 import java.lang.Boolean;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +25,6 @@ import com.example.mils.demo.domain.task.TaskWithLabels;
 import com.example.mils.demo.domain.taskLabel.TaskLabelService;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
-
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -112,6 +113,11 @@ public class TaskController {
             form.setName(taskWithLabels.getTask().getName());
             form.setDescription(taskWithLabels.getTask().getDescription());
             form.setLabels(taskWithLabels.getLabels().stream().map(LabelEntity::getId).collect(Collectors.toList()));
+            LocalDateTime deadline = taskWithLabels.getTask().getDeadline() != null
+                    ? taskWithLabels.getTask().getDeadline()
+                    : LocalDateTime.now().plusDays(1);
+            form.setDeadline(deadline);
+            form.setDeadlineString(deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")));
         } else {
             return "redirect:/milestones/" + milestoneId;
         }

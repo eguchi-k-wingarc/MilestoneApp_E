@@ -1,7 +1,6 @@
 package com.example.mils.demo.config;
 
 import lombok.AllArgsConstructor;
-
 import java.util.Collection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,12 +2,9 @@ package com.example.mils.demo.web.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 
 @AllArgsConstructor
 @Data

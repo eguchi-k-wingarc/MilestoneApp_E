@@ -1,7 +1,8 @@
 package com.example.mils.demo.web.milestone;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.example.mils.demo.domain.milestone.MilestoneEntity;
 import com.example.mils.demo.domain.milestone.MilestoneService;
 import com.example.mils.demo.domain.task.TaskService;
@@ -21,7 +21,6 @@ import com.example.mils.demo.domain.task.TaskWithLabels;
 import com.example.mils.demo.domain.user.UserEntity;
 import com.example.mils.demo.domain.user.UserService;
 import com.example.mils.demo.web.task.TaskIsCompleteUpdateForm;
-
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -58,7 +57,9 @@ public class MilestoneController {
      * @return 詳細画面のテンプレート名
      */
     @GetMapping("/{milestoneId}")
-    public String showDetail(@PathVariable("milestoneId") Long milestoneId,@ModelAttribute TaskIsCompleteUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) { // TODO: nullを許可しないlong型に変更する
+    public String showDetail(@PathVariable("milestoneId") Long milestoneId,
+            @ModelAttribute TaskIsCompleteUpdateForm form, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) { // TODO: nullを許可しないlong型に変更する
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         List<TaskWithLabels> taskWithLabelsList = taskService.findTasksWithLabelsByMilestoneId(milestoneId);
         UserEntity user = userService.findById(milestone.getUserId());
@@ -77,7 +78,8 @@ public class MilestoneController {
      * @return 作成フォームのテンプレート名
      */
     @GetMapping("/create")
-    public String showCreationForm(@ModelAttribute MilestoneCreateForm creationForm, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+    public String showCreationForm(@ModelAttribute MilestoneCreateForm creationForm, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         model.addAttribute("loginUser", loginUser);
         return "milestones/creationForm";
     }
@@ -90,7 +92,8 @@ public class MilestoneController {
      * @return 一覧画面にリダイレクトするURL
      */
     @PostMapping
-    public String create(@Validated MilestoneCreateForm creationForm, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+    public String create(@Validated MilestoneCreateForm creationForm, BindingResult bindingResult, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showCreationForm(creationForm, model, loginUser);
         }
@@ -106,13 +109,19 @@ public class MilestoneController {
      * @return 編集フォームのテンプレート名
      */
     @GetMapping("/{milestoneId}/update")
-    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneUpdateForm form, Model model, @AuthenticationPrincipal UserDetails loginUser) {
+    public String showEditForm(@PathVariable("milestoneId") Long milestoneId, MilestoneUpdateForm form, Model model,
+            @AuthenticationPrincipal UserDetails loginUser) {
         MilestoneEntity milestone = milestoneService.findById(milestoneId);
         if (milestone != null) {
             form.setId(milestone.getId());
             form.setName(milestone.getName());
             form.setDescription(milestone.getDescription());
             form.setDeadline(milestone.getDeadline());
+            LocalDateTime deadline = milestone.getDeadline() != null
+                    ? milestone.getDeadline()
+                    : LocalDateTime.now().plusDays(1);
+            form.setDeadline(deadline);
+            form.setDeadlineString(deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")));
         } else {
             return "redirect:/milestones";
         }

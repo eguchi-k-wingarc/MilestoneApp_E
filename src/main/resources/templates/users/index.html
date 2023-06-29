@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head th:replace="base::head(~{::title})">
-        <title>Index - Death Milestone</title>
-    </head>
-    <body>
-        <header th:replace="base::header_menu(false,false,false)"></header>
-        <main class="ui container">
-            <h1 class="ui dividing header">Death Milestone</h1>
-            <a class="" th:href="@{/milestones}">マイルストーンページ</a>
-            <a class="" th:href="@{/labels}">ラベル一覧ページ</a>
-        </main>
-    </body>
+
+<head th:replace="base::head(~{::title})">
+    <title>Index - Death Milestone</title>
+</head>
+
+<body>
+    <header th:replace="base::header_menu(false,false,false)"></header>
+    <main class="ui container">
+        <h1 class="ui dividing header">Death Milestone</h1>
+        <a class="" th:href="@{/milestones}">マイルストーンページ</a>
+        <a class="" th:href="@{/labels}">ラベル一覧ページ</a>
+    </main>
+</body>
+
 </html>

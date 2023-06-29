@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-    <head th:replace="base::head(~{::title})">
-        <title>Task - Death Milestone</title>
-    </head>
+<head th:replace="base::head(~{::title})">
+    <title>Task - Death Milestone</title>
+</head>
 
 <body>
     <header th:replace="base::header_menu(false,false,false)"></header>
@@ -14,7 +14,8 @@
             <div class="right menu">
 
                 <a class="item" th:href="@{/users/update}"><i class="edit icon"></i></a>
-                <form class="item"  th:action="@{/users/delete}" method="post"><button class="ui item" type="submit"><i class="red trash icon"></i></button></form>
+                <form class="item" th:action="@{/users/delete}" method="post"><button class="ui item" type="submit"><i
+                            class="red trash icon"></i></button></form>
 
             </div>
         </div>
@@ -25,14 +26,15 @@
                 Matt Giampietro
             </h2>
             <div class="sub header" th:text="${user.email}"></div>
-            <div class="description" >
+            <div class="description">
                 <p th:text="${user.authorities}"></p>
                 <div class="field">
                     <input type="password" name="" id="" th:value="${user.password}" disabled>
                 </div>
                 <p th:text="|registerdAt: ${#temporals.format(user.createdAt,'yyyy/MM/dd HH:mm')}|"></p>
                 <p th:text="|updatedAt: ${#temporals.format(user.updatedAt,'yyyy/MM/dd HH:mm')}|"></p>
-                <p th:text="|deletedAt: ${#temporals.format(user.deletedAt,'yyyy/MM/dd HH:mm')}|" th:unless="${user.deletedAt == null}"></p>
+                <p th:text="|deletedAt: ${#temporals.format(user.deletedAt,'yyyy/MM/dd HH:mm')}|"
+                    th:unless="${user.deletedAt == null}"></p>
             </div>
         </div>
     </main>

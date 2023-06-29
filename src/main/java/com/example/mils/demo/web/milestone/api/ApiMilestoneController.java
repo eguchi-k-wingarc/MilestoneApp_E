@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.mils.demo.domain.milestone.MilestoneProgressDto;
 import com.example.mils.demo.domain.milestone.MilestoneService;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class ApiMilestoneController {
      * 詳細の消化率取得API
      *
      * @param model 画面に渡すデータを格納するModelオブジェクト
-     * @return MilestoneProgressDto 
+     * @return MilestoneProgressDto
      */
     @GetMapping("{id}")
     public MilestoneProgressDto show(@PathVariable Long id) {
