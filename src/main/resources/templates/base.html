@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 各Viewで設定されたタイトル -->
     <title th:replace="${title}">Death Milestone</title>
+    <link rel="icon" href="favicon.ico">
 
     <!-- どのViewでも必ず読み込むファイル -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -13,16 +14,221 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
     <script>
-        //Dark mode
+        // Dark mode
         function toggleColorMode() {
             $("body,div,h4,p,i").toggleClass("dark")
             $("h1,h2,h3,table,input,textarea,form,header,div").toggleClass("inverted");
+            $('.wrapper').toggleClass('color');
+            $('.btn__background').toggleClass('color');
+            $('.btn__face').toggleClass('move');
+            $('.btn__eye-left, .btn__eye-right').toggleClass(function () {
+                return $(this).is('.open, .close') ? 'open close' : 'close';
+            });
+            $('.btn__mouth').toggleClass('close');
+
+            $('.btn__animation').toggleClass(function () {
+                return $(this).is('.move-reverse, .move') ? 'move-reverse move' : 'move';
+            });
         }
     </script>
     <style>
         .dark {
             background-color: #1A1A1C;
             color: white;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 1s linear;
+            position: relative;
+        }
+
+
+        .btn {
+            width: 60px;
+            height: 30px;
+            position: relative;
+        }
+
+        .btn__background {
+            position: fixed;
+            width: 60px;
+            height: 30px;
+            border-radius: 50px;
+            background: #FFB74D;
+            cursor: pointer;
+            transition: all 1s ease;
+        }
+
+        .btn__background.color {
+            background: #893fd7;
+        }
+
+        .btn__face {
+            position: absolute;
+            top: 4px;
+            left: 3px;
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            background: white;
+
+            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .btn__face.move {
+            transform: translateX(30px);
+        }
+
+        .btn__eye-left,
+        .btn__eye-right {
+            position: absolute;
+            top: 4px;
+            width: 3px;
+            height: 6px;
+            background: #FFB74D;
+            border-radius: 30%;
+            transition: all 1s ease;
+        }
+
+        .btn__eye-left.open,
+        .btn__eye-right.open {
+            animation: moving 3s ease infinite;
+            background: #FFB74D;
+        }
+
+        .btn__eye-left.close,
+        .btn__eye-right.close {
+            transform: scaleY(.2) scaleX(2) translateY(14px);
+            transform-origin: center;
+            transition: all 1s ease;
+            background: #893fd7;
+        }
+
+        .btn__eye-left {
+            left: 4px;
+        }
+
+        .btn__eye-right {
+            left: 16px;
+        }
+
+        .btn__mouth {
+            position: absolute;
+            top: 13px;
+            left: 4px;
+            width: 16px;
+            height: 6px;
+            border-bottom-left-radius: 90px;
+            border-bottom-right-radius: 90px;
+            background: #FFB74D;
+            transition: all 1s ease;
+        }
+
+        .btn__mouth.close {
+            transform: scale(.2, .6);
+            transform-origin: center;
+            border-radius: 50%;
+            background: #893fd7;
+        }
+
+        .btn__animation.move {
+            animation: rotate .5s ease forwards;
+        }
+
+        .btn__animation.move-reverse {
+            animation: rotate-reverse .5s ease forwards;
+        }
+
+        /* BLINK EYES LIGHT MODE*/
+        @keyframes moving {
+            0% {
+                transform: scaleY(1);
+                transform-origin: center;
+            }
+
+            5% {
+                transform: scaleY(.1);
+                transform-origin: center;
+            }
+
+            9% {
+                transform: scaleY(1);
+                transform-origin: center;
+            }
+
+            100% {
+                transform: scaleY(1);
+                transform-origin: center;
+            }
+        }
+
+        /* ROTATE THE FACE TO THE RIGHT */
+        @-webkit-keyframes rotate {
+            0% {
+                transform: rotate(0deg) translate(0px, 0px);
+            }
+
+            10% {
+                opacity: .2;
+            }
+
+            40% {
+                transform: rotate(0deg) translate(80px, 0px);
+                opacity: 0;
+            }
+
+            60% {
+                transform: rotate(360deg) translate(-80px, 0px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotate(360deg) translate(0px, 0px);
+                opacity: 1;
+            }
+        }
+
+        /* ROTATE THE FACE TO THE LEFT */
+        @-webkit-keyframes rotate-reverse {
+            0% {
+                transform: rotate(0deg) translate(0px, 0px);
+
+            }
+
+            10% {
+                opacity: .2;
+            }
+
+            40% {
+                transform: rotate(0deg) translate(-80px, 0px);
+                opacity: 0;
+            }
+
+            60% {
+                transform: rotate(360deg) translate(80px, 0px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotate(360deg) translate(0px, 0px);
+                backface-visibility: hidden;
+                opacity: 1;
+            }
         }
     </style>
 
@@ -43,10 +249,23 @@
 
         <form class="right menu" th:action="@{/logout}" method="post" style="margin-left: 0 !important;">
             <a class="item" th:href="@{/users/profile}" th:text="|Login : ${loginUser.username}|"></a>
-            <a class="item" id="toggleColorMode" onclick="toggleColorMode();"><i class="power off icon"></i></a>
+            <a class="item" id="toggleColorMode" onclick="toggleColorMode();">
+                <div class="wrapper">
+                    <div class="btn">
+                        <div class="btn__background">
+                            <div class="btn__face">
+                                <div class="btn__animation">
+                                    <span class="btn__eye-left"></span>
+                                    <span class="btn__eye-right"></span>
+                                    <span class="btn__mouth"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
             <input class="item" type="submit" value="Logout" style="border: none;">
         </form>
-
     </header>
 </body>
 
