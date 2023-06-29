@@ -83,8 +83,6 @@ public class UserController {
             form.setName(user.getName());
             form.setEmail(user.getEmail());
             form.setPassword(user.getPassword());
-        } else {
-            return "redirect:/users";
         }
         model.addAttribute("loginUser", loginUser);
         model.addAttribute("userUpdateForm", form);
@@ -93,9 +91,6 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@Validated UserRegisterForm form, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails loginUser) {
-        if (bindingResult.hasErrors()) {
-            return showUpdateForm(form, model, loginUser);
-        }
         try (InputStream uploadStream = form.getProfileImg().getInputStream()){
             byte[] buffer = new byte[uploadStream.available()];
             uploadStream.read(buffer);
@@ -105,10 +100,13 @@ public class UserController {
 		} catch (Throwable e) {
             bindingResult.addError(new FieldError(bindingResult.getObjectName(), "profileImg", "アップロード時にエラーが発生しました"));
 		}
+        if (bindingResult.hasErrors()) {
+            return showUpdateForm(form, model, loginUser);
+        }
 
         long userId = userService.findByEmail(loginUser.getUsername()).get().getId();
         userService.update(userId, form.getName(), form.getEmail(), form.getPassword(), "/profile/" + form.getProfileImg().getOriginalFilename());
-        return "redirect:/profile";
+        return "redirect:profile";
     }
 
     @PostMapping("/delete")
