@@ -19,7 +19,7 @@ public class ApiMilestoneController {
     /**
      * 一覧の消化率取得API
      *
-     * @return List<MilestoneProgressDto> DtoのList
+     * @return List<MilestoneProgressDto>
      */
     @GetMapping()
     public List<MilestoneProgressDto> index() {
@@ -32,7 +32,7 @@ public class ApiMilestoneController {
      * 詳細の消化率取得API
      *
      * @param model 画面に渡すデータを格納するModelオブジェクト
-     * @return
+     * @return MilestoneProgressDto 
      */
     @GetMapping("{id}")
     public MilestoneProgressDto show(@PathVariable Long id) {
