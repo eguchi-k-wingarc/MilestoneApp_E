@@ -45,6 +45,8 @@ public class SecurityConfig extends AbstractHttpConfigurer<SecurityConfig, HttpS
                                                 .mvcMatchers("/users/login**", "/h2-console/**", "/users/register**",
                                                                 "/admin-login**")
                                                 .permitAll()
+                                                // admin画面へのアクセスをROLE_ADMINのみに許可
+                                                .mvcMatchers("/admin-dashboard/**").hasRole("ADMIN")
                                                 // それ以外のすべてのリクエストは認証が必要とする
                                                 .anyRequest().authenticated())
                                 .formLogin(formLogin -> formLogin
