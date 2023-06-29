@@ -49,8 +49,10 @@ public class TaskController {
             Model model, @AuthenticationPrincipal UserDetails loginUser) {
         TaskWithLabels taskWithLabels = taskService.findTaskWithLabelsByTaskId(taskId);
         MilestoneEntity milestone = milestoneService.findById((long) taskWithLabels.getTask().getMilestoneId());
-        UserEntity user = userService.findByEmail(loginUser.getUsername()).get();
+        UserEntity user = userService.findById(milestone.getUserId());
+        UserEntity tUser = userService.findById(taskWithLabels.getTask().getUserId());
         model.addAttribute("user", user);
+        model.addAttribute("tUser", tUser);
         model.addAttribute("milestone", milestone);
         model.addAttribute("loginUser", loginUser);
         model.addAttribute("taskWithLabels", taskWithLabels);

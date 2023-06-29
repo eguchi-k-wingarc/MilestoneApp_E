@@ -40,7 +40,7 @@
             Labels
             </a>
             <form class="right menu" th:action="@{/logout}" method="post" >
-                <span class="item" th:text="|Login : ${loginUser.username}|"></span>
+                <a class="item" th:href="@{/users/profile}" th:text="|Login : ${loginUser.username}|"></a>
                 <a class="item" id="toggleColorMode" onclick="toggleColorMode();"><i class="power off icon" ></i></a>
                 <input class="item" type="submit" value="Logout" style="border: none;">
             </form>
