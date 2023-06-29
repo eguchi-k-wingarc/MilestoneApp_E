@@ -1,15 +1,16 @@
 package com.example.mils.demo.web.milestone.api;
 
 import java.util.List;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.mils.demo.domain.milestone.MilestoneProgressDto;
 import com.example.mils.demo.domain.milestone.MilestoneService;
 import lombok.AllArgsConstructor;
 
-@Controller
+@RestController
 @AllArgsConstructor
 @RequestMapping("/api/milestones")
 public class ApiMilestoneController {
