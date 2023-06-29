@@ -4,6 +4,7 @@ import com.example.mils.demo.domain.label.LabelEntity;
 import com.example.mils.demo.domain.label.LabelService;
 import com.example.mils.demo.domain.milestone.*;
 import java.lang.Boolean;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -136,6 +137,10 @@ public class TaskController {
             @AuthenticationPrincipal UserDetails loginUser) {
         if (bindingResult.hasErrors()) {
             return showEditForm(milestoneId, taskId, form, model, loginUser);
+        }
+
+        if (form.getLabels() == null) {
+            form.setLabels(new ArrayList<>());
         }
 
         taskService.update(taskId, form.getName(), form.getDescription(), form.getDeadline());
