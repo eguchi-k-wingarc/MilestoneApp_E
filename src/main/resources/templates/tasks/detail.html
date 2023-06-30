@@ -42,7 +42,6 @@
                     <img class="ui circular image" th:src="${tUser.profileImg}" alt="">
                     <h2 class="ui center aligned header"
                         th:utext='|${tUser.name}<div class="ui sub header">${tUser.email}</div>|'></h2>
-                    <div class="ui center aligned description" th:text="${tUser.authorities}"></div>
                 </div>
             </div>
         </div>
@@ -63,7 +62,6 @@
                         <img class="ui circular image" th:src="${user.profileImg}" alt="">
                         <h2 class="ui center aligned header"
                             th:utext='|${user.name}<div class="ui sub header">${user.email}</div>|'></h2>
-                        <div class="ui center aligned description" th:text="${user.authorities}"></div>
                     </div>
                 </div>
             </a>
