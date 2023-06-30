@@ -1,5 +1,6 @@
-insert into users (name, email, password, authorities) values ('egu', 'egu@gmail.com', '$2a$10$Qb2HInxnyuztG4yG/m1TxOYux8UgiVkVLqB.94QTjqFTVOYQ0pjsa', 'ROLE_ADMIN');
-insert into users (name, email, password, authorities) values ('egu2', 'egu2@gmail.com', '$2a$10$rYpIV6lZNA.fKwcURw7/KOfIbvJxMg5jTDFtznAMh79j3nEvnhBQG', 'ROLE_USER');
+insert into users (name, email, password, authorities, profile_img) values ('egu', 'egu@gmail.com', '$2a$10$Qb2HInxnyuztG4yG/m1TxOYux8UgiVkVLqB.94QTjqFTVOYQ0pjsa', 'ROLE_ADMIN', '/profile/egu.png');
+insert into users (name, email, password, authorities, profile_img) values ('sawada', 'sawada@gmail.com', '$2a$10$Xu6fn0.ero.OkMzQyYjYo.fKWd8v84UiS1Onh1xKSPYziTMzCZiYS', 'ROLE_USER', '/profile/sawada.png');
+insert into users (name, email, password, authorities, profile_img) values ('kanato', 'kanato@gmail.com', '$2a$10$GKXTgnBOxocENIMSULOmqe3ZLGZ5LFU6.4nCsz5/BwmMZNU1.3R6m', 'ROLE_USER', '/profile/kanato.png');
 insert into users (name, email, password, authorities, profile_img) values ('shanx', 'shanx@gmail.com', '$2a$10$lMqHeG1kTvXR5R5gVZD3c.MLzcNZT0huF9RBQPLWBwREaYondSdCi', 'ROLE_USER', '/profile/ほぼシャンクス.png');
 insert into users (name, email, password, authorities, profile_img) values ('zoro', 'zoro@gmail.com', '$2a$10$FgO44lMU/rFwz1RbMxGGbe37adH.oLz.uVYbNOzb2GvfAj7Lx2UiW', 'ROLE_USER', '/profile/onepiece02_zoro_bandana.png');
 insert into milestones (user_id, name, description, progress, deadline) values (1, 'ローンチ', 'ローンチ', 50, '2024-06-30 23:59:00');
